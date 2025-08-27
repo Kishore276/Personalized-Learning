@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Administrator - Personalized Learning</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@21stdev/ui/dist/21stdev-ui.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .centered {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="centered">
+        <div class="ui-card ui-shadow-xl ui-rounded-xl ui-p-6 ui-bg-white ui-w-96">
+            <div class="ui-flex ui-flex-col ui-items-center ui-mb-6">
+                <div class="ui-avatar ui-bg-gradient-to-r ui-from-blue-500 ui-to-purple-500 ui-mb-4">
+                    <span class="ui-icon ui-icon-envelope"></span>
+                </div>
+                <h2 class="ui-text-2xl ui-font-bold ui-mb-1">Contact Administrator</h2>
+                <p class="ui-text-gray-500 ui-text-center">Need access to the learning platform?</p>
+            </div>
+            
+            <div class="ui-bg-blue-50 ui-rounded-lg ui-p-4 ui-mb-6">
+                <h6 class="ui-font-semibold ui-mb-3 ui-text-blue-800">
+                    <span class="ui-icon ui-icon-info-circle ui-mr-2"></span>Access Information
+                </h6>
+                <div class="ui-text-blue-700 ui-space-y-2">
+                    <p><strong>Account Creation:</strong> User registration is managed by administrators only.</p>
+                    <p><strong>Password Reset:</strong> Contact your administrator for password assistance.</p>
+                    <p><strong>Technical Support:</strong> For any login or access issues.</p>
+                </div>
+            </div>
+
+            <div class="ui-bg-gray-50 ui-rounded-lg ui-p-4 ui-mb-6">
+                <h6 class="ui-font-semibold ui-mb-3">
+                    <span class="ui-icon ui-icon-user-shield ui-mr-2"></span>How to Get Access
+                </h6>
+                <ol class="ui-list-decimal ui-pl-5 ui-text-gray-700 ui-space-y-2">
+                    <li>Contact your organization's administrator</li>
+                    <li>Provide your email address for account creation</li>
+                    <li>Wait for account activation notification</li>
+                    <li>Login with your email and assigned password</li>
+                </ol>
+            </div>
+
+            <div class="ui-bg-green-50 ui-rounded-lg ui-p-4 ui-mb-6">
+                <h6 class="ui-font-semibold ui-mb-3 ui-text-green-800">
+                    <span class="ui-icon ui-icon-phone ui-mr-2"></span>Contact Methods
+                </h6>
+                <div class="ui-text-green-700 ui-space-y-2">
+                    <p><span class="ui-icon ui-icon-envelope ui-mr-2"></span>Email: admin@yourorganization.com</p>
+                    <p><span class="ui-icon ui-icon-phone ui-mr-2"></span>Phone: +1 (555) 123-4567</p>
+                    <p><span class="ui-icon ui-icon-clock ui-mr-2"></span>Hours: Mon-Fri 9AM-5PM</p>
+                </div>
+            </div>
+
+            <div class="ui-flex ui-gap-3">
+                <a href="{{ url_for('login') }}" class="ui-btn ui-btn-primary ui-flex-1 ui-rounded-lg">
+                    <span class="ui-icon ui-icon-arrow-left ui-mr-2"></span>Back to Login
+                </a>
+                <button onclick="window.location.href='mailto:admin@yourorganization.com?subject=Access Request&body=Hello, I would like to request access to the Personalized Learning Platform. My email address is: '" 
+                        class="ui-btn ui-btn-gradient ui-flex-1 ui-rounded-lg">
+                    <span class="ui-icon ui-icon-envelope ui-mr-2"></span>Send Email
+                </button>
+            </div>
+
+            <div class="ui-mt-6 ui-text-center ui-text-sm ui-text-gray-500">
+                <p>This is a secure learning platform with controlled access.</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@21stdev/ui/dist/21stdev-ui.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topic.title }} - {{ course.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #f8f9fa;
+            padding-top: 70px;
+            padding-bottom: 120px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .topic-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .clean-header {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .clean-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .clean-header .badge {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .content-area {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .next-btn {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .next-btn:hover {
+            background: linear-gradient(135deg, #0056b3, #004085);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .next-btn:disabled,
+        .next-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .progress-footer {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .quiz-container {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .quiz-option {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-option:hover {
+            border-color: #007bff;
+            background: #f8f9ff;
+        }
+        
+        .quiz-option.selected {
+            border-color: #007bff;
+            background: #e3f2fd;
+        }
+        
+        .quiz-option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .quiz-option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .submit-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        .submit-btn:hover {
+            background: #218838;
+        }
+        
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .btn.completed {
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="topic-container">
+            <div class="clean-header">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h1>{{ topic.title }}</h1>
+                        <p class="text-muted mb-3">{{ course.title }}</p>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge">{{ topic.difficulty or 'Beginner' }}</span>
+                        <p class="text-muted small mb-0 mt-2">
+                            <i class="fas fa-clock"></i> {{ topic.estimated_time or 15 }} min
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-area" id="topicContent">
+                {{ topic.content | safe }}
+            </div>
+
+            {% if sub_exercises %}
+            <div class="exercises-section">
+                {% for sub_exercise in sub_exercises %}
+                <div class="card mb-4" id="exercise-{{ sub_exercise.id }}">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-{{ 'brain' if sub_exercise.exercise_type == 'quiz' else 'code' }} me-2"></i>
+                            {{ sub_exercise.title }}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {{ sub_exercise.content | safe }}
+
+                        {% if sub_exercise.instructions %}
+                        <div class="alert alert-primary mt-3">
+                            <h6><i class="fas fa-info-circle me-2"></i>Instructions</h6>
+                            <p class="mb-0">{{ sub_exercise.instructions }}</p>
+                        </div>
+                        {% endif %}
+                        
+                        {% if sub_exercise.exercise_type == 'quiz' and sub_exercise.get('questions') %}
+                        {% for question in sub_exercise.questions %}
+                        <div class="quiz-container" id="quiz-{{ sub_exercise.id }}-{{ loop.index }}">
+                            <h6>Question {{ loop.index }}:</h6>
+                            <p><strong>{{ question.question }}</strong></p>
+                            
+                            <div class="quiz-options" id="options-{{ sub_exercise.id }}-{{ loop.index }}">
+                                {% for option in question.options %}
+                                <div class="quiz-option" onclick="selectOption({{ sub_exercise.id }}, {{ loop.index0 }}, {{ loop.parent.loop.index0 }}, '{{ option }}')">
+                                    {{ option }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <button class="submit-btn" onclick="submitAnswer({{ sub_exercise.id }}, {{ loop.index0 }}, '{{ question.correct_answer }}')" 
+                                    id="submit-{{ sub_exercise.id }}-{{ loop.index0 }}" disabled>
+                                Submit Answer
+                            </button>
+                            
+                            <div class="result-message mt-3" id="result-{{ sub_exercise.id }}-{{ loop.index0 }}" style="display: none;"></div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="fixed-footer">
+        <div class="footer-nav">
+            <div class="progress-footer">
+                <span id="completion-status">
+                    <i class="fas fa-clock text-warning"></i> Complete the topic to continue
+                </span>
+            </div>
+            
+            <div class="d-flex align-items-center gap-3">
+                {% if prev_topic %}
+                <a href="/course/{{ course.id }}/topic/{{ prev_topic.id }}" 
+                   class="btn btn-outline-secondary">
+                    <i class="fas fa-chevron-left me-1"></i>Previous
+                </a>
+                {% endif %}
+
+                <button class="btn btn-success" onclick="markComplete()" id="completeBtn">
+                    <i class="fas fa-check me-1"></i>Mark Complete
+                </button>
+
+                {% if next_topic %}
+                <a href="/course/{{ course.id }}/topic/{{ next_topic.id }}"
+                   class="next-btn disabled"
+                   id="next-topic-btn">
+                    Next Topic<i class="fas fa-chevron-right ms-1"></i>
+                </a>
+                {% else %}
+                <a href="{{ url_for('start_course', course_id=course.id) }}"
+                   class="next-btn disabled"
+                   id="complete-course-btn">
+                    <i class="fas fa-graduation-cap me-1"></i>Complete Course
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedOptions = {};
+        
+        function selectOption(exerciseId, questionIndex, optionIndex, option) {
+            const optionsContainer = document.getElementById(`options-${exerciseId}-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const submitBtn = document.getElementById(`submit-${exerciseId}-${questionIndex}`);
+            
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            
+            selectedOptions[`${exerciseId}-${questionIndex}`] = {
+                option: option,
+                optionIndex: optionIndex
+            };
+            
+            submitBtn.disabled = false;
+        }
+        
+        function submitAnswer(exerciseId, questionIndex, correctAnswer) {
+            const selection = selectedOptions[`${exerciseId}-${questionIndex}`];
+            if (!selection) return;
+            
+            const optionsContainer = document.getElementById(`options-${exerciseId}-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const submitBtn = document.getElementById(`submit-${exerciseId}-${questionIndex}`);
+            const resultDiv = document.getElementById(`result-${exerciseId}-${questionIndex}`);
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitted';
+            
+            options.forEach((option, index) => {
+                const optionText = option.textContent.trim();
+                
+                if (optionText === correctAnswer) {
+                    option.classList.add('correct');
+                } else if (index === selection.optionIndex) {
+                    option.classList.add('incorrect');
+                }
+                
+                option.style.pointerEvents = 'none';
+            });
+            
+            const isCorrect = selection.option === correctAnswer;
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = isCorrect 
+                ? '<div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>Correct! Well done!</div>'
+                : `<div class="alert alert-danger"><i class="fas fa-times-circle me-2"></i>Incorrect. The correct answer is: <strong>${correctAnswer}</strong></div>`;
+        }
+        
+        function markComplete() {
+            const btn = document.getElementById('completeBtn');
+            const nextBtn = document.getElementById('next-topic-btn') || document.getElementById('complete-course-btn');
+            const statusSpan = document.getElementById('completion-status');
+            
+            if (btn.classList.contains('completed')) {
+                return;
+            }
+            
+            btn.classList.add('completed');
+            btn.innerHTML = '<i class="fas fa-check-circle me-1"></i>Completed!';
+            btn.disabled = true;
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-outline-success');
+            
+            if (nextBtn) {
+                nextBtn.classList.remove('disabled');
+                nextBtn.style.pointerEvents = 'auto';
+                nextBtn.style.opacity = '1';
+            }
+            
+            if (statusSpan) {
+                statusSpan.innerHTML = '<i class="fas fa-check-circle text-success"></i> Topic Complete - Continue to next topic';
+            }
+            
+            showSuccessNotification('🎉 Topic completed! You can now proceed to the next topic.');
+        }
+        
+        function showSuccessNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'alert alert-success position-fixed';
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                border: none;
+                border-radius: 8px;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <span>${message}</span>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

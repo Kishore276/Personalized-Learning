@@ -1,0 +1,471 @@
+{
+  "course_id": 6,
+  "course_title": "Java Programming",
+  "language": "java",
+  "questions": [
+    {
+      "id": 1,
+      "level": "basic",
+      "question": "What is the correct syntax to declare a class in Java?",
+      "options": ["class MyClass { }", "Class MyClass { }", "public class MyClass { }", "Both A and C are correct"],
+      "correct_answer": "Both A and C are correct",
+      "explanation": "Both 'class MyClass' and 'public class MyClass' are valid class declarations in Java."
+    },
+    {
+      "id": 2,
+      "level": "basic",
+      "question": "Which keyword is used to inherit from a class in Java?",
+      "options": ["implements", "extends", "inherits", "super"],
+      "correct_answer": "extends",
+      "explanation": "The 'extends' keyword is used for class inheritance in Java."
+    },
+    {
+      "id": 3,
+      "level": "basic",
+      "question": "What is the output of System.out.println(10 + 20 + \"Hello\")?",
+      "options": ["1020Hello", "30Hello", "Hello30", "Hello1020"],
+      "correct_answer": "30Hello",
+      "explanation": "Numbers are added first (10 + 20 = 30), then concatenated with the string, resulting in '30Hello'."
+    },
+    {
+      "id": 4,
+      "level": "basic",
+      "question": "Which access modifier allows access from anywhere?",
+      "options": ["private", "protected", "public", "default"],
+      "correct_answer": "public",
+      "explanation": "The 'public' access modifier allows access from anywhere in the program."
+    },
+    {
+      "id": 5,
+      "level": "basic",
+      "question": "Which method is called when an object is created?",
+      "options": ["constructor", "main()", "init()", "create()"],
+      "correct_answer": "constructor",
+      "explanation": "The constructor is automatically called when an object is instantiated using the 'new' keyword."
+    },
+    {
+      "id": 6,
+      "level": "basic",
+      "question": "What is the main method signature in Java?",
+      "options": ["public static void main(String args[])", "public void main(String[] args)", "static void main(String[] args)", "public main(String[] args)"],
+      "correct_answer": "public static void main(String args[])",
+      "explanation": "The main method must be public, static, void, and take a String array parameter."
+    },
+    {
+      "id": 7,
+      "level": "basic",
+      "question": "Which primitive data type is used to store whole numbers?",
+      "options": ["float", "double", "int", "char"],
+      "correct_answer": "int",
+      "explanation": "The int data type is used to store 32-bit signed integers."
+    },
+    {
+      "id": 8,
+      "level": "basic",
+      "question": "How do you create a single-line comment in Java?",
+      "options": ["/* comment */", "// comment", "<!-- comment -->", "# comment"],
+      "correct_answer": "// comment",
+      "explanation": "Single-line comments in Java start with // and continue to the end of the line."
+    },
+    {
+      "id": 9,
+      "level": "basic",
+      "question": "Which keyword is used to create a constant in Java?",
+      "options": ["const", "final", "static", "constant"],
+      "correct_answer": "final",
+      "explanation": "The 'final' keyword is used to create constants in Java."
+    },
+    {
+      "id": 10,
+      "level": "basic",
+      "question": "What is the size of an int in Java?",
+      "options": ["8 bits", "16 bits", "32 bits", "64 bits"],
+      "correct_answer": "32 bits",
+      "explanation": "An int in Java is always 32 bits (4 bytes) regardless of the platform."
+    },
+    {
+      "id": 11,
+      "level": "basic",
+      "question": "Which operator is used for string concatenation?",
+      "options": ["+", "&", ".", "concat"],
+      "correct_answer": "+",
+      "explanation": "The + operator is used for string concatenation in Java."
+    },
+    {
+      "id": 12,
+      "level": "basic",
+      "question": "What is the default value of a boolean variable?",
+      "options": ["true", "false", "null", "0"],
+      "correct_answer": "false",
+      "explanation": "The default value of a boolean variable in Java is false."
+    },
+    {
+      "id": 13,
+      "level": "basic",
+      "question": "Which loop executes at least once?",
+      "options": ["for loop", "while loop", "do-while loop", "enhanced for loop"],
+      "correct_answer": "do-while loop",
+      "explanation": "The do-while loop executes the body first, then checks the condition, ensuring at least one execution."
+    },
+    {
+      "id": 14,
+      "level": "basic",
+      "question": "How do you declare an array in Java?",
+      "options": ["int[] arr", "int arr[]", "Both A and B", "array int arr"],
+      "correct_answer": "Both A and B",
+      "explanation": "Both int[] arr and int arr[] are valid array declarations in Java."
+    },
+    {
+      "id": 15,
+      "level": "basic",
+      "question": "What does JVM stand for?",
+      "options": ["Java Virtual Machine", "Java Variable Method", "Java Vector Model", "Java Version Manager"],
+      "correct_answer": "Java Virtual Machine",
+      "explanation": "JVM stands for Java Virtual Machine, which executes Java bytecode."
+    },
+    {
+      "id": 16,
+      "level": "basic",
+      "question": "Which package is automatically imported in every Java program?",
+      "options": ["java.util", "java.io", "java.lang", "java.awt"],
+      "correct_answer": "java.lang",
+      "explanation": "The java.lang package is automatically imported in every Java program."
+    },
+    {
+      "id": 17,
+      "level": "basic",
+      "question": "What is the wrapper class for int?",
+      "options": ["Int", "Integer", "Number", "Wrapper"],
+      "correct_answer": "Integer",
+      "explanation": "Integer is the wrapper class for the primitive int type."
+    },
+    {
+      "id": 18,
+      "level": "basic",
+      "question": "How do you compare two strings for equality?",
+      "options": ["str1 == str2", "str1.equals(str2)", "str1.compare(str2)", "str1 === str2"],
+      "correct_answer": "str1.equals(str2)",
+      "explanation": "Use the equals() method to compare string content, not the == operator."
+    },
+    {
+      "id": 19,
+      "level": "basic",
+      "question": "Which keyword is used to exit from a loop?",
+      "options": ["exit", "break", "return", "stop"],
+      "correct_answer": "break",
+      "explanation": "The break keyword is used to exit from a loop or switch statement."
+    },
+    {
+      "id": 21,
+      "level": "intermediate",
+      "question": "What does the 'static' keyword mean in Java?",
+      "options": ["Variable cannot be changed", "Belongs to the class, not instance", "Method cannot be overridden", "Variable is final"],
+      "correct_answer": "Belongs to the class, not instance",
+      "explanation": "'static' means the member belongs to the class itself rather than to any specific instance of the class."
+    },
+    {
+      "id": 22,
+      "level": "intermediate",
+      "question": "Which exception is thrown when dividing by zero with integers?",
+      "options": ["DivideByZeroException", "ArithmeticException", "NumberFormatException", "RuntimeException"],
+      "correct_answer": "ArithmeticException",
+      "explanation": "ArithmeticException is thrown when attempting to divide an integer by zero in Java."
+    },
+    {
+      "id": 23,
+      "level": "intermediate",
+      "question": "What is the difference between ArrayList and LinkedList?",
+      "options": ["ArrayList uses arrays, LinkedList uses nodes", "ArrayList is faster for random access", "LinkedList is faster for insertions/deletions", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "ArrayList uses dynamic arrays (faster random access), while LinkedList uses doubly-linked nodes (faster insertions/deletions)."
+    },
+    {
+      "id": 24,
+      "level": "intermediate",
+      "question": "What is method overloading in Java?",
+      "options": ["Having multiple methods with same name but different parameters", "Redefining parent class method", "Using static methods", "Creating abstract methods"],
+      "correct_answer": "Having multiple methods with same name but different parameters",
+      "explanation": "Method overloading allows multiple methods with the same name but different parameter lists."
+    },
+    {
+      "id": 25,
+      "level": "intermediate",
+      "question": "Which keyword is used to prevent inheritance of a class?",
+      "options": ["static", "private", "final", "abstract"],
+      "correct_answer": "final",
+      "explanation": "The 'final' keyword prevents a class from being inherited by other classes."
+    },
+    {
+      "id": 26,
+      "level": "intermediate",
+      "question": "What is the difference between == and .equals() in Java?",
+      "options": ["No difference", "== compares references, .equals() compares content", "== is faster", ".equals() works only with strings"],
+      "correct_answer": "== compares references, .equals() compares content",
+      "explanation": "== compares object references (memory addresses), while .equals() compares the actual content of objects."
+    },
+    {
+      "id": 27,
+      "level": "intermediate",
+      "question": "Which collection allows duplicate elements?",
+      "options": ["Set", "HashSet", "List", "Map"],
+      "correct_answer": "List",
+      "explanation": "List interface allows duplicate elements, while Set interface does not allow duplicates."
+    },
+    {
+      "id": 28,
+      "level": "intermediate",
+      "question": "What happens if you don't handle a checked exception?",
+      "options": ["Runtime error", "Compilation error", "Warning message", "Nothing"],
+      "correct_answer": "Compilation error",
+      "explanation": "Checked exceptions must be handled or declared to be thrown, otherwise the code will not compile."
+    },
+    {
+      "id": 29,
+      "level": "intermediate",
+      "question": "What is encapsulation in Java?",
+      "options": ["Hiding implementation details", "Using private variables with public methods", "Data security principle", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Encapsulation involves hiding implementation details, using private members with public accessors, and ensuring data security."
+    },
+    {
+      "id": 30,
+      "level": "intermediate",
+      "question": "Which interface is used for key-value pair storage?",
+      "options": ["List", "Set", "Map", "Collection"],
+      "correct_answer": "Map",
+      "explanation": "The Map interface is used for storing key-value pairs in Java."
+    },
+    {
+      "id": 31,
+      "level": "intermediate",
+      "question": "What is the purpose of the 'this' keyword?",
+      "options": ["Refers to current object", "Refers to parent class", "Creates new object", "Calls static methods"],
+      "correct_answer": "Refers to current object",
+      "explanation": "The 'this' keyword refers to the current instance of the class."
+    },
+    {
+      "id": 32,
+      "level": "intermediate",
+      "question": "Which method is used to convert a string to integer?",
+      "options": ["Integer.parseInt()", "String.toInt()", "Integer.valueOf()", "Both A and C"],
+      "correct_answer": "Both A and C",
+      "explanation": "Both Integer.parseInt() and Integer.valueOf() can convert strings to integers."
+    },
+    {
+      "id": 33,
+      "level": "intermediate",
+      "question": "What is autoboxing in Java?",
+      "options": ["Automatic type conversion", "Converting primitive to wrapper class", "Converting wrapper to primitive", "Automatic memory management"],
+      "correct_answer": "Converting primitive to wrapper class",
+      "explanation": "Autoboxing is the automatic conversion of primitive types to their corresponding wrapper classes."
+    },
+    {
+      "id": 34,
+      "level": "intermediate",
+      "question": "Which keyword is used to handle exceptions?",
+      "options": ["try", "catch", "finally", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "try, catch, and finally are all used in exception handling in Java."
+    },
+    {
+      "id": 35,
+      "level": "intermediate",
+      "question": "What is the difference between abstract class and interface?",
+      "options": ["Abstract class can have constructors", "Interface methods are public by default", "Abstract class can have concrete methods", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Abstract classes can have constructors and concrete methods, while interfaces have public methods by default."
+    },
+    {
+      "id": 36,
+      "level": "intermediate",
+      "question": "Which modifier is used for variables that should not be serialized?",
+      "options": ["static", "final", "transient", "volatile"],
+      "correct_answer": "transient",
+      "explanation": "The transient modifier prevents variables from being serialized."
+    },
+    {
+      "id": 37,
+      "level": "intermediate",
+      "question": "What is method overriding in Java?",
+      "options": ["Having multiple methods with same name", "Redefining parent class method in child class", "Creating static methods", "Using multiple constructors"],
+      "correct_answer": "Redefining parent class method in child class",
+      "explanation": "Method overriding occurs when a subclass provides a specific implementation for a method already defined in its parent class."
+    },
+    {
+      "id": 38,
+      "level": "intermediate",
+      "question": "Which keyword is used to call parent class constructor?",
+      "options": ["this", "super", "parent", "base"],
+      "correct_answer": "super",
+      "explanation": "The super() keyword is used to call the parent class constructor."
+    },
+    {
+      "id": 39,
+      "level": "intermediate",
+      "question": "What is polymorphism in Java?",
+      "options": ["Many forms of a single entity", "Method overloading and overriding", "Runtime method binding", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Polymorphism allows objects to take many forms through overloading, overriding, and runtime binding."
+    },
+    {
+      "id": 41,
+      "level": "advanced",
+      "question": "What is the purpose of the 'super' keyword?",
+      "options": ["Refers to current object", "Refers to parent class", "Creates new object", "Calls static methods"],
+      "correct_answer": "Refers to parent class",
+      "explanation": "The 'super' keyword refers to the immediate parent class and is used to access parent class members."
+    },
+    {
+      "id": 42,
+      "level": "advanced",
+      "question": "Which interface must be implemented to use enhanced for loop?",
+      "options": ["Iterator", "Iterable", "Collection", "List"],
+      "correct_answer": "Iterable",
+      "explanation": "The Iterable interface must be implemented to use the enhanced for loop (for-each loop)."
+    },
+    {
+      "id": 43,
+      "level": "advanced",
+      "question": "Which method is used to start a thread in Java?",
+      "options": ["run()", "start()", "execute()", "begin()"],
+      "correct_answer": "start()",
+      "explanation": "The start() method is used to begin execution of a thread, which then calls the run() method."
+    },
+    {
+      "id": 44,
+      "level": "advanced",
+      "question": "Which method must be overridden when implementing Comparable interface?",
+      "options": ["compare()", "compareTo()", "equals()", "hashCode()"],
+      "correct_answer": "compareTo()",
+      "explanation": "The compareTo() method must be implemented when a class implements the Comparable interface for natural ordering."
+    },
+    {
+      "id": 45,
+      "level": "advanced",
+      "question": "What is the difference between synchronized and volatile?",
+      "options": ["synchronized blocks threads, volatile ensures visibility", "volatile is faster", "synchronized is deprecated", "No difference"],
+      "correct_answer": "synchronized blocks threads, volatile ensures visibility",
+      "explanation": "synchronized provides mutual exclusion, while volatile ensures variable visibility across threads."
+    },
+    {
+      "id": 46,
+      "level": "advanced",
+      "question": "What is a lambda expression in Java 8?",
+      "options": ["Anonymous function", "Functional interface implementation", "Concise way to write code", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Lambda expressions are anonymous functions that provide a concise way to implement functional interfaces."
+    },
+    {
+      "id": 47,
+      "level": "advanced",
+      "question": "Which annotation is used to suppress compiler warnings?",
+      "options": ["@Override", "@Deprecated", "@SuppressWarnings", "@SafeVarargs"],
+      "correct_answer": "@SuppressWarnings",
+      "explanation": "The @SuppressWarnings annotation is used to suppress specific compiler warnings."
+    },
+    {
+      "id": 48,
+      "level": "advanced",
+      "question": "What is the Stream API used for?",
+      "options": ["File I/O operations", "Functional-style operations on collections", "Network programming", "Database connections"],
+      "correct_answer": "Functional-style operations on collections",
+      "explanation": "The Stream API provides functional-style operations like filter, map, and reduce on collections."
+    },
+    {
+      "id": 49,
+      "level": "advanced",
+      "question": "What is method reference in Java 8?",
+      "options": ["Shorthand for lambda expressions", "Reference to existing methods", "Alternative to anonymous classes", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Method references provide a shorthand for lambda expressions that call existing methods."
+    },
+    {
+      "id": 50,
+      "level": "advanced",
+      "question": "Which design pattern is implemented by Collections.synchronizedList()?",
+      "options": ["Singleton", "Decorator", "Observer", "Factory"],
+      "correct_answer": "Decorator",
+      "explanation": "Collections.synchronizedList() implements the Decorator pattern by wrapping an existing list with synchronization."
+    },
+    {
+      "id": 51,
+      "level": "advanced",
+      "question": "What is the purpose of the Optional class?",
+      "options": ["Handle null values", "Avoid NullPointerException", "Functional programming support", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Optional helps handle null values safely and supports functional programming paradigms."
+    },
+    {
+      "id": 52,
+      "level": "advanced",
+      "question": "Which garbage collector is the default in Java 11?",
+      "options": ["G1GC", "ParallelGC", "SerialGC", "ConcurrentMarkSweepGC"],
+      "correct_answer": "G1GC",
+      "explanation": "G1 Garbage Collector became the default garbage collector starting from Java 9."
+    },
+    {
+      "id": 53,
+      "level": "advanced",
+      "question": "What is reflection in Java?",
+      "options": ["Runtime inspection of classes", "Dynamic method invocation", "Accessing private members", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Reflection allows runtime inspection and manipulation of classes, methods, and fields."
+    },
+    {
+      "id": 54,
+      "level": "advanced",
+      "question": "Which keyword is used for dynamic method dispatch?",
+      "options": ["virtual", "dynamic", "override", "None - it's automatic"],
+      "correct_answer": "None - it's automatic",
+      "explanation": "Dynamic method dispatch happens automatically in Java through polymorphism without special keywords."
+    },
+    {
+      "id": 55,
+      "level": "advanced",
+      "question": "What is the difference between fail-fast and fail-safe iterators?",
+      "options": ["fail-fast throws exception on modification", "fail-safe works on copy", "fail-fast is used by ArrayList", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Fail-fast iterators throw ConcurrentModificationException, while fail-safe work on copies of the collection."
+    },
+    {
+      "id": 56,
+      "level": "advanced",
+      "question": "Which memory area stores static variables?",
+      "options": ["Heap", "Stack", "Method Area", "PC Register"],
+      "correct_answer": "Method Area",
+      "explanation": "Static variables are stored in the Method Area (also called Metaspace in newer JVMs)."
+    },
+    {
+      "id": 57,
+      "level": "advanced",
+      "question": "What is the diamond problem in multiple inheritance?",
+      "options": ["Ambiguity in method resolution", "Solved by interfaces in Java", "Related to default methods", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "The diamond problem creates ambiguity when multiple inheritance paths exist, addressed in Java through interfaces."
+    },
+    {
+      "id": 58,
+      "level": "advanced",
+      "question": "Which JVM parameter controls maximum heap size?",
+      "options": ["-Xms", "-Xmx", "-XX:MaxPermSize", "-Xss"],
+      "correct_answer": "-Xmx",
+      "explanation": "The -Xmx parameter sets the maximum heap size for the JVM."
+    },
+    {
+      "id": 59,
+      "level": "advanced",
+      "question": "What is CompletableFuture used for?",
+      "options": ["Asynchronous programming", "Non-blocking operations", "Combining multiple futures", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "CompletableFuture provides asynchronous programming capabilities with support for combining and chaining operations."
+    },
+    {
+      "id": 60,
+      "level": "advanced",
+      "question": "Which module system was introduced in Java 9?",
+      "options": ["JPMS (Java Platform Module System)", "Project Jigsaw", "Module system", "All refer to the same thing"],
+      "correct_answer": "All refer to the same thing",
+      "explanation": "Java 9 introduced JPMS (also known as Project Jigsaw), providing a module system for better encapsulation and dependencies."
+    }
+  ]
+}

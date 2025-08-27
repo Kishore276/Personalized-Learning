@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.title }} - Personalized Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/face-detection.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-bottom: 120px; /* Add padding for the fixed action bar */
+        }
+        .module-card {
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+        .module-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .module-card .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .topic-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+        .topic-item:last-child {
+            border-bottom: none;
+        }
+        .topic-item:hover {
+            background-color: #f8f9fa;
+        }
+        .topic-actions {
+            min-width: 110px;
+            text-align: right;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+        .action-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .course-header {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+        .progress-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .module-card {
+            transition: transform 0.2s;
+            margin-bottom: 20px;
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+        .topic-list {
+            list-style: none;
+            padding: 0;
+        }
+        .topic-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .topic-item:last-child {
+            border-bottom: none;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        /* Enhanced topic and exercise styles */
+        .topic-item-enhanced {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .topic-item-enhanced:last-child {
+            border-bottom: none;
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-title {
+            font-size: 1.1rem;
+        }
+
+        .topic-description {
+            margin-bottom: 0.75rem;
+        }
+
+        .topic-exercises {
+            background: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+        }
+
+        .exercise-card {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .exercise-description {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .badge-difficulty-beginner {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .badge-difficulty-intermediate {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .badge-difficulty-advanced {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .exercises-list {
+            margin-top: 0.5rem;
+        }
+
+        /* Enhanced Navigation Styles */
+        .module-navigation {
+            padding: 0.5rem 0;
+        }
+
+        .current-module {
+            font-weight: bold;
+            color: #007bff;
+            font-size: 0.9rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .navigation-buttons .btn {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .action-bar {
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 1rem 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .navigation-buttons .btn {
+                width: 100%;
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .module-navigation {
+                text-align: center;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include Emotion Tracker -->
+    {% include 'emotion_tracker.html' %}
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/dashboard">Personalized Learning</a>
+            <span class="navbar-text text-white">Course Overview</span>
+        </div>
+    </nav>
+
+    <div class="course-header" style="margin-top: 56px;">
+        <div class="container">
+            <h1>{{ course.title }}</h1>
+            <p class="lead">{{ course.description }}</p>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="progress" style="height: 20px;">
+                        <div class="progress-bar" role="progressbar" 
+                             style="width: {{ progress.progress_percentage }}%"
+                             aria-valuenow="{{ progress.progress_percentage }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ "%.1f"|format(progress.progress_percentage) }}%
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span class="badge bg-light text-dark me-3">
+                        {{ progress.completed_topics }} / {{ progress.total_topics }} topics completed
+                    </span>
+                    <!-- Continue Learning Button -->
+                    <button type="button" class="btn btn-success me-2" onclick="continuelearning()">
+                        <i class="fas fa-play-circle me-1"></i> Continue Learning
+                    </button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Course Modules -->
+                {% for module in modules %}
+                {% set module_index = loop.index0 %}
+                <div class="card module-card">
+                    <div class="card-header bg-light">
+                        <h3 class="mb-0">
+                            <button class="btn btn-link text-decoration-none p-0 text-start w-100"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#module{{ loop.index0 }}"
+                                    aria-expanded="true"
+                                    aria-controls="module{{ loop.index0 }}">
+                                <i class="fas fa-book me-2"></i>
+                                Module {{ loop.index }}: {{ module.title }}
+                                <i class="fas fa-chevron-down float-end mt-1"></i>
+                            </button>
+                        </h3>
+                    </div>
+                    <div id="module{{ loop.index0 }}" class="collapse show">
+                        <div class="card-body">
+                            <p>{{ module.description }}</p>
+                        <div class="topic-list">
+                            {% for topic in module.topics %}
+                            <div class="topic-item-enhanced">
+                                <div class="topic-header">
+                                    <div class="topic-title">
+                                        <i class="fas fa-book me-2"></i>
+                                        <strong>{{ topic.title if topic is mapping else topic }}</strong>
+                                    </div>
+                                    <div class="topic-actions">
+                                        {% set topic_id = [course.id, module_index, loop.index0]|join('_') %}
+                                        {% set topic_status = progress.topics_status.get(topic_id, 'not_started') if progress.topics_status else 'not_started' %}
+
+                                        {% if topic_status == 'completed' %}
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check-circle me-1"></i> Completed
+                                            </span>
+                                        {% else %}
+                                            <a href="/course/{{ course.id }}/topic/{{ topic_id }}"
+                                               class="btn btn-sm btn-primary">
+                                                {% if topic_status == 'in_progress' %}
+                                                    <i class="fas fa-play-circle me-1"></i> Continue
+                                                {% else %}
+                                                    <i class="fas fa-play me-1"></i> Start
+                                                {% endif %}
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <!-- Topic Description -->
+                                {% if topic is mapping and topic.content %}
+                                <div class="topic-description">
+                                    <p class="text-muted small mb-2">{{ topic.content[:100] }}{% if topic.content|length > 100 %}...{% endif %}</p>
+                                </div>
+                                {% endif %}
+
+                                <!-- Exercises for this topic -->
+                                <div class="topic-exercises">
+                                    {% if topic is mapping and topic.exercises %}
+                                        <div class="exercises-list">
+                                            <small class="text-muted"><i class="fas fa-dumbbell me-1"></i>Exercises:</small>
+                                            <div class="row g-2 mt-1">
+                                                {% for exercise in topic.exercises %}
+                                                <div class="col-md-6">
+                                                    <div class="exercise-card">
+                                                        <div class="exercise-header">
+                                                            {% if exercise.type == 'quiz' %}
+                                                                <i class="fas fa-question-circle text-info me-1"></i>
+                                                            {% elif exercise.type == 'practice' %}
+                                                                <i class="fas fa-code text-success me-1"></i>
+                                                            {% elif exercise.type == 'project' %}
+                                                                <i class="fas fa-project-diagram text-warning me-1"></i>
+                                                            {% else %}
+                                                                <i class="fas fa-dumbbell text-primary me-1"></i>
+                                                            {% endif %}
+                                                            <small class="fw-bold">{{ exercise.title }}</small>
+                                                        </div>
+                                                        <div class="exercise-description">
+                                                            <small class="text-muted">{{ exercise.description }}</small>
+                                                        </div>
+                                                        <div class="exercise-meta">
+                                                            <span class="badge badge-difficulty-{{ exercise.difficulty }}">
+                                                                {{ exercise.difficulty.title() }}
+                                                            </span>
+                                                            <span class="badge bg-light text-dark">
+                                                                {{ exercise.type.title() }}
+                                                            </span>
+                                                        </div>
+                                                        <div class="exercise-actions mt-2">
+                                                            <a href="/course/{{ course.id }}/topic/{{ topic_id }}/exercise/{{ loop.index0 }}" 
+                                                               class="btn btn-sm btn-primary">
+                                                                <i class="fas fa-play me-1"></i> Start
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <!-- Default exercises for topics without specific exercises -->
+                                        <div class="exercises-list">
+                                            <small class="text-muted"><i class="fas fa-dumbbell me-1"></i>Exercises:</small>
+                                            <div class="row g-2 mt-1">
+                                                <div class="col-md-6">
+                                                    <div class="exercise-card">
+                                                        <div class="exercise-header">
+                                                            <i class="fas fa-code text-success me-1"></i>
+                                                            <small class="fw-bold">Practice Exercise</small>
+                                                        </div>
+                                                        <div class="exercise-description">
+                                                            <small class="text-muted">Complete hands-on practice for this topic</small>
+                                                        </div>
+                                                        <div class="exercise-meta">
+                                                            <span class="badge badge-difficulty-beginner">Beginner</span>
+                                                            <span class="badge bg-light text-dark">Practice</span>
+                                                        </div>
+                                                        <div class="exercise-actions mt-2">
+                                                            <a href="/course/{{ course.id }}/topic/{{ topic_id }}/exercise/0" 
+                                                               class="btn btn-sm btn-primary">
+                                                                <i class="fas fa-play me-1"></i> Start
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="exercise-card">
+                                                        <div class="exercise-header">
+                                                            <i class="fas fa-question-circle text-info me-1"></i>
+                                                            <small class="fw-bold">Knowledge Check</small>
+                                                        </div>
+                                                        <div class="exercise-description">
+                                                            <small class="text-muted">Test your understanding with a quick quiz</small>
+                                                        </div>
+                                                        <div class="exercise-meta">
+                                                            <span class="badge badge-difficulty-beginner">Beginner</span>
+                                                            <span class="badge bg-light text-dark">Quiz</span>
+                                                        </div>
+                                                        <div class="exercise-actions mt-2">
+                                                            <a href="/course/{{ course.id }}/topic/{{ topic_id }}/exercise/1" 
+                                                               class="btn btn-sm btn-primary">
+                                                                <i class="fas fa-play me-1"></i> Start
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    </div> <!-- Close collapse -->
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4">
+                <!-- Progress Card -->
+                <div class="progress-card">
+                    <h4><i class="fas fa-chart-line me-2"></i>Your Progress</h4>
+                    <div class="mb-3">
+                        <small class="text-muted">Course Completion</small>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" 
+                                 style="width: {{ progress.progress_percentage }}%">
+                            </div>
+                        </div>
+                    </div>
+                    {% if progress.latest_activity %}
+                    <div class="mb-3">
+                        <small class="text-muted">Latest Activity</small>
+                        <p class="mb-0">{{ progress.latest_activity.title }}</p>
+                        <small class="text-muted">
+                            {{ progress.latest_activity.completion_time }}
+                        </small>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Estimated Time Card -->
+                <div class="progress-card">
+                    <h4><i class="fas fa-clock me-2"></i>Course Details</h4>
+                    <p><strong>Level:</strong> {{ course.level|title }}</p>
+                    <p><strong>Estimated Duration:</strong> {{ course.estimated_duration }} minutes</p>
+                    <p><strong>Total Topics:</strong> {{ progress.total_topics }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Action Bar with Module Navigation -->
+    <div class="action-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-success" role="progressbar"
+                             style="width: {{ progress.progress_percentage }}%"
+                             aria-valuenow="{{ progress.progress_percentage }}"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                        </div>
+                    </div>
+                    <small class="text-muted">{{ "%.1f"|format(progress.progress_percentage) }}% Complete</small>
+                </div>
+
+                <div class="col-md-4 text-center">
+                    <!-- Module Navigation -->
+                    <div class="module-navigation">
+                        {% set current_module = 0 %}
+                        {% for module in modules %}
+                            {% if loop.index0 == current_module %}
+                                <span class="current-module">
+                                    <i class="fas fa-book me-1"></i>
+                                    Module {{ loop.index }}: {{ module.title }}
+                                </span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-md-4 text-md-end">
+                    <!-- Navigation Buttons -->
+                    <div class="navigation-buttons">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-home me-1"></i> Dashboard
+                        </a>
+
+                        {% if progress.completed_topics < progress.total_topics %}
+                            <!-- Previous Module Button -->
+                            {% if current_module > 0 %}
+                                <button class="btn btn-outline-primary me-2" onclick="navigateToModule({{ current_module - 1 }})">
+                                    <i class="fas fa-chevron-left me-1"></i> Previous
+                                </button>
+                            {% endif %}
+
+
+
+                            <!-- Next Module Button -->
+                            {% if current_module < modules|length - 1 %}
+                                <button class="btn btn-primary" onclick="navigateToModule({{ current_module + 1 }})">
+                                    Next <i class="fas fa-chevron-right ms-1"></i>
+                                </button>
+                            {% else %}
+                                <button class="btn btn-primary" onclick="completeCourse()">
+                                    <i class="fas fa-trophy me-1"></i> Complete Course
+                                </button>
+                            {% endif %}
+                        {% else %}
+                            <button class="btn btn-success" disabled>
+                                <i class="fas fa-check-circle me-1"></i> Course Completed
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add smooth scrolling to topic links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Module Navigation Functions
+        let currentModuleIndex = 0;
+
+        function navigateToModule(moduleIndex) {
+            // Scroll to the specific module
+            const moduleElement = document.getElementById(`module${moduleIndex}`);
+            if (moduleElement) {
+                moduleElement.scrollIntoView({ behavior: 'smooth' });
+                currentModuleIndex = moduleIndex;
+                updateModuleNavigation();
+            }
+        }
+
+
+
+        function completeCourse() {
+            // Show course completion message
+            alert('Congratulations! You have completed the entire course!');
+            // Redirect to dashboard or course completion page
+            window.location.href = "{{ url_for('dashboard') }}";
+        }
+
+
+
+        function updateProgressBar() {
+            // Update the progress bar (you can implement this based on your progress tracking)
+            // This is a placeholder for progress update functionality
+        }
+
+        function updateModuleNavigation() {
+            // Update the current module display
+            const moduleDisplay = document.querySelector('.current-module');
+            if (moduleDisplay) {
+                moduleDisplay.innerHTML = `<i class="fas fa-book me-1"></i>Module ${currentModuleIndex + 1}`;
+            }
+        }
+
+        // Initialize module navigation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up module collapse event listeners
+            document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-bs-target');
+                    const moduleIndex = parseInt(targetId.replace('#module', ''));
+                    currentModuleIndex = moduleIndex;
+                    updateModuleNavigation();
+                });
+            });
+        });
+
+        // Continue Learning function
+        function continuelearning() {
+            console.log('Continue Learning clicked');
+            
+            // Make POST request to continue learning
+            fetch('/start_course/{{ course.id }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.text();
+                }
+            })
+            .then(data => {
+                if (data) {
+                    document.body.innerHTML = data;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error continuing learning. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
