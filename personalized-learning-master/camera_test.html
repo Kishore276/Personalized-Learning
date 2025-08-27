@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Test</title>
+</head>
+<body>
+    <h1>Camera Test</h1>
+    <video id="videoInput" width="320" height="240" autoplay muted style="border: 2px solid red;"></video>
+    <div id="status">Initializing...</div>
+    <button onclick="testCamera()">Test Camera</button>
+    
+    <script>
+        function testCamera() {
+            console.log('Testing camera...');
+            document.getElementById('status').innerText = 'Requesting camera...';
+            
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    console.log('Camera access granted');
+                    document.getElementById('status').innerText = 'Camera access granted!';
+                    
+                    const video = document.getElementById('videoInput');
+                    video.srcObject = stream;
+                    
+                    video.onloadedmetadata = () => {
+                        document.getElementById('status').innerText = `Camera ready: ${video.videoWidth}x${video.videoHeight}`;
+                    };
+                })
+                .catch(err => {
+                    console.error('Camera error:', err);
+                    document.getElementById('status').innerText = `Error: ${err.name} - ${err.message}`;
+                });
+        }
+        
+        // Auto-start on page load
+        window.onload = testCamera;
+    </script>
+</body>
+</html>

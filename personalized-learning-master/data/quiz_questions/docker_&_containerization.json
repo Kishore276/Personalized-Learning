@@ -1,0 +1,488 @@
+{
+  "course_id": 57,
+  "course_title": "Docker & Containerization",
+  "language": "docker",
+  "questions": [
+    {
+      "id": 1,
+      "level": "basic",
+      "question": "What is Docker?",
+      "options": ["A containerization platform", "A programming language", "A database", "A web server"],
+      "correct_answer": "A containerization platform",
+      "explanation": "Docker is a platform for developing, shipping, and running applications in containers."
+    },
+    {
+      "id": 2,
+      "level": "basic",
+      "question": "What is a Docker container?",
+      "options": ["A virtual machine", "A lightweight, portable executable package", "A programming framework", "A cloud service"],
+      "correct_answer": "A lightweight, portable executable package",
+      "explanation": "A Docker container is a lightweight, portable executable package that includes everything needed to run an application."
+    },
+    {
+      "id": 3,
+      "level": "basic",
+      "question": "Which file defines instructions for building a Docker image?",
+      "options": ["Dockerfile", "docker-compose.yml", "imagefile", "buildfile"],
+      "correct_answer": "Dockerfile",
+      "explanation": "Dockerfile contains instructions for building Docker images."
+    },
+    {
+      "id": 4,
+      "level": "basic",
+      "question": "Which command builds a Docker image?",
+      "options": ["docker build", "docker run", "docker image", "docker start"],
+      "correct_answer": "docker build",
+      "explanation": "docker build is used to build Docker images from a Dockerfile."
+    },
+    {
+      "id": 5,
+      "level": "basic",
+      "question": "Which command starts a container from an image?",
+      "options": ["docker run", "docker start", "docker build", "docker exec"],
+      "correct_answer": "docker run",
+      "explanation": "docker run creates and starts a container from an image."
+    },
+    {
+      "id": 6,
+      "level": "basic",
+      "question": "Which command lists running containers?",
+      "options": ["docker ps", "docker run", "docker list", "docker show"],
+      "correct_answer": "docker ps",
+      "explanation": "docker ps lists currently running containers."
+    },
+    {
+      "id": 7,
+      "level": "basic",
+      "question": "What is the difference between a Docker image and a container?",
+      "options": ["No difference", "Image is a template, container is a running instance", "Container is larger", "Image runs faster"],
+      "correct_answer": "Image is a template, container is a running instance",
+      "explanation": "A Docker image is a read-only template, while a container is a running instance of an image."
+    },
+    {
+      "id": 8,
+      "level": "basic",
+      "question": "Which command stops a running container?",
+      "options": ["docker stop", "docker end", "docker kill", "docker pause"],
+      "correct_answer": "docker stop",
+      "explanation": "docker stop gracefully stops a running container."
+    },
+    {
+      "id": 9,
+      "level": "basic",
+      "question": "Which command removes a Docker container?",
+      "options": ["docker rm", "docker remove", "docker delete", "docker rmi"],
+      "correct_answer": "docker rm",
+      "explanation": "docker rm removes one or more Docker containers."
+    },
+    {
+      "id": 10,
+      "level": "basic",
+      "question": "Which command removes a Docker image?",
+      "options": ["docker rmi", "docker rm", "docker delete", "docker remove"],
+      "correct_answer": "docker rmi",
+      "explanation": "docker rmi removes one or more Docker images."
+    },
+    {
+      "id": 11,
+      "level": "basic",
+      "question": "What does the FROM instruction do in a Dockerfile?",
+      "options": ["Sets the base image", "Copies files", "Runs commands", "Exposes ports"],
+      "correct_answer": "Sets the base image",
+      "explanation": "FROM instruction specifies the base image to use for building the Docker image."
+    },
+    {
+      "id": 12,
+      "level": "basic",
+      "question": "Which command shows container logs?",
+      "options": ["docker logs", "docker show", "docker info", "docker inspect"],
+      "correct_answer": "docker logs",
+      "explanation": "docker logs displays logs for a container."
+    },
+    {
+      "id": 13,
+      "level": "basic",
+      "question": "What does the RUN instruction do in a Dockerfile?",
+      "options": ["Starts the container", "Executes commands during image build", "Copies files", "Sets environment variables"],
+      "correct_answer": "Executes commands during image build",
+      "explanation": "RUN instruction executes commands in a new layer on top of the current image."
+    },
+    {
+      "id": 14,
+      "level": "basic",
+      "question": "Which command lists all Docker images?",
+      "options": ["docker images", "docker list", "docker show", "docker ps"],
+      "correct_answer": "docker images",
+      "explanation": "docker images lists all Docker images on the local system."
+    },
+    {
+      "id": 15,
+      "level": "basic",
+      "question": "What is the default port for Docker daemon?",
+      "options": ["2375", "2376", "8080", "80"],
+      "correct_answer": "2376",
+      "explanation": "Docker daemon runs on port 2376 by default when TLS is enabled."
+    },
+    {
+      "id": 16,
+      "level": "basic",
+      "question": "Which instruction sets the working directory in a Dockerfile?",
+      "options": ["WORKDIR", "DIR", "CD", "PATH"],
+      "correct_answer": "WORKDIR",
+      "explanation": "WORKDIR instruction sets the working directory for subsequent instructions."
+    },
+    {
+      "id": 17,
+      "level": "basic",
+      "question": "What does the COPY instruction do in a Dockerfile?",
+      "options": ["Copies files from host to image", "Copies between containers", "Copies images", "Copies networks"],
+      "correct_answer": "Copies files from host to image",
+      "explanation": "COPY instruction copies files or directories from the host into the Docker image."
+    },
+    {
+      "id": 18,
+      "level": "basic",
+      "question": "Which command executes a command inside a running container?",
+      "options": ["docker exec", "docker run", "docker start", "docker build"],
+      "correct_answer": "docker exec",
+      "explanation": "docker exec runs a command inside a running container."
+    },
+    {
+      "id": 19,
+      "level": "basic",
+      "question": "What does the EXPOSE instruction do in a Dockerfile?",
+      "options": ["Opens ports", "Documents which ports the app uses", "Starts services", "Creates networks"],
+      "correct_answer": "Documents which ports the app uses",
+      "explanation": "EXPOSE instruction documents which ports the application uses but doesn't actually publish them."
+    },
+    {
+      "id": 20,
+      "level": "basic",
+      "question": "Which flag runs a container in detached mode?",
+      "options": ["-d", "-detach", "-background", "-daemon"],
+      "correct_answer": "-d",
+      "explanation": "The -d flag runs a container in detached mode (in the background)."
+    },
+    {
+      "id": 21,
+      "level": "intermediate",
+      "question": "What is Docker Compose?",
+      "options": ["Image builder", "Multi-container application manager", "Container runtime", "Registry service"],
+      "correct_answer": "Multi-container application manager",
+      "explanation": "Docker Compose is a tool for defining and running multi-container Docker applications."
+    },
+    {
+      "id": 22,
+      "level": "intermediate",
+      "question": "Which file is used for Docker Compose configuration?",
+      "options": ["docker-compose.yml", "Dockerfile", "compose.json", "docker.yml"],
+      "correct_answer": "docker-compose.yml",
+      "explanation": "docker-compose.yml is the default configuration file for Docker Compose."
+    },
+    {
+      "id": 23,
+      "level": "intermediate",
+      "question": "What are Docker volumes used for?",
+      "options": ["Networking", "Persistent data storage", "Image building", "Container monitoring"],
+      "correct_answer": "Persistent data storage",
+      "explanation": "Docker volumes provide persistent data storage that survives container restarts and deletions."
+    },
+    {
+      "id": 24,
+      "level": "intermediate",
+      "question": "Which command creates a Docker volume?",
+      "options": ["docker volume create", "docker create volume", "docker make volume", "docker volume new"],
+      "correct_answer": "docker volume create",
+      "explanation": "docker volume create creates a new Docker volume."
+    },
+    {
+      "id": 25,
+      "level": "intermediate",
+      "question": "What is the difference between COPY and ADD in Dockerfile?",
+      "options": ["No difference", "ADD has additional features like URL and tar extraction", "COPY is faster", "ADD is deprecated"],
+      "correct_answer": "ADD has additional features like URL and tar extraction",
+      "explanation": "ADD can download files from URLs and automatically extract tar files, while COPY only copies local files."
+    },
+    {
+      "id": 26,
+      "level": "intermediate",
+      "question": "Which command starts services defined in docker-compose.yml?",
+      "options": ["docker-compose up", "docker-compose start", "docker-compose run", "docker-compose begin"],
+      "correct_answer": "docker-compose up",
+      "explanation": "docker-compose up creates and starts containers defined in docker-compose.yml."
+    },
+    {
+      "id": 27,
+      "level": "intermediate",
+      "question": "What is a Docker network?",
+      "options": ["Internet connection", "Communication channel between containers", "Image repository", "Container storage"],
+      "correct_answer": "Communication channel between containers",
+      "explanation": "Docker networks enable communication between containers and with the outside world."
+    },
+    {
+      "id": 28,
+      "level": "intermediate",
+      "question": "Which instruction sets environment variables in a Dockerfile?",
+      "options": ["ENV", "SET", "VAR", "EXPORT"],
+      "correct_answer": "ENV",
+      "explanation": "ENV instruction sets environment variables in the Docker image."
+    },
+    {
+      "id": 29,
+      "level": "intermediate",
+      "question": "What does the CMD instruction do in a Dockerfile?",
+      "options": ["Runs during build", "Sets default command for container", "Copies files", "Creates volumes"],
+      "correct_answer": "Sets default command for container",
+      "explanation": "CMD instruction sets the default command to run when the container starts."
+    },
+    {
+      "id": 30,
+      "level": "intermediate",
+      "question": "What is the difference between CMD and ENTRYPOINT?",
+      "options": ["No difference", "ENTRYPOINT is immutable, CMD can be overridden", "CMD is faster", "ENTRYPOINT is deprecated"],
+      "correct_answer": "ENTRYPOINT is immutable, CMD can be overridden",
+      "explanation": "ENTRYPOINT sets a fixed command that cannot be overridden, while CMD can be overridden at runtime."
+    },
+    {
+      "id": 31,
+      "level": "intermediate",
+      "question": "Which flag publishes container ports to host?",
+      "options": ["-p", "-port", "-publish", "-expose"],
+      "correct_answer": "-p",
+      "explanation": "The -p flag publishes container ports to the host system."
+    },
+    {
+      "id": 32,
+      "level": "intermediate",
+      "question": "What is a Docker registry?",
+      "options": ["Container runtime", "Image storage and distribution service", "Network manager", "Volume manager"],
+      "correct_answer": "Image storage and distribution service",
+      "explanation": "A Docker registry is a service for storing and distributing Docker images."
+    },
+    {
+      "id": 33,
+      "level": "intermediate",
+      "question": "Which command pulls an image from a registry?",
+      "options": ["docker pull", "docker get", "docker download", "docker fetch"],
+      "correct_answer": "docker pull",
+      "explanation": "docker pull downloads an image from a Docker registry."
+    },
+    {
+      "id": 34,
+      "level": "intermediate",
+      "question": "What is Docker Hub?",
+      "options": ["Docker's official registry", "Container orchestrator", "Development IDE", "Monitoring tool"],
+      "correct_answer": "Docker's official registry",
+      "explanation": "Docker Hub is Docker's official cloud-based registry service."
+    },
+    {
+      "id": 35,
+      "level": "intermediate",
+      "question": "Which command pushes an image to a registry?",
+      "options": ["docker push", "docker upload", "docker send", "docker publish"],
+      "correct_answer": "docker push",
+      "explanation": "docker push uploads an image to a Docker registry."
+    },
+    {
+      "id": 36,
+      "level": "intermediate",
+      "question": "What is the purpose of .dockerignore file?",
+      "options": ["Configure Docker daemon", "Exclude files from build context", "Set environment variables", "Define networks"],
+      "correct_answer": "Exclude files from build context",
+      "explanation": ".dockerignore file specifies which files to exclude when building a Docker image."
+    },
+    {
+      "id": 37,
+      "level": "intermediate",
+      "question": "Which command inspects container configuration?",
+      "options": ["docker inspect", "docker info", "docker show", "docker config"],
+      "correct_answer": "docker inspect",
+      "explanation": "docker inspect returns detailed information about containers, images, or other Docker objects."
+    },
+    {
+      "id": 38,
+      "level": "intermediate",
+      "question": "What is multi-stage builds in Docker?",
+      "options": ["Running multiple containers", "Using multiple FROM statements in Dockerfile", "Building multiple images", "Deploying to multiple environments"],
+      "correct_answer": "Using multiple FROM statements in Dockerfile",
+      "explanation": "Multi-stage builds use multiple FROM statements to create smaller, more efficient images."
+    },
+    {
+      "id": 39,
+      "level": "intermediate",
+      "question": "Which command shows resource usage of containers?",
+      "options": ["docker stats", "docker monitor", "docker usage", "docker resources"],
+      "correct_answer": "docker stats",
+      "explanation": "docker stats displays real-time resource usage statistics for containers."
+    },
+    {
+      "id": 40,
+      "level": "intermediate",
+      "question": "What is container orchestration?",
+      "options": ["Building images", "Managing containers at scale", "Storing data", "Network configuration"],
+      "correct_answer": "Managing containers at scale",
+      "explanation": "Container orchestration involves managing, scaling, and maintaining containerized applications."
+    },
+    {
+      "id": 41,
+      "level": "advanced",
+      "question": "What is Kubernetes?",
+      "options": ["Docker alternative", "Container orchestration platform", "Image registry", "Development framework"],
+      "correct_answer": "Container orchestration platform",
+      "explanation": "Kubernetes is an open-source container orchestration platform for automating deployment, scaling, and management."
+    },
+    {
+      "id": 42,
+      "level": "advanced",
+      "question": "What is Docker Swarm?",
+      "options": ["Image builder", "Docker's native clustering solution", "Registry service", "Monitoring tool"],
+      "correct_answer": "Docker's native clustering solution",
+      "explanation": "Docker Swarm is Docker's native clustering and orchestration solution."
+    },
+    {
+      "id": 43,
+      "level": "advanced",
+      "question": "Which command initializes a Docker Swarm?",
+      "options": ["docker swarm init", "docker swarm create", "docker swarm start", "docker swarm new"],
+      "correct_answer": "docker swarm init",
+      "explanation": "docker swarm init initializes a new Docker Swarm cluster."
+    },
+    {
+      "id": 44,
+      "level": "advanced",
+      "question": "What is a Docker service in Swarm mode?",
+      "options": ["Single container", "Scalable set of containers", "Network configuration", "Volume mount"],
+      "correct_answer": "Scalable set of containers",
+      "explanation": "A Docker service is a scalable set of containers that can be deployed across a Swarm cluster."
+    },
+    {
+      "id": 45,
+      "level": "advanced",
+      "question": "What is the purpose of health checks in Docker?",
+      "options": ["Monitor system resources", "Check container application health", "Validate images", "Test networks"],
+      "correct_answer": "Check container application health",
+      "explanation": "Health checks monitor the health of applications running inside containers."
+    },
+    {
+      "id": 46,
+      "level": "advanced",
+      "question": "Which instruction adds health check to a Dockerfile?",
+      "options": ["HEALTHCHECK", "HEALTH", "CHECK", "MONITOR"],
+      "correct_answer": "HEALTHCHECK",
+      "explanation": "HEALTHCHECK instruction defines how to test if the container is healthy."
+    },
+    {
+      "id": 47,
+      "level": "advanced",
+      "question": "What are Docker secrets used for?",
+      "options": ["Environment variables", "Secure storage of sensitive data", "Network encryption", "Image signing"],
+      "correct_answer": "Secure storage of sensitive data",
+      "explanation": "Docker secrets provide secure storage and management of sensitive data like passwords and certificates."
+    },
+    {
+      "id": 48,
+      "level": "advanced",
+      "question": "What is the difference between bridge and host networking?",
+      "options": ["No difference", "Bridge isolates containers, host shares host network", "Host is faster", "Bridge is deprecated"],
+      "correct_answer": "Bridge isolates containers, host shares host network",
+      "explanation": "Bridge network isolates containers, while host networking shares the host's network stack."
+    },
+    {
+      "id": 49,
+      "level": "advanced",
+      "question": "What is container image layering?",
+      "options": ["Stacking containers", "Building images in layers for efficiency", "Network segmentation", "Storage partitioning"],
+      "correct_answer": "Building images in layers for efficiency",
+      "explanation": "Docker images are built in layers, allowing for efficient storage and distribution through layer sharing."
+    },
+    {
+      "id": 50,
+      "level": "advanced",
+      "question": "What is the purpose of Docker Content Trust?",
+      "options": ["Performance optimization", "Image signing and verification", "Network security", "Access control"],
+      "correct_answer": "Image signing and verification",
+      "explanation": "Docker Content Trust provides cryptographic signatures for image integrity and authenticity."
+    },
+    {
+      "id": 51,
+      "level": "advanced",
+      "question": "What is a sidecar pattern in containerization?",
+      "options": ["Main container with helper containers", "Container replication", "Load balancing", "Data backup"],
+      "correct_answer": "Main container with helper containers",
+      "explanation": "Sidecar pattern involves deploying helper containers alongside main application containers."
+    },
+    {
+      "id": 52,
+      "level": "advanced",
+      "question": "What is the purpose of admission controllers in Kubernetes?",
+      "options": ["User authentication", "Validate and modify requests", "Load balancing", "Resource monitoring"],
+      "correct_answer": "Validate and modify requests",
+      "explanation": "Admission controllers validate and can modify requests to the Kubernetes API server."
+    },
+    {
+      "id": 53,
+      "level": "advanced",
+      "question": "What is a Kubernetes operator?",
+      "options": ["Human administrator", "Application-specific controller", "Load balancer", "Storage system"],
+      "correct_answer": "Application-specific controller",
+      "explanation": "A Kubernetes operator is an application-specific controller that extends Kubernetes functionality."
+    },
+    {
+      "id": 54,
+      "level": "advanced",
+      "question": "What is the difference between StatefulSet and Deployment in Kubernetes?",
+      "options": ["No difference", "StatefulSet maintains stable identities, Deployment doesn't", "Deployment is faster", "StatefulSet is deprecated"],
+      "correct_answer": "StatefulSet maintains stable identities, Deployment doesn't",
+      "explanation": "StatefulSet provides stable network identities and persistent storage, while Deployment manages stateless applications."
+    },
+    {
+      "id": 55,
+      "level": "advanced",
+      "question": "What is container runtime interface (CRI)?",
+      "options": ["User interface", "API for container runtimes", "Network protocol", "Storage interface"],
+      "correct_answer": "API for container runtimes",
+      "explanation": "CRI is an API that allows Kubernetes to use different container runtimes."
+    },
+    {
+      "id": 56,
+      "level": "advanced",
+      "question": "What is the purpose of resource quotas in Kubernetes?",
+      "options": ["Performance tuning", "Limit resource consumption per namespace", "Network throttling", "Image size limits"],
+      "correct_answer": "Limit resource consumption per namespace",
+      "explanation": "Resource quotas limit the total amount of compute resources that can be consumed by a namespace."
+    },
+    {
+      "id": 57,
+      "level": "advanced",
+      "question": "What is Helm in the Kubernetes ecosystem?",
+      "options": ["Container runtime", "Package manager for Kubernetes", "Monitoring tool", "Security scanner"],
+      "correct_answer": "Package manager for Kubernetes",
+      "explanation": "Helm is a package manager for Kubernetes that helps manage complex applications."
+    },
+    {
+      "id": 58,
+      "level": "advanced",
+      "question": "What is the purpose of init containers in Kubernetes?",
+      "options": ["Main application containers", "Run before main containers start", "Backup containers", "Monitoring containers"],
+      "correct_answer": "Run before main containers start",
+      "explanation": "Init containers run and complete before the main application containers start."
+    },
+    {
+      "id": 59,
+      "level": "advanced",
+      "question": "What is container escape?",
+      "options": ["Container shutdown", "Breaking out of container isolation", "Container migration", "Resource optimization"],
+      "correct_answer": "Breaking out of container isolation",
+      "explanation": "Container escape refers to breaking out of container isolation to access the host system."
+    },
+    {
+      "id": 60,
+      "level": "advanced",
+      "question": "What is the purpose of Pod Security Standards in Kubernetes?",
+      "options": ["Network security", "Define security policies for pods", "Image scanning", "Access control"],
+      "correct_answer": "Define security policies for pods",
+      "explanation": "Pod Security Standards define security policies that pods must adhere to for enhanced security."
+    }
+  ]
+}
+      

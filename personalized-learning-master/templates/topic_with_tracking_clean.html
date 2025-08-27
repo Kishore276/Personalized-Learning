@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topic.title }} - {{ course.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/ui-enhanced.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Enhanced Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('dashboard') }}">
+                <i class="fas fa-graduation-cap me-2"></i>Learning Platform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('profile') }}">
+                            <!-- Profile button removed -->
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <style>
+        /* Page-specific enhancements */
+        body { 
+            padding-top: 80px;
+            padding-bottom: 120px;
+        }
+        
+        /* Debug styles for exercise visibility */
+        .debug-info {
+            background: rgba(240, 240, 240, 0.9);
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: monospace;
+        }
+        
+        /* Exercise progression styles */
+        .exercise-section {
+            margin-bottom: 2rem;
+            opacity: 0.3;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+        
+        .exercise-section:first-child,
+        .exercise-section.enabled {
+            opacity: 1 !important;
+            pointer-events: all !important;
+            transform: translateY(0) !important;
+        }
+        
+        .show-solution {
+            display: none !important;
+        }
+        
+        .show-solution.active {
+            display: block !important;
+        }
+        
+        .score-display {
+            display: none;
+        }
+        
+        .score-display.show {
+            display: block !important;
+        }
+        
+        /* Quiz option styling */
+        .quiz-option {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            background: white;
+        }
+        
+        .quiz-option:hover {
+            border-color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.05);
+            transform: translateX(4px);
+        }
+        
+        .quiz-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .quiz-option.correct {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .quiz-option.incorrect {
+            border-color: var(--error-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        /* Button enhancements */
+        .start-exercise-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            transition: all var(--transition-normal);
+        }
+        
+        .start-exercise-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        /* Progress indicator */
+        .exercise-progress {
+            position: fixed;
+            top: 80px;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+        
+        /* Floating back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            display: none;
+            z-index: 1000;
+            transition: all var(--transition-fast);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+    </style>
+        
+        .clean-header {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .clean-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .clean-header .badge {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .content-area {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        /* Fixed Footer Navigation */
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .next-btn {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .next-btn:hover {
+            background: linear-gradient(135deg, #0056b3, #004085);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .next-btn:disabled,
+        .next-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .progress-footer {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .quiz-container {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .quiz-option {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-option:hover {
+            border-color: #007bff;
+            background: #f8f9ff;
+        }
+        
+        .quiz-option.selected {
+            border-color: #007bff;
+            background: #e3f2fd;
+        }
+        
+        .exercise-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        
+        .exercise-section:not(#exercise1) {
+            display: none;
+        }
+        
+        .score-display {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .total-score {
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .show-solution {
+            display: none;
+            margin-top: 15px;
+        }
+        
+        .solution {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f4ff;
+            border-radius: 5px;
+        }
+        
+        .quiz-option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .quiz-option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .submit-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        .submit-btn:hover {
+            background: #218838;
+        }
+        
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .btn.completed {
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Topic Header -->
+        <div class="topic-container">
+            <div class="clean-header">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h1>{{ topic.title }}</h1>
+                        <p class="text-muted mb-3">{{ course.title }}</p>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge">{{ topic.difficulty or 'Beginner' }}</span>
+                        <p class="text-muted small mb-0 mt-2">
+                            <i class="fas fa-clock"></i> {{ topic.estimated_time or 15 }} min
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic Content -->
+            <div class="content-area" id="topicContent">
+                {{ topic.content | safe }}
+            </div>
+
+            <!-- DEBUG INFO -->
+            <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; border: 1px solid #ccc;">
+                <strong>DEBUG INFO:</strong><br>
+                Course ID: {{ course.id if course else 'None' }}<br>
+                Topic Title: {{ topic.title if topic else 'None' }}<br>
+                Sub-exercises count: {{ sub_exercises|length if sub_exercises else 0 }}<br>
+                {% if sub_exercises %}
+                    {% for ex in sub_exercises[:3] %}
+                        Exercise {{ loop.index }}: {{ ex.title if ex.title else 'No title' }} (Type: {{ ex.exercise_type if ex.exercise_type else 'No type' }})<br>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Exercises Section -->
+            {% if sub_exercises %}
+            <div class="exercises-section">
+                {% for sub_exercise in sub_exercises %}
+                <div class="exercise-section" id="exercise{{ loop.index }}" data-correct-answer="{{ sub_exercise.questions[0].correct_answer if sub_exercise.questions else 0 }}">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-{{ 'brain' if sub_exercise.exercise_type == 'quiz' else 'code' }} me-2"></i>
+                                Exercise {{ loop.index }}: {{ sub_exercise.title }}
+                            </h5>
+                            {% if loop.first %}
+                            <button class="btn btn-success start-exercise-btn" onclick="startExercise({{ loop.index }})">
+                                <i class="fas fa-play me-2"></i>Start Exercise
+                            </button>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            {{ sub_exercise.content | safe }}
+
+                            {% if sub_exercise.exercise_type == 'quiz' and sub_exercise.questions %}
+                            {% for question in sub_exercise.questions %}
+                            <div class="question-container mt-3">
+                                <h6>Question {{ loop.index }}:</h6>
+                                <p><strong>{{ question.question }}</strong></p>
+                                
+                                <div class="options">
+                                    {% for option in question.options %}
+                                    <div class="quiz-option" id="{{ loop.parent.loop.index }}-{{ loop.index0 }}" onclick="selectOption('{{ loop.parent.loop.index }}-{{ loop.index0 }}', {{ loop.index0 }})">
+                                        <span class="me-2">{{ loop.index }}.</span>{{ option }}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                            <div class="mt-3">
+                                <button class="btn btn-success" onclick="submitSolution({{ loop.index }})">
+                                    <i class="fas fa-check me-2"></i>Submit Solution
+                                </button>
+                                <button class="btn btn-secondary show-solution" onclick="showSolution({{ loop.index }})">
+                                    <i class="fas fa-lightbulb me-2"></i>Show Solution
+                                </button>
+                            </div>
+                            
+                            <div class="solution mt-3" style="display: none;">
+                                <div class="alert alert-info">
+                                    <h6><i class="fas fa-lightbulb me-2"></i>Solution Explanation:</h6>
+                                    <p>{{ sub_exercise.questions[0].explanation if sub_exercise.questions else 'No explanation available.' }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                            <button class="btn btn-secondary show-solution" onclick="showSolution({{ loop.index }})" style="display: none;">
+                                <i class="fas fa-eye me-2"></i>Show Solution
+                            </button>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Fixed Footer Navigation -->
+    <div class="fixed-footer">
+        <div class="footer-nav">
+            <div class="progress-footer">
+                <span id="completion-status">
+                    <i class="fas fa-clock text-warning"></i> Complete the topic to continue
+                </span>
+            </div>
+            
+            <div class="d-flex align-items-center gap-3">
+                {% if prev_topic %}
+                <a href="/course/{{ course.id }}/topic/{{ prev_topic.id }}" 
+                   class="btn btn-outline-secondary">
+                    <i class="fas fa-chevron-left me-1"></i>Previous
+                </a>
+                {% endif %}
+
+                <!-- Complete Button -->
+                <button class="btn btn-success" onclick="markComplete()" id="completeBtn">
+                    <i class="fas fa-check me-1"></i>Mark Complete
+                </button>
+
+                {% if next_topic %}
+                <a href="/course/{{ course.id }}/topic/{{ next_topic.id }}"
+                   class="next-btn disabled"
+                   id="next-topic-btn">
+                    Next Topic<i class="fas fa-chevron-right ms-1"></i>
+                </a>
+                {% else %}
+                <a href="{{ url_for('start_course', course_id=course.id) }}"
+                   class="next-btn disabled"
+                   id="complete-course-btn">
+                    <i class="fas fa-graduation-cap me-1"></i>Complete Course
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/enhanced-exercises.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initially hide all exercises except the first one
+            document.querySelectorAll('.exercise-section').forEach((section, index) => {
+                if (index > 0) {
+                    section.style.display = 'none';
+                }
+            });
+
+            // Handle Start Exercise button clicks
+            document.querySelectorAll('.start-exercise').forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSection = this.closest('.exercise-section');
+                    const nextSection = currentSection.nextElementSibling;
+                    
+                    if (nextSection && nextSection.classList.contains('exercise-section')) {
+                        nextSection.style.display = 'block';
+                        // Hide the current start button
+                        this.style.display = 'none';
+                        // Show the start button in the next section if it exists
+                        const nextButton = nextSection.querySelector('.start-exercise');
+                        if (nextButton) {
+                            nextButton.style.display = 'inline-block';
+                        }
+                    }
+                });
+            });
+
+            // Track selected answers
+            let userAnswers = {};
+
+            // Handle option selection
+            window.selectOption = function(questionId, optionId) {
+                userAnswers[questionId] = optionId;
+                
+                // Update UI to show selected option
+                const questionContainer = document.querySelector(`[data-question="${questionId}"]`);
+                questionContainer.querySelectorAll('.quiz-option').forEach((option, index) => {
+                    option.classList.toggle('selected', index === optionId);
+                });
+            };
+
+            // Handle solution submission
+            window.submitSolution = function(exerciseId) {
+                const exercise = document.querySelector(`#exercise${exerciseId}`);
+                if (!exercise) return;
+                
+                const questions = exercise.querySelectorAll('.question-container');
+                let correct = 0;
+                let total = questions.length;
+
+                questions.forEach((question, index) => {
+                    const questionId = `${exerciseId}-${index}`;
+                    const correctAnswer = question.dataset.correct;
+                    const userAnswer = userAnswers[questionId];
+
+                    const scoreDisplay = question.querySelector('.score-display');
+                    if (userAnswer === parseInt(correctAnswer)) {
+                        correct++;
+                        scoreDisplay.innerHTML = '<i class="fas fa-check-circle text-success me-2"></i>Correct!';
+                        scoreDisplay.style.backgroundColor = '#d4edda';
+                        scoreDisplay.style.color = '#155724';
+                        scoreDisplay.style.border = '1px solid #c3e6cb';
+                    } else {
+                        scoreDisplay.innerHTML = '<i class="fas fa-times-circle text-danger me-2"></i>Incorrect';
+                        scoreDisplay.style.backgroundColor = '#f8d7da';
+                        scoreDisplay.style.color = '#721c24';
+                        scoreDisplay.style.border = '1px solid #f5c6cb';
+                    }
+                    scoreDisplay.style.display = 'block';
+                    scoreDisplay.style.padding = '10px';
+                    scoreDisplay.style.borderRadius = '5px';
+                    scoreDisplay.style.marginTop = '10px';
+                });
+
+                // Show total score with detailed breakdown
+                const totalScore = exercise.querySelector('.total-score');
+                if (totalScore) {
+                    const percentage = Math.round((correct/total)*100);
+                    const wrong = total - correct;
+                    
+                    totalScore.innerHTML = `
+                        <div style="background-color: #e9ecef; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+                            <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 10px;">
+                                <i class="fas fa-chart-bar me-2"></i>Exercise Results
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div style="color: #28a745; font-size: 1.1em;">
+                                        <i class="fas fa-check-circle"></i><br>
+                                        <strong>${correct}</strong><br>
+                                        <small>Correct</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div style="color: #dc3545; font-size: 1.1em;">
+                                        <i class="fas fa-times-circle"></i><br>
+                                        <strong>${wrong}</strong><br>
+                                        <small>Wrong</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div style="color: #007bff; font-size: 1.1em;">
+                                        <i class="fas fa-percentage"></i><br>
+                                        <strong>${percentage}%</strong><br>
+                                        <small>Score</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 15px; font-weight: bold; color: ${percentage >= 80 ? '#28a745' : percentage >= 60 ? '#ffc107' : '#dc3545'};">
+                                ${percentage >= 80 ? '🎉 Excellent!' : percentage >= 60 ? '👍 Good job!' : '📚 Keep practicing!'}
+                            </div>
+                        </div>
+                    `;
+                    totalScore.style.display = 'block';
+                }
+
+                // Show solution button and hide submit button
+                const solutionBtn = exercise.querySelector('.show-solution');
+                const submitBtn = exercise.querySelector('button[onclick*="submitSolution"]');
+                
+                if (solutionBtn) {
+                    solutionBtn.style.display = 'inline-block';
+                    solutionBtn.style.marginLeft = '10px';
+                }
+                
+                if (submitBtn) {
+                    submitBtn.style.display = 'none';
+                }
+            };
+
+            // Handle showing solutions
+            window.showSolution = function(exerciseId) {
+                const exercise = document.querySelector(`#exercise${exerciseId}`);
+                if (!exercise) return;
+                
+                const solutions = exercise.querySelectorAll('.solution');
+                const solutionBtn = exercise.querySelector('.show-solution');
+                
+                solutions.forEach(solution => {
+                    if (solution.style.display === 'none' || solution.style.display === '') {
+                        solution.style.display = 'block';
+                        solution.style.marginTop = '15px';
+                        solution.style.padding = '15px';
+                        solution.style.backgroundColor = '#e8f4ff';
+                        solution.style.borderRadius = '5px';
+                        solution.style.border = '1px solid #b8daff';
+                        if (solutionBtn) {
+                            solutionBtn.textContent = 'Hide Solution';
+                            solutionBtn.classList.remove('btn-secondary');
+                            solutionBtn.classList.add('btn-warning');
+                        }
+                    } else {
+                        solution.style.display = 'none';
+                        if (solutionBtn) {
+                            solutionBtn.textContent = 'Show Solution';
+                            solutionBtn.classList.remove('btn-warning');
+                            solutionBtn.classList.add('btn-secondary');
+                        }
+                    }
+                });
+            };
+        });
+    </script>
+    <script>
+        let selectedOptions = {};
+        
+        function selectOption(exerciseId, questionIndex, optionIndex, option) {
+            const optionsContainer = document.getElementById(`options-${exerciseId}-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const submitBtn = document.getElementById(`submit-${exerciseId}-${questionIndex}`);
+            
+            // Remove previous selection
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Mark selected option
+            options[optionIndex].classList.add('selected');
+            
+            // Store selection
+            selectedOptions[`${exerciseId}-${questionIndex}`] = {
+                option: option,
+                optionIndex: optionIndex
+            };
+            
+            // Enable submit button
+            submitBtn.disabled = false;
+        }
+        
+        function submitAnswer(exerciseId, questionIndex, correctAnswer) {
+            const selection = selectedOptions[`${exerciseId}-${questionIndex}`];
+            if (!selection) return;
+            
+            const optionsContainer = document.getElementById(`options-${exerciseId}-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.quiz-option');
+            const submitBtn = document.getElementById(`submit-${exerciseId}-${questionIndex}`);
+            const resultDiv = document.getElementById(`result-${exerciseId}-${questionIndex}`);
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitted';
+            
+            // Show results
+            options.forEach((option, index) => {
+                const optionText = option.textContent.trim();
+                
+                if (optionText === correctAnswer) {
+                    // Mark correct answer in green
+                    option.classList.add('correct');
+                } else if (index === selection.optionIndex) {
+                    // Mark selected wrong answer in red
+                    option.classList.add('incorrect');
+                }
+                
+                // Disable clicking
+                option.style.pointerEvents = 'none';
+            });
+            
+            // Show result message
+            const isCorrect = selection.option === correctAnswer;
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = isCorrect 
+                ? '<div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>Correct! Well done!</div>'
+                : `<div class="alert alert-danger"><i class="fas fa-times-circle me-2"></i>Incorrect. The correct answer is: <strong>${correctAnswer}</strong></div>`;
+        }
+        
+        function markComplete() {
+            const btn = document.getElementById('completeBtn');
+            const nextBtn = document.getElementById('next-topic-btn') || document.getElementById('complete-course-btn');
+            const statusSpan = document.getElementById('completion-status');
+            
+            if (btn.classList.contains('completed')) {
+                return; // Already completed
+            }
+            
+            // Mark as completed
+            btn.classList.add('completed');
+            btn.innerHTML = '<i class="fas fa-check-circle me-1"></i>Completed!';
+            btn.disabled = true;
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-outline-success');
+            
+            // Enable next button
+            if (nextBtn) {
+                nextBtn.classList.remove('disabled');
+                nextBtn.style.pointerEvents = 'auto';
+                nextBtn.style.opacity = '1';
+            }
+            
+            // Update status
+            if (statusSpan) {
+                statusSpan.innerHTML = '<i class="fas fa-check-circle text-success"></i> Topic Complete - Continue to next topic';
+            }
+            
+            // Show success message
+            showSuccessNotification('🎉 Topic completed! You can now proceed to the next topic.');
+        }
+        
+        // Simple success notification
+        function showSuccessNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'alert alert-success position-fixed';
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                border: none;
+                border-radius: 8px;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <span>${message}</span>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 4 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
