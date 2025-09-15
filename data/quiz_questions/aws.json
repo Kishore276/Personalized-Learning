@@ -1,0 +1,488 @@
+{
+  "course_id": 58,
+  "course_title": "AWS",
+  "language": "AWS",
+  "questions": [
+    {
+      "id": 1,
+      "level": "basic",
+      "question": "What does AWS stand for?",
+      "options": ["Amazon Web Services", "Advanced Web Solutions", "Automated Workflow System", "Azure Web Services"],
+      "correct_answer": "Amazon Web Services",
+      "explanation": "AWS stands for Amazon Web Services."
+    },
+    {
+      "id": 2,
+      "level": "basic",
+      "question": "Which AWS service is used for object storage?",
+      "options": ["EC2", "S3", "RDS", "Lambda"],
+      "correct_answer": "S3",
+      "explanation": "Amazon S3 is used for object storage."
+    },
+    {
+      "id": 3,
+      "level": "basic",
+      "question": "Which AWS service provides virtual servers?",
+      "options": ["EC2", "S3", "DynamoDB", "CloudFront"],
+      "correct_answer": "EC2",
+      "explanation": "Amazon EC2 provides virtual servers."
+    },
+    {
+      "id": 4,
+      "level": "basic",
+      "question": "Which AWS service is a NoSQL database?",
+      "options": ["RDS", "DynamoDB", "Redshift", "Aurora"],
+      "correct_answer": "DynamoDB",
+      "explanation": "Amazon DynamoDB is a NoSQL database."
+    },
+    {
+      "id": 5,
+      "level": "basic",
+      "question": "Which AWS service is used for content delivery?",
+      "options": ["CloudFront", "S3", "EC2", "Lambda"],
+      "correct_answer": "CloudFront",
+      "explanation": "Amazon CloudFront is a content delivery network (CDN)."
+    },
+    {
+      "id": 6,
+      "level": "basic",
+      "question": "Which AWS service is used for API management?",
+      "options": ["API Gateway", "Lambda", "EC2", "S3"],
+      "correct_answer": "API Gateway",
+      "explanation": "Amazon API Gateway is used for API management."
+    },
+    {
+      "id": 7,
+      "level": "basic",
+      "question": "Which AWS service is used for caching?",
+      "options": ["ElastiCache", "CloudFront", "S3", "EC2"],
+      "correct_answer": "ElastiCache",
+      "explanation": "Amazon ElastiCache is used for caching."
+    },
+    {
+      "id": 8,
+      "level": "basic",
+      "question": "Which AWS service is used for data warehousing?",
+      "options": ["Redshift", "RDS", "S3", "EC2"],
+      "correct_answer": "Redshift",
+      "explanation": "Amazon Redshift is used for data warehousing."
+    },
+    {
+      "id": 9,
+      "level": "basic",
+      "question": "Which AWS service is used for email sending?",
+      "options": ["SES", "SNS", "SQS", "EC2"],
+      "correct_answer": "SES",
+      "explanation": "Amazon SES is used for email sending."
+    },
+    {
+      "id": 10,
+      "level": "basic",
+      "question": "Which AWS service is used for monitoring application performance?",
+      "options": ["X-Ray", "CloudWatch", "S3", "EC2"],
+      "correct_answer": "X-Ray",
+      "explanation": "AWS X-Ray is used for monitoring application performance."
+    },
+    {
+      "id": 11,
+      "level": "basic",
+      "question": "What is the default storage class for Amazon S3?",
+      "options": ["S3 Standard", "S3 Intelligent-Tiering", "S3 One Zone-IA", "S3 Glacier"],
+      "correct_answer": "S3 Standard",
+      "explanation": "The default storage class for Amazon S3 is S3 Standard."
+    },
+    {
+      "id": 12,
+      "level": "basic",
+      "question": "Which AWS service allows you to run code without provisioning servers?",
+      "options": ["AWS Lambda", "Amazon EC2", "Amazon ECS", "AWS Fargate"],
+      "correct_answer": "AWS Lambda",
+      "explanation": "AWS Lambda allows you to run code without provisioning or managing servers."
+    },
+    {
+      "id": 13,
+      "level": "basic",
+      "question": "Which AWS service is used to create and manage IAM users?",
+      "options": ["AWS Identity and Access Management", "AWS Organizations", "AWS Single Sign-On", "AWS Directory Service"],
+      "correct_answer": "AWS Identity and Access Management",
+      "explanation": "AWS Identity and Access Management (IAM) is used to create and manage AWS IAM users and groups."
+    },
+    {
+      "id": 14,
+      "level": "basic",
+      "question": "Which AWS service provides scalable DNS?",
+      "options": ["Amazon Route 53", "AWS CloudFormation", "AWS Config", "Amazon CloudFront"],
+      "correct_answer": "Amazon Route 53",
+      "explanation": "Amazon Route 53 provides a scalable and highly available Domain Name System (DNS) web service."
+    },
+    {
+      "id": 15,
+      "level": "basic",
+      "question": "Which AWS service is used for managed Kubernetes?",
+      "options": ["Amazon EKS", "Amazon ECS", "AWS Lambda", "AWS Fargate"],
+      "correct_answer": "Amazon EKS",
+      "explanation": "Amazon EKS provides a managed Kubernetes service."
+    },
+    {
+      "id": 16,
+      "level": "basic",
+      "question": "Which AWS service is used for container orchestration?",
+      "options": ["Amazon ECS", "Amazon EKS", "AWS Lambda", "AWS Fargate"],
+      "correct_answer": "Amazon ECS",
+      "explanation": "Amazon ECS is used to run containerized applications on a cluster of Amazon EC2 instances."
+    },
+    {
+      "id": 17,
+      "level": "basic",
+      "question": "Which AWS service provides file storage?",
+      "options": ["Amazon EFS", "Amazon S3", "Amazon Glacier", "AWS Lambda"],
+      "correct_answer": "Amazon EFS",
+      "explanation": "Amazon EFS provides a scalable and secure file storage service for use with Amazon EC2 instances."
+    },
+    {
+      "id": 18,
+      "level": "basic",
+      "question": "Which AWS service creates virtual private clouds?",
+      "options": ["Amazon VPC", "AWS Direct Connect", "AWS VPN", "Amazon Route 53"],
+      "correct_answer": "Amazon VPC",
+      "explanation": "Amazon VPC is used to create and manage virtual private clouds (VPCs)."
+    },
+    {
+      "id": 19,
+      "level": "basic",
+      "question": "Which AWS service provides dedicated network connection?",
+      "options": ["AWS Direct Connect", "AWS VPN", "Amazon VPC", "Amazon Route 53"],
+      "correct_answer": "AWS Direct Connect",
+      "explanation": "AWS Direct Connect provides a dedicated network connection from your premises to AWS."
+    },
+    {
+      "id": 20,
+      "level": "basic",
+      "question": "Which AWS service analyzes streaming data in real-time?",
+      "options": ["Amazon Kinesis", "AWS Lambda", "Amazon S3", "Amazon Redshift"],
+      "correct_answer": "Amazon Kinesis",
+      "explanation": "Amazon Kinesis is used to analyze streaming data in real-time."
+    },
+    {
+      "id": 21,
+      "level": "intermediate",
+      "question": "Which AWS service is used for serverless computing?",
+      "options": ["Lambda", "EC2", "S3", "RDS"],
+      "correct_answer": "Lambda",
+      "explanation": "AWS Lambda is used for serverless computing."
+    },
+    {
+      "id": 22,
+      "level": "intermediate",
+      "question": "Which AWS service is used for relational databases?",
+      "options": ["RDS", "DynamoDB", "S3", "EC2"],
+      "correct_answer": "RDS",
+      "explanation": "Amazon RDS is used for relational databases."
+    },
+    {
+      "id": 23,
+      "level": "intermediate",
+      "question": "Which AWS service is used for monitoring resources?",
+      "options": ["CloudWatch", "CloudFront", "S3", "EC2"],
+      "correct_answer": "CloudWatch",
+      "explanation": "Amazon CloudWatch is used for monitoring AWS resources."
+    },
+    {
+      "id": 24,
+      "level": "intermediate",
+      "question": "Which AWS service is used for infrastructure as code?",
+      "options": ["CloudFormation", "CloudFront", "S3", "EC2"],
+      "correct_answer": "CloudFormation",
+      "explanation": "AWS CloudFormation is used for infrastructure as code."
+    },
+    {
+      "id": 25,
+      "level": "intermediate",
+      "question": "Which AWS service is used for message queuing?",
+      "options": ["SQS", "SNS", "Lambda", "EC2"],
+      "correct_answer": "SQS",
+      "explanation": "Amazon SQS is used for message queuing."
+    },
+    {
+      "id": 26,
+      "level": "intermediate",
+      "question": "Which AWS service is used for notifications?",
+      "options": ["SNS", "SQS", "Lambda", "EC2"],
+      "correct_answer": "SNS",
+      "explanation": "Amazon SNS is used for notifications."
+    },
+    {
+      "id": 27,
+      "level": "intermediate",
+      "question": "What is the maximum duration for a single AWS Lambda function?",
+      "options": ["5 minutes", "10 minutes", "15 minutes", "1 hour"],
+      "correct_answer": "15 minutes",
+      "explanation": "The maximum duration for a single AWS Lambda function invocation is 15 minutes."
+    },
+    {
+      "id": 28,
+      "level": "intermediate",
+      "question": "Which AWS service provides managed message broker for Apache ActiveMQ?",
+      "options": ["Amazon MQ", "Amazon SNS", "Amazon SQS", "AWS Lambda"],
+      "correct_answer": "Amazon MQ",
+      "explanation": "Amazon MQ provides a managed message broker service for Apache ActiveMQ."
+    },
+    {
+      "id": 29,
+      "level": "intermediate",
+      "question": "Which AWS service automates application deployment to EC2?",
+      "options": ["AWS CodeDeploy", "AWS CodePipeline", "AWS CloudFormation", "AWS Elastic Beanstalk"],
+      "correct_answer": "AWS CodeDeploy",
+      "explanation": "AWS CodeDeploy is used to automate the deployment of applications to Amazon EC2 instances."
+    },
+    {
+      "id": 30,
+      "level": "intermediate",
+      "question": "Which AWS service provides serverless compute for containers?",
+      "options": ["AWS Fargate", "Amazon EC2", "Amazon ECS", "AWS Lambda"],
+      "correct_answer": "AWS Fargate",
+      "explanation": "AWS Fargate provides a serverless compute engine for containers."
+    },
+    {
+      "id": 31,
+      "level": "intermediate",
+      "question": "Which AWS service provides managed search powered by Elasticsearch?",
+      "options": ["Amazon Elasticsearch Service", "Amazon CloudSearch", "Amazon Kinesis", "AWS Lambda"],
+      "correct_answer": "Amazon Elasticsearch Service",
+      "explanation": "Amazon Elasticsearch Service provides a managed search service powered by Elasticsearch."
+    },
+    {
+      "id": 32,
+      "level": "intermediate",
+      "question": "Which AWS service provides managed Hadoop framework?",
+      "options": ["Amazon EMR", "Amazon EC2", "Amazon RDS", "AWS Lambda"],
+      "correct_answer": "Amazon EMR",
+      "explanation": "Amazon EMR provides a managed Hadoop framework that makes it easy to process large data sets."
+    },
+    {
+      "id": 33,
+      "level": "intermediate",
+      "question": "Which AWS service establishes secure VPN connection?",
+      "options": ["AWS VPN", "AWS Direct Connect", "Amazon VPC", "Amazon Route 53"],
+      "correct_answer": "AWS VPN",
+      "explanation": "AWS VPN is used to establish a secure and private connection between your network and an AWS VPC."
+    },
+    {
+      "id": 34,
+      "level": "intermediate",
+      "question": "Which AWS service automates CI/CD pipelines?",
+      "options": ["AWS CodePipeline", "AWS CodeBuild", "AWS CodeDeploy", "AWS CloudFormation"],
+      "correct_answer": "AWS CodePipeline",
+      "explanation": "AWS CodePipeline is used to automate the building, testing, and deployment of applications."
+    },
+    {
+      "id": 35,
+      "level": "intermediate",
+      "question": "Which AWS service provides auto scaling for EC2 instances?",
+      "options": ["AWS Auto Scaling", "Elastic Load Balancing", "CloudWatch", "CloudFormation"],
+      "correct_answer": "AWS Auto Scaling",
+      "explanation": "AWS Auto Scaling monitors applications and automatically adjusts capacity to maintain performance."
+    },
+    {
+      "id": 36,
+      "level": "intermediate",
+      "question": "Which AWS service distributes incoming traffic across targets?",
+      "options": ["Elastic Load Balancing", "AWS Auto Scaling", "CloudFront", "Route 53"],
+      "correct_answer": "Elastic Load Balancing",
+      "explanation": "Elastic Load Balancing automatically distributes incoming application traffic across multiple targets."
+    },
+    {
+      "id": 37,
+      "level": "intermediate",
+      "question": "Which AWS service provides managed relational database for MySQL?",
+      "options": ["Amazon Aurora", "Amazon RDS", "DynamoDB", "Redshift"],
+      "correct_answer": "Amazon RDS",
+      "explanation": "Amazon RDS provides managed relational database services including MySQL."
+    },
+    {
+      "id": 38,
+      "level": "intermediate",
+      "question": "Which AWS service provides in-memory caching?",
+      "options": ["ElastiCache", "CloudFront", "S3", "DynamoDB"],
+      "correct_answer": "ElastiCache",
+      "explanation": "Amazon ElastiCache provides in-memory caching services for Redis and Memcached."
+    },
+    {
+      "id": 39,
+      "level": "intermediate",
+      "question": "Which AWS service provides managed blockchain networks?",
+      "options": ["Amazon Managed Blockchain", "AWS Lambda", "EC2", "S3"],
+      "correct_answer": "Amazon Managed Blockchain",
+      "explanation": "Amazon Managed Blockchain is a fully managed service for creating and managing blockchain networks."
+    },
+    {
+      "id": 40,
+      "level": "intermediate",
+      "question": "Which AWS service provides machine learning model training?",
+      "options": ["Amazon SageMaker", "AWS Lambda", "EC2", "S3"],
+      "correct_answer": "Amazon SageMaker",
+      "explanation": "Amazon SageMaker provides a fully managed platform for building, training, and deploying machine learning models."
+    },
+    {
+      "id": 41,
+      "level": "advanced",
+      "question": "Which AWS service provides private connectivity between VPCs?",
+      "options": ["VPC Peering", "AWS Transit Gateway", "AWS Direct Connect", "AWS VPN"],
+      "correct_answer": "VPC Peering",
+      "explanation": "VPC Peering allows you to connect VPCs privately using AWS's network infrastructure."
+    },
+    {
+      "id": 42,
+      "level": "advanced",
+      "question": "Which AWS service provides centralized connectivity for multiple VPCs?",
+      "options": ["AWS Transit Gateway", "VPC Peering", "AWS Direct Connect", "AWS VPN"],
+      "correct_answer": "AWS Transit Gateway",
+      "explanation": "AWS Transit Gateway connects VPCs and on-premises networks through a central hub."
+    },
+    {
+      "id": 43,
+      "level": "advanced",
+      "question": "Which AWS service provides distributed denial of service protection?",
+      "options": ["AWS Shield", "AWS WAF", "CloudFront", "Route 53"],
+      "correct_answer": "AWS Shield",
+      "explanation": "AWS Shield is a managed DDoS protection service that safeguards applications running on AWS."
+    },
+    {
+      "id": 44,
+      "level": "advanced",
+      "question": "Which AWS service provides web application firewall?",
+      "options": ["AWS WAF", "AWS Shield", "CloudFront", "Security Groups"],
+      "correct_answer": "AWS WAF",
+      "explanation": "AWS WAF is a web application firewall that helps protect web applications from common exploits."
+    },
+    {
+      "id": 45,
+      "level": "advanced",
+      "question": "Which AWS service provides compliance and governance automation?",
+      "options": ["AWS Config", "CloudWatch", "CloudTrail", "AWS Inspector"],
+      "correct_answer": "AWS Config",
+      "explanation": "AWS Config provides a detailed view of AWS resources configuration and compliance monitoring."
+    },
+    {
+      "id": 46,
+      "level": "advanced",
+      "question": "Which AWS service provides API activity logging?",
+      "options": ["AWS CloudTrail", "CloudWatch", "AWS Config", "X-Ray"],
+      "correct_answer": "AWS CloudTrail",
+      "explanation": "AWS CloudTrail provides governance, compliance, and operational auditing of AWS account activity."
+    },
+    {
+      "id": 47,
+      "level": "advanced",
+      "question": "Which AWS service provides secrets management?",
+      "options": ["AWS Secrets Manager", "AWS Systems Manager", "AWS KMS", "IAM"],
+      "correct_answer": "AWS Secrets Manager",
+      "explanation": "AWS Secrets Manager helps protect secrets needed to access applications, services, and IT resources."
+    },
+    {
+      "id": 48,
+      "level": "advanced",
+      "question": "Which AWS service provides encryption key management?",
+      "options": ["AWS KMS", "AWS Secrets Manager", "AWS Systems Manager", "IAM"],
+      "correct_answer": "AWS KMS",
+      "explanation": "AWS KMS makes it easy to create and manage cryptographic keys and control their use."
+    },
+    {
+      "id": 49,
+      "level": "advanced",
+      "question": "Which AWS service provides hybrid cloud storage?",
+      "options": ["AWS Storage Gateway", "S3", "EFS", "EBS"],
+      "correct_answer": "AWS Storage Gateway",
+      "explanation": "AWS Storage Gateway connects on-premises software appliances with cloud-based storage."
+    },
+    {
+      "id": 50,
+      "level": "advanced",
+      "question": "Which AWS service provides disaster recovery orchestration?",
+      "options": ["AWS CloudEndure", "AWS Backup", "S3", "EBS Snapshots"],
+      "correct_answer": "AWS CloudEndure",
+      "explanation": "AWS CloudEndure provides disaster recovery and live migration of applications."
+    },
+    {
+      "id": 51,
+      "level": "advanced",
+      "question": "Which AWS service provides centralized backup across AWS services?",
+      "options": ["AWS Backup", "S3", "EBS Snapshots", "CloudEndure"],
+      "correct_answer": "AWS Backup",
+      "explanation": "AWS Backup provides centralized backup across AWS services with compliance reporting."
+    },
+    {
+      "id": 52,
+      "level": "advanced",
+      "question": "Which AWS service provides security vulnerability assessment?",
+      "options": ["Amazon Inspector", "AWS Config", "CloudTrail", "GuardDuty"],
+      "correct_answer": "Amazon Inspector",
+      "explanation": "Amazon Inspector is an automated security assessment service for applications."
+    },
+    {
+      "id": 53,
+      "level": "advanced",
+      "question": "Which AWS service provides threat detection using machine learning?",
+      "options": ["Amazon GuardDuty", "Amazon Inspector", "AWS Config", "CloudTrail"],
+      "correct_answer": "Amazon GuardDuty",
+      "explanation": "Amazon GuardDuty is a threat detection service that uses machine learning to identify malicious activity."
+    },
+    {
+      "id": 54,
+      "level": "advanced",
+      "question": "Which AWS service provides data loss prevention?",
+      "options": ["Amazon Macie", "GuardDuty", "Inspector", "Config"],
+      "correct_answer": "Amazon Macie",
+      "explanation": "Amazon Macie uses machine learning to discover, classify, and protect sensitive data."
+    },
+    {
+      "id": 55,
+      "level": "advanced",
+      "question": "Which AWS service provides quantum computing?",
+      "options": ["Amazon Braket", "SageMaker", "Lambda", "EC2"],
+      "correct_answer": "Amazon Braket",
+      "explanation": "Amazon Braket is a fully managed quantum computing service."
+    },
+    {
+      "id": 56,
+      "level": "advanced",
+      "question": "Which AWS service provides ground station connectivity?",
+      "options": ["AWS Ground Station", "Direct Connect", "VPN", "CloudFront"],
+      "correct_answer": "AWS Ground Station",
+      "explanation": "AWS Ground Station is a fully managed service for controlling satellite communications."
+    },
+    {
+      "id": 57,
+      "level": "advanced",
+      "question": "Which AWS service provides edge computing for 5G networks?",
+      "options": ["AWS Wavelength", "CloudFront", "EC2", "Lambda@Edge"],
+      "correct_answer": "AWS Wavelength",
+      "explanation": "AWS Wavelength brings AWS services to the edge of 5G networks for ultra-low latency applications."
+    },
+    {
+      "id": 58,
+      "level": "advanced",
+      "question": "Which AWS service provides multi-region data replication?",
+      "options": ["AWS Global Tables", "DynamoDB", "RDS Cross-Region", "S3 Cross-Region Replication"],
+      "correct_answer": "AWS Global Tables",
+      "explanation": "AWS Global Tables provide multi-region, multi-master database for DynamoDB."
+    },
+    {
+      "id": 59,
+      "level": "advanced",
+      "question": "Which AWS service provides application performance monitoring?",
+      "options": ["AWS X-Ray", "CloudWatch", "Config", "Inspector"],
+      "correct_answer": "AWS X-Ray",
+      "explanation": "AWS X-Ray provides distributed tracing for debugging and analyzing microservices applications."
+    },
+    {
+      "id": 60,
+      "level": "advanced",
+      "question": "Which AWS service provides cost optimization recommendations?",
+      "options": ["AWS Trusted Advisor", "Cost Explorer", "Budgets", "CloudWatch"],
+      "correct_answer": "AWS Trusted Advisor",
+      "explanation": "AWS Trusted Advisor provides real-time guidance to help provision resources following AWS best practices."
+    }
+  ]
+}
+

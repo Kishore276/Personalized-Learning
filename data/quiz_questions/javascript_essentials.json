@@ -1,0 +1,414 @@
+{
+  "course_id": 2,
+  "course_title": "JavaScript Essentials",
+  "language": "javascript",
+  "questions": [
+    {"id": 1, "level": "basic", "question": "Which keyword is used to declare a variable in JavaScript?", "options": ["var", "let", "const", "All of the above"], "correct_answer": "All of the above", "explanation": "You can declare variables using var, let, or const in JavaScript."},
+    {"id": 2, "level": "basic", "question": "What is the output of console.log(typeof 42)?", "options": ["number", "string", "object", "undefined"], "correct_answer": "number", "explanation": "typeof 42 returns 'number'."},
+    {"id": 3, "level": "basic", "question": "Which symbol is used for single-line comments in JavaScript?", "options": ["//", "#", "--", "/*"], "correct_answer": "//", "explanation": "Single-line comments use // in JavaScript."},
+    {"id": 4, "level": "basic", "question": "Which function displays output in the browser console?", "options": ["print()", "console.log()", "alert()", "show()"], "correct_answer": "console.log()", "explanation": "console.log() outputs to the browser console."},
+    {"id": 5, "level": "basic", "question": "Which operator is used for strict equality in JavaScript?", "options": ["==", "===", "!=", "!=="], "correct_answer": "===", "explanation": "=== checks both value and type for equality."},
+    {"id": 6, "level": "intermediate", "question": "How do you define a function in JavaScript?", "options": ["function myFunc() {}", "def myFunc() {}", "func myFunc() {}", "function:myFunc() {}"], "correct_answer": "function myFunc() {}", "explanation": "Functions are defined using the function keyword."},
+    {"id": 7, "level": "intermediate", "question": "Which array method adds an element to the end of an array?", "options": ["push()", "pop()", "shift()", "unshift()"], "correct_answer": "push()", "explanation": "push() adds an element to the end of an array."},
+    {"id": 8, "level": "intermediate", "question": "What is the result of [1,2,3].length?", "options": ["2", "3", "4", "undefined"], "correct_answer": "3", "explanation": "The length property returns the number of elements in an array."},
+    {"id": 9, "level": "intermediate", "question": "Which object is used for date and time in JavaScript?", "options": ["Date", "Time", "Calendar", "Moment"], "correct_answer": "Date", "explanation": "The Date object is used for date and time operations."},
+    {"id": 10, "level": "intermediate", "question": "How do you handle errors in JavaScript?", "options": ["try-catch", "catch-try", "error handling", "exception"], "correct_answer": "try-catch", "explanation": "try-catch blocks are used for error handling."},
+    {"id": 11, "level": "advanced", "question": "What is a JavaScript closure?", "options": ["A function inside another function", "A variable outside a function", "A loop", "A class"], "correct_answer": "A function inside another function", "explanation": "A closure is a function that has access to its outer function's scope."},
+    {"id": 12, "level": "advanced", "question": "Which ES6 feature allows you to write asynchronous code?", "options": ["Promises", "Classes", "Modules", "Generators"], "correct_answer": "Promises", "explanation": "Promises are used for asynchronous operations in ES6."},
+    {"id": 13, "level": "advanced", "question": "Which method is used to fetch data from an API in JavaScript?", "options": ["fetch()", "get()", "request()", "call()"], "correct_answer": "fetch()", "explanation": "fetch() is used to make HTTP requests in JavaScript."},
+    {"id": 14, "level": "advanced", "question": "What is the purpose of the 'this' keyword in JavaScript?", "options": ["Refers to the current object", "Refers to a variable", "Refers to a function", "Refers to a class"], "correct_answer": "Refers to the current object", "explanation": "'this' refers to the current object context."},
+    {"id": 15, "level": "advanced", "question": "Which JavaScript framework is used for building user interfaces?", "options": ["React", "Node.js", "Express", "MongoDB"], "correct_answer": "React", "explanation": "React is a popular JavaScript library for building UIs."},
+    {
+      "id": 12,
+      "level": "basic",
+      "question": "How do you create an array in JavaScript?",
+      "options": ["var arr = []", "var arr = {}", "var arr = ()", "var arr = new String()"],
+      "correct_answer": "var arr = []",
+      "explanation": "Arrays are created using square brackets [] in JavaScript."
+    },
+    {
+      "id": 13,
+      "level": "basic",
+      "question": "Which method converts a string to lowercase?",
+      "options": ["toLowerCase()", "lower()", "downCase()", "smallCase()"],
+      "correct_answer": "toLowerCase()",
+      "explanation": "The toLowerCase() method converts a string to lowercase letters."
+    },
+    {
+      "id": 14,
+      "level": "basic",
+      "question": "What is the correct way to write a JavaScript if statement?",
+      "options": ["if (condition) {}", "if condition {}", "if (condition) then {}", "if condition then {}"],
+      "correct_answer": "if (condition) {}",
+      "explanation": "JavaScript if statements use parentheses around the condition."
+    },
+    {
+      "id": 15,
+      "level": "basic",
+      "question": "Which operator is used for assignment in JavaScript?",
+      "options": ["=", "==", "===", ":="],
+      "correct_answer": "=",
+      "explanation": "The = operator is used for assignment in JavaScript."
+    },
+    {
+      "id": 16,
+      "level": "basic",
+      "question": "How do you write a for loop in JavaScript?",
+      "options": ["for (i = 0; i < 5; i++)", "for i = 0 to 5", "for (i in 5)", "repeat (i = 0; i < 5)"],
+      "correct_answer": "for (i = 0; i < 5; i++)",
+      "explanation": "JavaScript for loops use the syntax: for (initialization; condition; increment)."
+    },
+    {
+      "id": 17,
+      "level": "basic",
+      "question": "What does 'null' represent in JavaScript?",
+      "options": ["Empty string", "Zero value", "No value intentionally", "Undefined variable"],
+      "correct_answer": "No value intentionally",
+      "explanation": "null represents an intentional absence of any object value."
+    },
+    {
+      "id": 18,
+      "level": "basic",
+      "question": "Which method adds an element to the beginning of an array?",
+      "options": ["unshift()", "push()", "shift()", "pop()"],
+      "correct_answer": "unshift()",
+      "explanation": "unshift() adds one or more elements to the beginning of an array."
+    },
+    {
+      "id": 19,
+      "level": "basic",
+      "question": "How do you access the first element of an array named 'arr'?",
+      "options": ["arr[0]", "arr[1]", "arr.first()", "arr.get(0)"],
+      "correct_answer": "arr[0]",
+      "explanation": "Array indices start at 0, so the first element is accessed with arr[0]."
+    },
+    {
+      "id": 20,
+      "level": "basic",
+      "question": "What is the result of 5 + '3' in JavaScript?",
+      "options": ["8", "53", "Error", "undefined"],
+      "correct_answer": "53",
+      "explanation": "JavaScript performs string concatenation when one operand is a string, resulting in '53'."
+    },
+    {
+      "id": 21,
+      "level": "intermediate",
+      "question": "What is the difference between let and var?",
+      "options": ["let has block scope, var has function scope", "No difference", "let is faster", "var is deprecated"],
+      "correct_answer": "let has block scope, var has function scope",
+      "explanation": "let has block scope while var has function scope, making let safer to use."
+    },
+    {
+      "id": 22,
+      "level": "intermediate",
+      "question": "Which method removes the last element from an array?",
+      "options": ["pop()", "push()", "shift()", "splice()"],
+      "correct_answer": "pop()",
+      "explanation": "The pop() method removes and returns the last element of an array."
+    },
+    {
+      "id": 23,
+      "level": "intermediate",
+      "question": "What does the map() method do?",
+      "options": ["Creates a new array with transformed elements", "Modifies the original array", "Finds an element", "Sorts the array"],
+      "correct_answer": "Creates a new array with transformed elements",
+      "explanation": "map() creates a new array by calling a function on every element of the original array."
+    },
+    {
+      "id": 24,
+      "level": "intermediate",
+      "question": "How do you check if a variable is an array?",
+      "options": ["Array.isArray()", "typeof array", "array instanceof Array", "Both A and C"],
+      "correct_answer": "Both A and C",
+      "explanation": "Both Array.isArray() and instanceof Array can be used to check if a variable is an array."
+    },
+    {
+      "id": 25,
+      "level": "intermediate",
+      "question": "What is the purpose of the filter() method?",
+      "options": ["Creates array with elements that pass a test", "Removes all elements", "Sorts elements", "Counts elements"],
+      "correct_answer": "Creates array with elements that pass a test",
+      "explanation": "filter() creates a new array with elements that pass the test in the provided function."
+    },
+    {
+      "id": 26,
+      "level": "intermediate",
+      "question": "What does JSON.parse() do?",
+      "options": ["Converts JSON string to JavaScript object", "Converts object to JSON", "Validates JSON", "Creates JSON"],
+      "correct_answer": "Converts JSON string to JavaScript object",
+      "explanation": "JSON.parse() parses a JSON string and returns the corresponding JavaScript object."
+    },
+    {
+      "id": 27,
+      "level": "intermediate",
+      "question": "Which method is used to join array elements into a string?",
+      "options": ["join()", "concat()", "merge()", "combine()"],
+      "correct_answer": "join()",
+      "explanation": "The join() method joins all elements of an array into a string."
+    },
+    {
+      "id": 28,
+      "level": "intermediate",
+      "question": "What is event delegation in JavaScript?",
+      "options": ["Attaching event to parent element", "Creating multiple events", "Removing events", "Event timing"],
+      "correct_answer": "Attaching event to parent element",
+      "explanation": "Event delegation involves attaching an event listener to a parent element to handle events on child elements."
+    },
+    {
+      "id": 29,
+      "level": "intermediate",
+      "question": "What does the reduce() method do?",
+      "options": ["Reduces array to single value", "Removes elements", "Shrinks array size", "Filters elements"],
+      "correct_answer": "Reduces array to single value",
+      "explanation": "reduce() executes a reducer function on each element, resulting in a single output value."
+    },
+    {
+      "id": 30,
+      "level": "intermediate",
+      "question": "How do you convert a string to a number in JavaScript?",
+      "options": ["Number()", "parseInt()", "parseFloat()", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Number(), parseInt(), and parseFloat() can all convert strings to numbers."
+    },
+    {
+      "id": 31,
+      "level": "intermediate",
+      "question": "What is the difference between undefined and null?",
+      "options": ["undefined means not assigned, null means intentionally empty", "No difference", "undefined is an error", "null is undefined"],
+      "correct_answer": "undefined means not assigned, null means intentionally empty",
+      "explanation": "undefined means a variable has been declared but not assigned, null means intentionally no value."
+    },
+    {
+      "id": 32,
+      "level": "intermediate",
+      "question": "What does the spread operator (...) do?",
+      "options": ["Expands iterables into individual elements", "Creates arrays", "Combines objects", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "The spread operator can expand arrays, combine objects, and spread iterables."
+    },
+    {
+      "id": 33,
+      "level": "intermediate",
+      "question": "How do you create an object in JavaScript?",
+      "options": ["var obj = {}", "var obj = new Object()", "Both A and B", "var obj = []"],
+      "correct_answer": "Both A and B",
+      "explanation": "Objects can be created using object literal {} or the Object constructor."
+    },
+    {
+      "id": 34,
+      "level": "intermediate",
+      "question": "What is destructuring in JavaScript?",
+      "options": ["Extracting values from arrays/objects", "Destroying variables", "Creating variables", "Combining arrays"],
+      "correct_answer": "Extracting values from arrays/objects",
+      "explanation": "Destructuring allows unpacking values from arrays or properties from objects into variables."
+    },
+    {
+      "id": 35,
+      "level": "intermediate",
+      "question": "Which method finds the first element that matches a condition?",
+      "options": ["find()", "search()", "locate()", "match()"],
+      "correct_answer": "find()",
+      "explanation": "The find() method returns the first element that satisfies the testing function."
+    },
+    {
+      "id": 36,
+      "level": "intermediate",
+      "question": "What does setTimeout() do?",
+      "options": ["Executes code after specified delay", "Sets current time", "Times function execution", "Creates timer"],
+      "correct_answer": "Executes code after specified delay",
+      "explanation": "setTimeout() executes a function after a specified number of milliseconds."
+    },
+    {
+      "id": 37,
+      "level": "intermediate",
+      "question": "How do you check if an object has a property?",
+      "options": ["hasOwnProperty()", "in operator", "Object.hasOwn()", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "hasOwnProperty(), 'in' operator, and Object.hasOwn() can check for object properties."
+    },
+    {
+      "id": 38,
+      "level": "intermediate",
+      "question": "What is the difference between == and ===?",
+      "options": ["== allows type coercion, === doesn't", "=== is faster", "No difference", "== is deprecated"],
+      "correct_answer": "== allows type coercion, === doesn't",
+      "explanation": "== performs type conversion before comparison, while === checks both value and type."
+    },
+    {
+      "id": 39,
+      "level": "intermediate",
+      "question": "What does Object.keys() return?",
+      "options": ["Array of object property names", "Object values", "Object entries", "Object length"],
+      "correct_answer": "Array of object property names",
+      "explanation": "Object.keys() returns an array of an object's own enumerable property names."
+    },
+    {
+      "id": 40,
+      "level": "intermediate",
+      "question": "How do you add a property to an object?",
+      "options": ["obj.prop = value", "obj['prop'] = value", "Both A and B", "obj.add('prop', value)"],
+      "correct_answer": "Both A and B",
+      "explanation": "Properties can be added using dot notation or bracket notation."
+    },
+    {
+      "id": 41,
+      "level": "advanced",
+      "question": "What is a JavaScript closure?",
+      "options": ["A function with access to outer scope", "A closed function", "A private variable", "A loop structure"],
+      "correct_answer": "A function with access to outer scope",
+      "explanation": "A closure gives you access to an outer function's scope from an inner function."
+    },
+    {
+      "id": 42,
+      "level": "advanced",
+      "question": "What are Promises used for?",
+      "options": ["Handling asynchronous operations", "Creating variables", "Loops", "Functions"],
+      "correct_answer": "Handling asynchronous operations",
+      "explanation": "Promises are used to handle asynchronous operations and avoid callback hell."
+    },
+    {
+      "id": 43,
+      "level": "advanced",
+      "question": "What does async/await do?",
+      "options": ["Makes asynchronous code look synchronous", "Creates threads", "Speeds up code", "Handles errors"],
+      "correct_answer": "Makes asynchronous code look synchronous",
+      "explanation": "async/await syntax makes asynchronous code easier to read and write."
+    },
+    {
+      "id": 44,
+      "level": "advanced",
+      "question": "What is the difference between call() and apply()?",
+      "options": ["call takes arguments separately, apply takes array", "No difference", "apply is faster", "call is deprecated"],
+      "correct_answer": "call takes arguments separately, apply takes array",
+      "explanation": "call() takes arguments separately while apply() takes an array of arguments."
+    },
+    {
+      "id": 45,
+      "level": "advanced",
+      "question": "What is prototype in JavaScript?",
+      "options": ["Object from which other objects inherit", "A function type", "A variable type", "An operator"],
+      "correct_answer": "Object from which other objects inherit",
+      "explanation": "Prototype is an object from which other objects inherit properties and methods."
+    },
+    {
+      "id": 46,
+      "level": "advanced",
+      "question": "What is the event loop in JavaScript?",
+      "options": ["Handles asynchronous callbacks", "Creates events", "Loops through arrays", "Event listener"],
+      "correct_answer": "Handles asynchronous callbacks",
+      "explanation": "The event loop handles the execution of asynchronous callbacks in JavaScript."
+    },
+    {
+      "id": 47,
+      "level": "advanced",
+      "question": "What are arrow functions?",
+      "options": ["Shorter syntax for functions", "Faster functions", "Anonymous functions only", "ES5 feature"],
+      "correct_answer": "Shorter syntax for functions",
+      "explanation": "Arrow functions provide a more concise syntax for writing functions in ES6."
+    },
+    {
+      "id": 48,
+      "level": "advanced",
+      "question": "What is hoisting in JavaScript?",
+      "options": ["Moving declarations to top of scope", "Lifting objects", "Performance optimization", "Memory management"],
+      "correct_answer": "Moving declarations to top of scope",
+      "explanation": "Hoisting moves variable and function declarations to the top of their scope."
+    },
+    {
+      "id": 49,
+      "level": "advanced",
+      "question": "What is the difference between WeakMap and Map?",
+      "options": ["WeakMap keys must be objects", "WeakMap is faster", "No difference", "WeakMap stores strings"],
+      "correct_answer": "WeakMap keys must be objects",
+      "explanation": "WeakMap keys must be objects and are weakly referenced, allowing garbage collection."
+    },
+    {
+      "id": 50,
+      "level": "advanced",
+      "question": "What are generators in JavaScript?",
+      "options": ["Functions that can pause and resume", "Random number generators", "Event generators", "HTML generators"],
+      "correct_answer": "Functions that can pause and resume",
+      "explanation": "Generators are functions that can be paused and resumed, yielding values on demand."
+    },
+    {
+      "id": 51,
+      "level": "advanced",
+      "question": "What is the purpose of Symbol in JavaScript?",
+      "options": ["Create unique identifiers", "Mathematical symbols", "Text symbols", "Currency symbols"],
+      "correct_answer": "Create unique identifiers",
+      "explanation": "Symbols create unique identifiers that won't conflict with other property names."
+    },
+    {
+      "id": 52,
+      "level": "advanced",
+      "question": "What is a Proxy in JavaScript?",
+      "options": ["Intercepts operations on objects", "Network proxy", "Function proxy", "Variable proxy"],
+      "correct_answer": "Intercepts operations on objects",
+      "explanation": "Proxy allows you to intercept and customize operations performed on objects."
+    },
+    {
+      "id": 53,
+      "level": "advanced",
+      "question": "What is currying in JavaScript?",
+      "options": ["Transforming function to take one argument at a time", "Spicy programming", "Looping technique", "Error handling"],
+      "correct_answer": "Transforming function to take one argument at a time",
+      "explanation": "Currying transforms a function to take one argument at a time and return new functions."
+    },
+    {
+      "id": 54,
+      "level": "advanced",
+      "question": "What is debouncing in JavaScript?",
+      "options": ["Limiting function execution frequency", "Removing bugs", "Function optimization", "Error prevention"],
+      "correct_answer": "Limiting function execution frequency",
+      "explanation": "Debouncing limits how often a function can be executed, useful for performance."
+    },
+    {
+      "id": 55,
+      "level": "advanced",
+      "question": "What is the purpose of Object.freeze()?",
+      "options": ["Makes object immutable", "Stops object execution", "Caches object", "Copies object"],
+      "correct_answer": "Makes object immutable",
+      "explanation": "Object.freeze() makes an object immutable, preventing changes to its properties."
+    },
+    {
+      "id": 56,
+      "level": "advanced",
+      "question": "What is memoization in JavaScript?",
+      "options": ["Caching function results", "Memory management", "Note-taking technique", "Variable storage"],
+      "correct_answer": "Caching function results",
+      "explanation": "Memoization is an optimization technique that caches function results."
+    },
+    {
+      "id": 57,
+      "level": "advanced",
+      "question": "What is the module pattern in JavaScript?",
+      "options": ["Encapsulating code in modules", "Design pattern", "ES6 feature", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "The module pattern encapsulates code, is a design pattern, and ES6 provides native modules."
+    },
+    {
+      "id": 58,
+      "level": "advanced",
+      "question": "What is the Observer pattern in JavaScript?",
+      "options": ["Objects notify observers of changes", "Watching variables", "Debugging pattern", "Performance monitoring"],
+      "correct_answer": "Objects notify observers of changes",
+      "explanation": "Observer pattern allows objects to notify multiple observers about state changes."
+    },
+    {
+      "id": 59,
+      "level": "advanced",
+      "question": "What is the difference between shallow and deep copying?",
+      "options": ["Shallow copies references, deep copies values", "No difference", "Shallow is faster", "Deep is deprecated"],
+      "correct_answer": "Shallow copies references, deep copies values",
+      "explanation": "Shallow copy copies references while deep copy creates completely independent copies."
+    },
+    {
+      "id": 60,
+      "level": "advanced",
+      "question": "What is tree shaking in JavaScript?",
+      "options": ["Removing unused code from bundles", "Data structure operation", "DOM manipulation", "Performance testing"],
+      "correct_answer": "Removing unused code from bundles",
+      "explanation": "Tree shaking eliminates dead code from JavaScript bundles to reduce file size."
+    }
+  ]
+}

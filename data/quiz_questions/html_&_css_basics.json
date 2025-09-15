@@ -1,0 +1,479 @@
+{
+  "course_id": 44,
+  "course_title": "HTML & CSS Basics",
+  "language": "html",
+  "questions": [
+    {
+      "id": 1,
+      "level": "basic",
+      "question": "What does HTML stand for?",
+      "options": ["HyperText Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language", "HyperTool Markup Language"],
+      "correct_answer": "HyperText Markup Language",
+      "explanation": "HTML stands for HyperText Markup Language, which is the standard markup language for creating web pages."
+    },
+    {
+      "id": 2,
+      "level": "basic",
+      "question": "Which HTML tag is used to create a heading?",
+      "options": ["<head>", "<h1>", "<heading>", "<header>"],
+      "correct_answer": "<h1>",
+      "explanation": "The <h1> tag is used to create the largest heading in HTML. There are six heading tags from <h1> to <h6>."
+    },
+    {
+      "id": 3,
+      "level": "basic",
+      "question": "Which attribute is used to provide alternate text for an image?",
+      "options": ["alt", "src", "title", "href"],
+      "correct_answer": "alt",
+      "explanation": "The alt attribute provides alternate text for images in HTML for accessibility."
+    },
+    {
+      "id": 4,
+      "level": "basic",
+      "question": "Which tag is used to create a hyperlink in HTML?",
+      "options": ["<a>", "<link>", "<href>", "<url>"],
+      "correct_answer": "<a>",
+      "explanation": "The <a> tag (anchor tag) is used to create hyperlinks in HTML."
+    },
+    {
+      "id": 5,
+      "level": "basic",
+      "question": "Which property is used to change text color in CSS?",
+      "options": ["color", "background-color", "font-color", "text-color"],
+      "correct_answer": "color",
+      "explanation": "The color property sets the text color in CSS."
+    },
+    {
+      "id": 6,
+      "level": "basic",
+      "question": "Which tag is used to define the document title?",
+      "options": ["<name>", "<title>", "<header>", "<caption>"],
+      "correct_answer": "<title>",
+      "explanation": "The <title> tag defines the title of the document that appears in the browser tab."
+    },
+    {
+      "id": 7,
+      "level": "basic",
+      "question": "What is the correct HTML document structure?",
+      "options": ["<html><head></head><body></body></html>", "<head><html><body></body></html></head>", "<body><html><head></head></html></body>", "<html><body><head></head></body></html>"],
+      "correct_answer": "<html><head></head><body></body></html>",
+      "explanation": "The correct structure is <html> as the root element, containing <head> and <body> elements."
+    },
+    {
+      "id": 8,
+      "level": "basic",
+      "question": "Which HTML tag is used to create a paragraph?",
+      "options": ["<para>", "<p>", "<paragraph>", "<text>"],
+      "correct_answer": "<p>",
+      "explanation": "The <p> tag is used to create paragraphs in HTML."
+    },
+    {
+      "id": 9,
+      "level": "basic",
+      "question": "Which attribute specifies the source of an image?",
+      "options": ["src", "href", "alt", "link"],
+      "correct_answer": "src",
+      "explanation": "The src attribute specifies the path to the image file."
+    },
+    {
+      "id": 10,
+      "level": "basic",
+      "question": "How do you make text bold in HTML?",
+      "options": ["<bold>", "<b>", "<strong>", "Both <b> and <strong>"],
+      "correct_answer": "Both <b> and <strong>",
+      "explanation": "Both <b> and <strong> tags can be used to make text bold, with <strong> having semantic importance."
+    },
+    {
+      "id": 11,
+      "level": "basic",
+      "question": "Which HTML tag is used to create an unordered list?",
+      "options": ["<ul>", "<ol>", "<li>", "<list>"],
+      "correct_answer": "<ul>",
+      "explanation": "The <ul> tag creates an unordered (bulleted) list in HTML."
+    },
+    {
+      "id": 12,
+      "level": "basic",
+      "question": "Which HTML tag is used to create an ordered list?",
+      "options": ["<ul>", "<ol>", "<li>", "<list>"],
+      "correct_answer": "<ol>",
+      "explanation": "The <ol> tag creates an ordered (numbered) list in HTML."
+    },
+    {
+      "id": 13,
+      "level": "basic",
+      "question": "Which tag is used for list items?",
+      "options": ["<item>", "<li>", "<list>", "<bullet>"],
+      "correct_answer": "<li>",
+      "explanation": "The <li> tag defines list items within <ul> or <ol> elements."
+    },
+    {
+      "id": 14,
+      "level": "basic",
+      "question": "How do you create a line break in HTML?",
+      "options": ["<break>", "<br>", "<lb>", "<newline>"],
+      "correct_answer": "<br>",
+      "explanation": "The <br> tag creates a line break in HTML."
+    },
+    {
+      "id": 15,
+      "level": "basic",
+      "question": "Which CSS property is used to change background color?",
+      "options": ["color", "background-color", "bg-color", "back-color"],
+      "correct_answer": "background-color",
+      "explanation": "The background-color property sets the background color of an element."
+    },
+    {
+      "id": 16,
+      "level": "basic",
+      "question": "How do you select an element by ID in CSS?",
+      "options": [".myid", "#myid", "myid", "*myid"],
+      "correct_answer": "#myid",
+      "explanation": "Use # followed by the ID name to select an element by its ID in CSS."
+    },
+    {
+      "id": 17,
+      "level": "basic",
+      "question": "How do you select an element by class in CSS?",
+      "options": [".myclass", "#myclass", "myclass", "*myclass"],
+      "correct_answer": ".myclass",
+      "explanation": "Use . followed by the class name to select elements by their class in CSS."
+    },
+    {
+      "id": 18,
+      "level": "basic",
+      "question": "Which HTML attribute is used to specify a CSS class?",
+      "options": ["class", "css", "style", "id"],
+      "correct_answer": "class",
+      "explanation": "The class attribute is used to specify one or more CSS classes for an element."
+    },
+    {
+      "id": 19,
+      "level": "basic",
+      "question": "Which HTML attribute is used for inline CSS?",
+      "options": ["css", "style", "inline", "design"],
+      "correct_answer": "style",
+      "explanation": "The style attribute is used to apply inline CSS directly to an HTML element."
+    },
+    {
+      "id": 20,
+      "level": "basic",
+      "question": "What does CSS stand for?",
+      "options": ["Creative Style Sheets", "Cascading Style Sheets", "Computer Style Sheets", "Colorful Style Sheets"],
+      "correct_answer": "Cascading Style Sheets",
+      "explanation": "CSS stands for Cascading Style Sheets, used for styling HTML documents."
+    },
+    {
+      "id": 21,
+      "level": "intermediate",
+      "question": "What is the CSS box model?",
+      "options": ["A way to create boxes", "Content, padding, border, and margin", "A design pattern", "A layout method"],
+      "correct_answer": "Content, padding, border, and margin",
+      "explanation": "The CSS box model consists of content, padding, border, and margin areas around every HTML element."
+    },
+    {
+      "id": 22,
+      "level": "intermediate",
+      "question": "Which CSS property is used for spacing inside an element?",
+      "options": ["margin", "padding", "spacing", "gap"],
+      "correct_answer": "padding",
+      "explanation": "Padding creates space inside an element, between the content and the border."
+    },
+    {
+      "id": 23,
+      "level": "intermediate",
+      "question": "Which CSS property is used for spacing outside an element?",
+      "options": ["margin", "padding", "spacing", "gap"],
+      "correct_answer": "margin",
+      "explanation": "Margin creates space outside an element, between the element and other elements."
+    },
+    {
+      "id": 24,
+      "level": "intermediate",
+      "question": "What does the CSS 'display: block' property do?",
+      "options": ["Hides the element", "Makes element take full width", "Creates a block of text", "Blocks other elements"],
+      "correct_answer": "Makes element take full width",
+      "explanation": "Display: block makes an element take up the full available width and start on a new line."
+    },
+    {
+      "id": 25,
+      "level": "intermediate",
+      "question": "What does the CSS 'display: inline' property do?",
+      "options": ["Displays elements in a line", "Creates inline text", "Makes elements smaller", "Aligns elements"],
+      "correct_answer": "Displays elements in a line",
+      "explanation": "Display: inline makes elements appear on the same line, only taking up as much width as necessary."
+    },
+    {
+      "id": 26,
+      "level": "intermediate",
+      "question": "Which CSS property is used to center text?",
+      "options": ["align", "text-align", "center", "text-center"],
+      "correct_answer": "text-align",
+      "explanation": "The text-align property is used to set the horizontal alignment of text."
+    },
+    {
+      "id": 27,
+      "level": "intermediate",
+      "question": "What is the difference between id and class attributes?",
+      "options": ["No difference", "ID is unique, class can be reused", "Class is unique, ID can be reused", "ID is for CSS, class is for JavaScript"],
+      "correct_answer": "ID is unique, class can be reused",
+      "explanation": "ID should be unique on a page and used for single elements, while class can be applied to multiple elements."
+    },
+    {
+      "id": 28,
+      "level": "intermediate",
+      "question": "Which CSS unit is relative to the font size of the element?",
+      "options": ["px", "em", "pt", "cm"],
+      "correct_answer": "em",
+      "explanation": "The 'em' unit is relative to the font-size of the element (1em = current font size)."
+    },
+    {
+      "id": 29,
+      "level": "intermediate",
+      "question": "What is the purpose of the DOCTYPE declaration?",
+      "options": ["Defines the document type", "Sets the language", "Links CSS files", "Creates metadata"],
+      "correct_answer": "Defines the document type",
+      "explanation": "The DOCTYPE declaration tells the browser which version of HTML the document is written in."
+    },
+    {
+      "id": 30,
+      "level": "intermediate",
+      "question": "Which CSS property controls the stacking order of elements?",
+      "options": ["order", "stack", "z-index", "layer"],
+      "correct_answer": "z-index",
+      "explanation": "The z-index property controls the stacking order of positioned elements."
+    },
+    {
+      "id": 31,
+      "level": "intermediate",
+      "question": "What is CSS specificity?",
+      "options": ["How specific selectors are", "The order CSS rules are applied", "Browser compatibility", "File size optimization"],
+      "correct_answer": "The order CSS rules are applied",
+      "explanation": "CSS specificity determines which CSS rules are applied when multiple rules target the same element."
+    },
+    {
+      "id": 32,
+      "level": "intermediate",
+      "question": "Which has higher specificity: ID or class?",
+      "options": ["Class", "ID", "They're equal", "Depends on order"],
+      "correct_answer": "ID",
+      "explanation": "ID selectors have higher specificity than class selectors in CSS."
+    },
+    {
+      "id": 33,
+      "level": "intermediate",
+      "question": "What is the CSS float property used for?",
+      "options": ["Making elements transparent", "Positioning elements", "Creating animations", "Adding shadows"],
+      "correct_answer": "Positioning elements",
+      "explanation": "The float property is used to position elements to the left or right, allowing text to wrap around them."
+    },
+    {
+      "id": 34,
+      "level": "intermediate",
+      "question": "Which CSS property is used to create rounded corners?",
+      "options": ["corner-radius", "border-radius", "round-corner", "border-round"],
+      "correct_answer": "border-radius",
+      "explanation": "The border-radius property is used to create rounded corners on elements."
+    },
+    {
+      "id": 35,
+      "level": "intermediate",
+      "question": "What is the purpose of CSS media queries?",
+      "options": ["Loading media files", "Responsive design", "Audio controls", "Video styling"],
+      "correct_answer": "Responsive design",
+      "explanation": "Media queries are used to apply different CSS styles based on device characteristics like screen size."
+    },
+    {
+      "id": 36,
+      "level": "intermediate",
+      "question": "Which CSS property is used to control element visibility?",
+      "options": ["show", "visible", "visibility", "display"],
+      "correct_answer": "visibility",
+      "explanation": "The visibility property controls whether an element is visible (visible/hidden) while keeping its space."
+    },
+    {
+      "id": 37,
+      "level": "intermediate",
+      "question": "What is the difference between 'visibility: hidden' and 'display: none'?",
+      "options": ["No difference", "Hidden keeps space, none removes space", "Hidden removes space, none keeps space", "They work on different elements"],
+      "correct_answer": "Hidden keeps space, none removes space",
+      "explanation": "visibility: hidden hides the element but keeps its space, while display: none removes the element entirely."
+    },
+    {
+      "id": 38,
+      "level": "intermediate",
+      "question": "Which CSS property is used to control text decoration?",
+      "options": ["text-style", "text-decoration", "font-decoration", "text-format"],
+      "correct_answer": "text-decoration",
+      "explanation": "The text-decoration property is used to add decorations like underline, overline, or line-through to text."
+    },
+    {
+      "id": 39,
+      "level": "intermediate",
+      "question": "What is the CSS position property used for?",
+      "options": ["Text alignment", "Element positioning", "Font positioning", "Image alignment"],
+      "correct_answer": "Element positioning",
+      "explanation": "The position property specifies the positioning method for an element (static, relative, absolute, fixed, sticky)."
+    },
+    {
+      "id": 41,
+      "level": "advanced",
+      "question": "What is CSS Grid used for?",
+      "options": ["Creating grids in images", "Two-dimensional layout system", "Table styling", "Graph creation"],
+      "correct_answer": "Two-dimensional layout system",
+      "explanation": "CSS Grid is a powerful two-dimensional layout system for creating complex web layouts with rows and columns."
+    },
+    {
+      "id": 42,
+      "level": "advanced",
+      "question": "What is CSS Flexbox primarily used for?",
+      "options": ["Flexible images", "One-dimensional layout", "Animation", "Responsive text"],
+      "correct_answer": "One-dimensional layout",
+      "explanation": "CSS Flexbox is a one-dimensional layout method for arranging items in rows or columns with flexible sizing."
+    },
+    {
+      "id": 43,
+      "level": "advanced",
+      "question": "What are CSS custom properties (variables)?",
+      "options": ["Browser-specific properties", "Reusable values defined with --", "Advanced selectors", "Experimental features"],
+      "correct_answer": "Reusable values defined with --",
+      "explanation": "CSS custom properties (variables) are defined with -- and allow you to store and reuse values throughout your stylesheet."
+    },
+    {
+      "id": 44,
+      "level": "advanced",
+      "question": "What is the CSS 'calc()' function used for?",
+      "options": ["Mathematical calculations", "Color calculations", "Time calculations", "Font calculations"],
+      "correct_answer": "Mathematical calculations",
+      "explanation": "The calc() function allows you to perform mathematical calculations when specifying CSS property values."
+    },
+    {
+      "id": 45,
+      "level": "advanced",
+      "question": "What are CSS pseudo-elements?",
+      "options": ["False elements", "Virtual elements for styling parts of elements", "JavaScript elements", "Hidden elements"],
+      "correct_answer": "Virtual elements for styling parts of elements",
+      "explanation": "Pseudo-elements allow you to style specific parts of an element, like ::before, ::after, ::first-letter."
+    },
+    {
+      "id": 46,
+      "level": "advanced",
+      "question": "What are CSS pseudo-classes?",
+      "options": ["Fake classes", "Special states of elements", "JavaScript classes", "Browser classes"],
+      "correct_answer": "Special states of elements",
+      "explanation": "Pseudo-classes select elements based on their state, like :hover, :focus, :nth-child()."
+    },
+    {
+      "id": 47,
+      "level": "advanced",
+      "question": "What is the CSS 'transform' property used for?",
+      "options": ["Changing element shapes", "2D and 3D transformations", "Color transformations", "Text transformations"],
+      "correct_answer": "2D and 3D transformations",
+      "explanation": "The transform property allows you to rotate, scale, translate, or skew elements in 2D or 3D space."
+    },
+    {
+      "id": 48,
+      "level": "advanced",
+      "question": "What are CSS animations?",
+      "options": ["Moving images", "Gradual changes between CSS styles", "JavaScript animations", "Video controls"],
+      "correct_answer": "Gradual changes between CSS styles",
+      "explanation": "CSS animations allow gradual changes from one set of CSS styles to another using @keyframes."
+    },
+    {
+      "id": 49,
+      "level": "advanced",
+      "question": "What is the CSS 'transition' property used for?",
+      "options": ["Changing pages", "Smooth changes between property values", "Element transitions", "Color transitions"],
+      "correct_answer": "Smooth changes between property values",
+      "explanation": "The transition property provides smooth changes between different property values over a specified duration."
+    },
+    {
+      "id": 50,
+      "level": "advanced",
+      "question": "What is CSS specificity calculated based on?",
+      "options": ["File order", "Inline styles, IDs, classes, elements", "Importance", "Browser support"],
+      "correct_answer": "Inline styles, IDs, classes, elements",
+      "explanation": "CSS specificity is calculated based on inline styles (1000), IDs (100), classes/attributes/pseudo-classes (10), and elements (1)."
+    },
+    {
+      "id": 51,
+      "level": "advanced",
+      "question": "What is the CSS 'object-fit' property used for?",
+      "options": ["Fitting objects in containers", "Controlling how replaced content fits", "Object positioning", "Container sizing"],
+      "correct_answer": "Controlling how replaced content fits",
+      "explanation": "The object-fit property specifies how the content of replaced elements (like images) should fit within their container."
+    },
+    {
+      "id": 52,
+      "level": "advanced",
+      "question": "What are CSS container queries?",
+      "options": ["Querying containers", "Responsive design based on container size", "Database queries", "Element queries"],
+      "correct_answer": "Responsive design based on container size",
+      "explanation": "Container queries allow you to apply styles based on the size of a containing element rather than the viewport."
+    },
+    {
+      "id": 53,
+      "level": "advanced",
+      "question": "What is the CSS 'aspect-ratio' property?",
+      "options": ["Image ratios", "Defining width-to-height ratio", "Screen ratios", "Font ratios"],
+      "correct_answer": "Defining width-to-height ratio",
+      "explanation": "The aspect-ratio property sets a preferred aspect ratio for an element's box."
+    },
+    {
+      "id": 54,
+      "level": "advanced",
+      "question": "What are CSS logical properties?",
+      "options": ["Boolean properties", "Direction-agnostic properties", "Mathematical properties", "Logical operators"],
+      "correct_answer": "Direction-agnostic properties",
+      "explanation": "CSS logical properties provide direction-agnostic ways to specify properties based on writing mode and text direction."
+    },
+    {
+      "id": 55,
+      "level": "advanced",
+      "question": "What is the purpose of the CSS @keyframes rule?",
+      "options": ["Defining frame rates", "Creating animation sequences", "Setting up media queries", "Defining color schemes"],
+      "correct_answer": "Creating animation sequences",
+      "explanation": "The @keyframes rule defines the animation sequence by specifying CSS styles at various points during the animation."
+    },
+    {
+      "id": 56,
+      "level": "advanced",
+      "question": "What is the CSS 'clamp()' function?",
+      "options": ["Clamping values", "Setting min, preferred, and max values", "Restricting properties", "Limiting animations"],
+      "correct_answer": "Setting min, preferred, and max values",
+      "explanation": "The clamp() function takes three parameters: minimum, preferred, and maximum values, returning the middle value."
+    },
+    {
+      "id": 57,
+      "level": "advanced",
+      "question": "What are CSS scroll snap properties?",
+      "options": ["Snapping scrollbars", "Controlling scroll behavior", "Image snapping", "Layout snapping"],
+      "correct_answer": "Controlling scroll behavior",
+      "explanation": "CSS scroll snap properties control the snap positions when scrolling through content."
+    },
+    {
+      "id": 58,
+      "level": "advanced",
+      "question": "What is the CSS 'backdrop-filter' property?",
+      "options": ["Background filters", "Applying filters to backdrop", "Image filters", "Color filters"],
+      "correct_answer": "Applying filters to backdrop",
+      "explanation": "The backdrop-filter property applies graphical effects like blur or color shift to the area behind an element."
+    },
+    {
+      "id": 59,
+      "level": "advanced",
+      "question": "What is the purpose of CSS subgrid?",
+      "options": ["Smaller grids", "Grid items participating in parent grid", "Nested grids", "Grid subdivisions"],
+      "correct_answer": "Grid items participating in parent grid",
+      "explanation": "CSS subgrid allows grid items to participate in the sizing of their parent grid tracks."
+    },
+    {
+      "id": 60,
+      "level": "advanced",
+      "question": "What is the CSS 'content-visibility' property?",
+      "options": ["Content hiding", "Controlling rendering of content", "Visibility settings", "Content filters"],
+      "correct_answer": "Controlling rendering of content",
+      "explanation": "The content-visibility property controls whether the browser renders an element's contents, improving rendering performance."
+    }
+  ]
+}

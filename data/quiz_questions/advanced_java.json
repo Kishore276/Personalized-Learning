@@ -1,0 +1,487 @@
+{
+  "course_id": 5,
+  "course_title": "Advanced Java",
+  "language": "java",
+  "questions": [
+    {
+      "id": 1,
+      "level": "basic",
+      "question": "Which keyword is used to define a class in Java?",
+      "options": ["class", "Class", "define", "object"],
+      "correct_answer": "class",
+      "explanation": "The 'class' keyword is used to define a class in Java."
+    },
+    {
+      "id": 2,
+      "level": "basic",
+      "question": "Which method is the entry point of a Java program?",
+      "options": ["main()", "start()", "run()", "init()"],
+      "correct_answer": "main()",
+      "explanation": "The main() method is the entry point of a Java program."
+    },
+    {
+      "id": 3,
+      "level": "basic",
+      "question": "Which symbol is used for single-line comments in Java?",
+      "options": ["//", "#", "--", "/*"],
+      "correct_answer": "//",
+      "explanation": "Single-line comments use // in Java."
+    },
+    {
+      "id": 4,
+      "level": "basic",
+      "question": "Which data type is used to store true/false values?",
+      "options": ["int", "boolean", "char", "float"],
+      "correct_answer": "boolean",
+      "explanation": "The boolean data type stores true/false values in Java."
+    },
+    {
+      "id": 5,
+      "level": "basic",
+      "question": "Which operator is used for equality comparison in Java?",
+      "options": ["=", "==", "!=", "equals"],
+      "correct_answer": "==",
+      "explanation": "== is used for equality comparison in Java."
+    },
+    {
+      "id": 6,
+      "level": "basic",
+      "question": "How do you create an object in Java?",
+      "options": ["new", "create", "object", "instance"],
+      "correct_answer": "new",
+      "explanation": "The 'new' keyword is used to create objects in Java."
+    },
+    {
+      "id": 7,
+      "level": "basic",
+      "question": "Which keyword is used to inherit a class in Java?",
+      "options": ["extends", "implements", "inherits", "super"],
+      "correct_answer": "extends",
+      "explanation": "The 'extends' keyword is used for inheritance in Java."
+    },
+    {
+      "id": 8,
+      "level": "basic",
+      "question": "What is the default value of an int variable in Java?",
+      "options": ["null", "0", "1", "undefined"],
+      "correct_answer": "0",
+      "explanation": "The default value of an int variable in Java is 0."
+    },
+    {
+      "id": 9,
+      "level": "basic",
+      "question": "Which keyword is used to define a constant in Java?",
+      "options": ["const", "final", "static", "constant"],
+      "correct_answer": "final",
+      "explanation": "The 'final' keyword is used to define constants in Java."
+    },
+    {
+      "id": 10,
+      "level": "basic",
+      "question": "What is the correct way to declare an array in Java?",
+      "options": ["int[] arr", "int arr[]", "array<int> arr", "Both int[] arr and int arr[]"],
+      "correct_answer": "Both int[] arr and int arr[]",
+      "explanation": "Both int[] arr and int arr[] are valid ways to declare an array in Java."
+    },
+    {
+      "id": 11,
+      "level": "basic",
+      "question": "Which access modifier makes a method accessible only within the same class?",
+      "options": ["public", "private", "protected", "default"],
+      "correct_answer": "private",
+      "explanation": "The private access modifier restricts access to within the same class only."
+    },
+    {
+      "id": 12,
+      "level": "basic",
+      "question": "What does JVM stand for?",
+      "options": ["Java Virtual Machine", "Java Variable Method", "Java Version Manager", "Java Visual Mode"],
+      "correct_answer": "Java Virtual Machine",
+      "explanation": "JVM stands for Java Virtual Machine, which executes Java bytecode."
+    },
+    {
+      "id": 13,
+      "level": "basic",
+      "question": "Which method is used to get the length of a string in Java?",
+      "options": ["size()", "length()", "count()", "getLength()"],
+      "correct_answer": "length()",
+      "explanation": "The length() method returns the number of characters in a string."
+    },
+    {
+      "id": 14,
+      "level": "basic",
+      "question": "What is the correct syntax for a for loop in Java?",
+      "options": ["for(int i=0; i<10; i++)", "for(i=0; i<10; i++)", "for(int i=0, i<10, i++)", "loop(int i=0; i<10; i++)"],
+      "correct_answer": "for(int i=0; i<10; i++)",
+      "explanation": "The correct syntax uses semicolons to separate initialization, condition, and increment."
+    },
+    {
+      "id": 15,
+      "level": "basic",
+      "question": "Which keyword is used to define an interface in Java?",
+      "options": ["interface", "abstract", "implements", "class"],
+      "correct_answer": "interface",
+      "explanation": "The 'interface' keyword is used to define an interface in Java."
+    },
+    {
+      "id": 16,
+      "level": "basic",
+      "question": "What is the default access modifier for class members in Java?",
+      "options": ["public", "private", "protected", "package-private (default)"],
+      "correct_answer": "package-private (default)",
+      "explanation": "If no access modifier is specified, the default is package-private access."
+    },
+    {
+      "id": 17,
+      "level": "basic",
+      "question": "Which exception is thrown when accessing a null reference?",
+      "options": ["NullPointerException", "ArrayIndexOutOfBoundsException", "IllegalArgumentException", "RuntimeException"],
+      "correct_answer": "NullPointerException",
+      "explanation": "NullPointerException is thrown when trying to use a reference that points to no location in memory."
+    },
+    {
+      "id": 18,
+      "level": "basic",
+      "question": "What is the correct way to create a string in Java?",
+      "options": ["String str = 'Hello'", "String str = \"Hello\"", "str = \"Hello\"", "string str = \"Hello\""],
+      "correct_answer": "String str = \"Hello\"",
+      "explanation": "Strings in Java are created using double quotes and the String class."
+    },
+    {
+      "id": 19,
+      "level": "basic",
+      "question": "Which keyword is used to call the parent class constructor?",
+      "options": ["parent", "base", "super", "this"],
+      "correct_answer": "super",
+      "explanation": "The 'super' keyword is used to call the parent class constructor."
+    },
+    {
+      "id": 20,
+      "level": "basic",
+      "question": "What is the size of an int in Java?",
+      "options": ["16 bits", "32 bits", "64 bits", "Platform dependent"],
+      "correct_answer": "32 bits",
+      "explanation": "An int in Java is always 32 bits (4 bytes) regardless of platform."
+    },
+    {
+      "id": 21,
+      "level": "intermediate",
+      "question": "Which collection class allows duplicate elements?",
+      "options": ["Set", "List", "Map", "Queue"],
+      "correct_answer": "List",
+      "explanation": "List allows duplicate elements in Java collections."
+    },
+    {
+      "id": 22,
+      "level": "intermediate",
+      "question": "Which exception is thrown when dividing by zero?",
+      "options": ["NullPointerException", "ArithmeticException", "ArrayIndexOutOfBoundsException", "IOException"],
+      "correct_answer": "ArithmeticException",
+      "explanation": "ArithmeticException is thrown when dividing by zero."
+    },
+    {
+      "id": 23,
+      "level": "intermediate",
+      "question": "Which method is used to compare two strings in Java?",
+      "options": ["equals()", "compare()", "==", "match()"],
+      "correct_answer": "equals()",
+      "explanation": "equals() is used to compare two strings for equality."
+    },
+    {
+      "id": 24,
+      "level": "intermediate",
+      "question": "What is the difference between ArrayList and LinkedList?",
+      "options": ["No difference", "ArrayList uses arrays, LinkedList uses nodes", "ArrayList is faster", "LinkedList is synchronized"],
+      "correct_answer": "ArrayList uses arrays, LinkedList uses nodes",
+      "explanation": "ArrayList is backed by an array, while LinkedList uses a doubly-linked list structure."
+    },
+    {
+      "id": 25,
+      "level": "intermediate",
+      "question": "Which keyword is used to implement an interface?",
+      "options": ["extends", "implements", "inherits", "uses"],
+      "correct_answer": "implements",
+      "explanation": "The 'implements' keyword is used to implement an interface in Java."
+    },
+    {
+      "id": 26,
+      "level": "intermediate",
+      "question": "What is method overloading?",
+      "options": ["Same method name, different parameters", "Same method name, same parameters", "Different method name, same parameters", "Overriding parent methods"],
+      "correct_answer": "Same method name, different parameters",
+      "explanation": "Method overloading allows multiple methods with the same name but different parameter lists."
+    },
+    {
+      "id": 27,
+      "level": "intermediate",
+      "question": "What is the difference between == and equals() for strings?",
+      "options": ["No difference", "== compares references, equals() compares content", "== is faster", "equals() compares references"],
+      "correct_answer": "== compares references, equals() compares content",
+      "explanation": "== compares object references, while equals() compares the actual string content."
+    },
+    {
+      "id": 28,
+      "level": "intermediate",
+      "question": "Which collection provides key-value mapping?",
+      "options": ["List", "Set", "Map", "Queue"],
+      "correct_answer": "Map",
+      "explanation": "Map interface provides key-value pair storage and retrieval."
+    },
+    {
+      "id": 29,
+      "level": "intermediate",
+      "question": "What is the purpose of the static keyword?",
+      "options": ["Makes variables constant", "Belongs to class, not instance", "Prevents inheritance", "Enables multithreading"],
+      "correct_answer": "Belongs to class, not instance",
+      "explanation": "Static members belong to the class rather than any specific instance."
+    },
+    {
+      "id": 30,
+      "level": "intermediate",
+      "question": "Which exception handling block is always executed?",
+      "options": ["try", "catch", "finally", "throw"],
+      "correct_answer": "finally",
+      "explanation": "The finally block always executes, regardless of whether an exception occurs."
+    },
+    {
+      "id": 31,
+      "level": "intermediate",
+      "question": "What is autoboxing in Java?",
+      "options": ["Automatic memory management", "Converting primitives to wrapper objects", "Automatic method calling", "Boxing objects for shipping"],
+      "correct_answer": "Converting primitives to wrapper objects",
+      "explanation": "Autoboxing automatically converts primitive types to their corresponding wrapper classes."
+    },
+    {
+      "id": 32,
+      "level": "intermediate",
+      "question": "Which keyword is used to prevent method overriding?",
+      "options": ["static", "private", "final", "sealed"],
+      "correct_answer": "final",
+      "explanation": "The final keyword prevents method overriding when applied to methods in a parent class."
+    },
+    {
+      "id": 33,
+      "level": "intermediate",
+      "question": "What is the difference between HashSet and TreeSet?",
+      "options": ["No difference", "HashSet is unsorted, TreeSet is sorted", "TreeSet allows duplicates", "HashSet is synchronized"],
+      "correct_answer": "HashSet is unsorted, TreeSet is sorted",
+      "explanation": "HashSet stores elements in no particular order, while TreeSet maintains elements in sorted order."
+    },
+    {
+      "id": 34,
+      "level": "intermediate",
+      "question": "What is a lambda expression in Java?",
+      "options": ["A type of loop", "Anonymous function", "Exception handling", "Memory allocation"],
+      "correct_answer": "Anonymous function",
+      "explanation": "Lambda expressions provide a concise way to represent anonymous functions in Java."
+    },
+    {
+      "id": 35,
+      "level": "intermediate",
+      "question": "Which annotation is used to override a method?",
+      "options": ["@Override", "@Overload", "@Super", "@Method"],
+      "correct_answer": "@Override",
+      "explanation": "@Override annotation indicates that a method is overriding a method from its superclass."
+    },
+    {
+      "id": 36,
+      "level": "intermediate",
+      "question": "What is the Stream API used for?",
+      "options": ["File operations", "Functional programming with collections", "Network streaming", "Audio processing"],
+      "correct_answer": "Functional programming with collections",
+      "explanation": "Stream API provides functional programming capabilities for processing collections of data."
+    },
+    {
+      "id": 37,
+      "level": "intermediate",
+      "question": "What is method overriding?",
+      "options": ["Same method in same class", "Redefining parent class method in child class", "Creating multiple methods", "Deleting methods"],
+      "correct_answer": "Redefining parent class method in child class",
+      "explanation": "Method overriding allows a subclass to provide a specific implementation of a method from its parent class."
+    },
+    {
+      "id": 38,
+      "level": "intermediate",
+      "question": "Which collection is synchronized by default?",
+      "options": ["ArrayList", "HashMap", "Vector", "HashSet"],
+      "correct_answer": "Vector",
+      "explanation": "Vector is synchronized by default, making it thread-safe but slower than ArrayList."
+    },
+    {
+      "id": 39,
+      "level": "intermediate",
+      "question": "What is the purpose of the abstract keyword?",
+      "options": ["Makes methods faster", "Creates incomplete classes/methods", "Prevents inheritance", "Enables polymorphism"],
+      "correct_answer": "Creates incomplete classes/methods",
+      "explanation": "Abstract keyword is used to create classes that cannot be instantiated and methods that must be implemented by subclasses."
+    },
+    {
+      "id": 40,
+      "level": "intermediate",
+      "question": "What is the difference between String and StringBuilder?",
+      "options": ["No difference", "String is mutable, StringBuilder is immutable", "String is immutable, StringBuilder is mutable", "StringBuilder is faster for reading"],
+      "correct_answer": "String is immutable, StringBuilder is mutable",
+      "explanation": "String objects are immutable, while StringBuilder provides a mutable sequence of characters."
+    },
+    {
+      "id": 41,
+      "level": "advanced",
+      "question": "What is the purpose of the 'synchronized' keyword in Java?",
+      "options": ["Thread safety", "Memory management", "Exception handling", "Inheritance"],
+      "correct_answer": "Thread safety",
+      "explanation": "The 'synchronized' keyword is used to ensure thread safety in Java."
+    },
+    {
+      "id": 42,
+      "level": "advanced",
+      "question": "Which design pattern ensures only one instance of a class exists?",
+      "options": ["Singleton", "Factory", "Observer", "Builder"],
+      "correct_answer": "Singleton",
+      "explanation": "The Singleton pattern ensures only one instance of a class exists."
+    },
+    {
+      "id": 43,
+      "level": "advanced",
+      "question": "Which Java feature allows code to run in parallel?",
+      "options": ["Threads", "Interfaces", "Inheritance", "Exceptions"],
+      "correct_answer": "Threads",
+      "explanation": "Threads allow code to run in parallel in Java."
+    },
+    {
+      "id": 44,
+      "level": "advanced",
+      "question": "Which annotation is used for dependency injection in Spring?",
+      "options": ["@Autowired", "@Inject", "@Resource", "@Bean"],
+      "correct_answer": "@Autowired",
+      "explanation": "@Autowired is used for dependency injection in Spring."
+    },
+    {
+      "id": 45,
+      "level": "advanced",
+      "question": "Which Java API is used for building RESTful web services?",
+      "options": ["JAX-RS", "JDBC", "JPA", "JSP"],
+      "correct_answer": "JAX-RS",
+      "explanation": "JAX-RS is the Java API for RESTful web services."
+    },
+    {
+      "id": 46,
+      "level": "advanced",
+      "question": "What is the purpose of @Transactional annotation in Spring?",
+      "options": ["Method security", "Database transaction management", "HTTP request handling", "Dependency injection"],
+      "correct_answer": "Database transaction management",
+      "explanation": "@Transactional annotation enables declarative transaction management, handling database transactions automatically."
+    },
+    {
+      "id": 47,
+      "level": "advanced",
+      "question": "Which concurrent collection should you use for high read, low write scenarios?",
+      "options": ["ConcurrentHashMap", "Collections.synchronizedMap()", "CopyOnWriteArrayList", "Vector"],
+      "correct_answer": "CopyOnWriteArrayList",
+      "explanation": "CopyOnWriteArrayList is optimized for scenarios with high reads and low writes, as it creates a new copy on each write."
+    },
+    {
+      "id": 48,
+      "level": "advanced",
+      "question": "What is the Observer pattern implementation in Java?",
+      "options": ["Listener interface", "Observer/Observable classes", "Event handling", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Java implements Observer pattern through Observer/Observable classes, event handling mechanisms, and listener interfaces."
+    },
+    {
+      "id": 49,
+      "level": "advanced",
+      "question": "Which annotation is used for validation in Spring Boot?",
+      "options": ["@Valid", "@Validated", "@NotNull", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Spring Boot supports @Valid and @Validated for triggering validation, and @NotNull (among others) for defining validation constraints."
+    },
+    {
+      "id": 50,
+      "level": "advanced",
+      "question": "What is the difference between ExecutorService.submit() and execute()?",
+      "options": ["submit() returns Future, execute() doesn't", "execute() is faster", "submit() only accepts Callable", "No difference"],
+      "correct_answer": "submit() returns Future, execute() doesn't",
+      "explanation": "submit() returns a Future object that can be used to retrieve results or handle exceptions, while execute() doesn't return anything."
+    },
+    {
+      "id": 51,
+      "level": "advanced",
+      "question": "Which Spring profile annotation is used to conditionally load beans?",
+      "options": ["@Profile", "@Conditional", "@Environment", "@ActiveProfile"],
+      "correct_answer": "@Profile",
+      "explanation": "@Profile annotation is used to conditionally load beans based on active Spring profiles."
+    },
+    {
+      "id": 52,
+      "level": "advanced",
+      "question": "What is the recommended way to handle exceptions in Spring REST controllers?",
+      "options": ["Try-catch blocks", "@ExceptionHandler", "@ControllerAdvice", "Both @ExceptionHandler and @ControllerAdvice"],
+      "correct_answer": "Both @ExceptionHandler and @ControllerAdvice",
+      "explanation": "Both @ExceptionHandler (for controller-specific) and @ControllerAdvice (for global) are recommended for handling exceptions in Spring REST controllers."
+    },
+    {
+      "id": 53,
+      "level": "advanced",
+      "question": "What is the difference between @Component and @Service annotations in Spring?",
+      "options": ["@Service has additional features", "@Component is more general, @Service is semantically specific", "@Service is faster", "No difference"],
+      "correct_answer": "@Component is more general, @Service is semantically specific",
+      "explanation": "@Component is a general stereotype, while @Service is semantically specific for service layer components, but functionally they are the same."
+    },
+    {
+      "id": 54,
+      "level": "advanced",
+      "question": "Which Spring annotation is used to handle HTTP GET requests?",
+      "options": ["@RequestMapping", "@GetMapping", "@Controller", "Both @RequestMapping and @GetMapping"],
+      "correct_answer": "Both @RequestMapping and @GetMapping",
+      "explanation": "Both @RequestMapping(method=GET) and @GetMapping can be used to handle HTTP GET requests in Spring."
+    },
+    {
+      "id": 55,
+      "level": "advanced",
+      "question": "What are the benefits of Java Stream API?",
+      "options": ["Better performance", "Functional programming style", "Automatic parallelization", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "Stream API provides functional programming style, can offer better performance, and supports easy parallelization with parallel()."
+    },
+    {
+      "id": 56,
+      "level": "advanced",
+      "question": "What is the difference between fail-fast and fail-safe iterators?",
+      "options": ["No difference", "Fail-fast throws exception on modification, fail-safe doesn't", "Fail-safe is faster", "They work on different collections"],
+      "correct_answer": "Fail-fast throws exception on modification, fail-safe doesn't",
+      "explanation": "Fail-fast iterators throw ConcurrentModificationException when collection is modified during iteration, fail-safe iterators don't."
+    },
+    {
+      "id": 57,
+      "level": "advanced",
+      "question": "What is the purpose of CompletableFuture in Java?",
+      "options": ["Synchronous programming", "Asynchronous programming and composition", "File operations", "Memory management"],
+      "correct_answer": "Asynchronous programming and composition",
+      "explanation": "CompletableFuture provides asynchronous programming capabilities and allows composition of asynchronous operations."
+    },
+    {
+      "id": 58,
+      "level": "advanced",
+      "question": "What is the difference between ConcurrentHashMap and Hashtable?",
+      "options": ["No difference", "ConcurrentHashMap uses segment locking, Hashtable synchronizes entire map", "Hashtable is faster", "ConcurrentHashMap allows null keys"],
+      "correct_answer": "ConcurrentHashMap uses segment locking, Hashtable synchronizes entire map",
+      "explanation": "ConcurrentHashMap uses segment-based locking for better concurrency, while Hashtable synchronizes the entire map."
+    },
+    {
+      "id": 59,
+      "level": "advanced",
+      "question": "What is method reference in Java 8?",
+      "options": ["Pointer to method", "Shorthand for lambda expressions", "Method documentation", "Method overloading"],
+      "correct_answer": "Shorthand for lambda expressions",
+      "explanation": "Method references provide a compact way to refer to methods without executing them, serving as shorthand for lambda expressions."
+    },
+    {
+      "id": 60,
+      "level": "advanced",
+      "question": "What is the difference between @RequestParam and @PathVariable in Spring?",
+      "options": ["No difference", "@RequestParam for query parameters, @PathVariable for URL path", "@PathVariable is faster", "They work with different HTTP methods"],
+      "correct_answer": "@RequestParam for query parameters, @PathVariable for URL path",
+      "explanation": "@RequestParam extracts query parameters from the URL, while @PathVariable extracts values from the URL path template."
+    }
+  ]
+}

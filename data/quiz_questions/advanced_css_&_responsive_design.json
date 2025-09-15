@@ -1,0 +1,487 @@
+{
+  "course_id": 45,
+  "course_title": "Advanced CSS & Responsive Design",
+  "language": "css",
+  "questions": [
+    {
+      "id": 1,
+      "level": "basic",
+      "question": "What is responsive web design?",
+      "options": ["Design that responds to user clicks", "Design that adapts to different screen sizes", "Design with animations", "Design with interactive elements"],
+      "correct_answer": "Design that adapts to different screen sizes",
+      "explanation": "Responsive web design adapts layouts to different devices and screen sizes."
+    },
+    {
+      "id": 2,
+      "level": "basic",
+      "question": "Which CSS property is used to change the background color?",
+      "options": ["background-color", "color", "bgcolor", "background"],
+      "correct_answer": "background-color",
+      "explanation": "background-color sets the background color in CSS."
+    },
+    {
+      "id": 3,
+      "level": "basic",
+      "question": "Which unit is relative to the font size of the element?",
+      "options": ["px", "em", "%", "rem"],
+      "correct_answer": "em",
+      "explanation": "em is relative to the font size of the element."
+    },
+    {
+      "id": 4,
+      "level": "basic",
+      "question": "Which property is used to hide an element in CSS?",
+      "options": ["display: none", "visibility: hidden", "opacity: 0", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "All these properties can hide elements in different ways."
+    },
+    {
+      "id": 5,
+      "level": "basic",
+      "question": "Which selector targets all <p> elements?",
+      "options": ["p", ".p", "#p", "*p"],
+      "correct_answer": "p",
+      "explanation": "The p selector targets all <p> elements."
+    },
+    {
+      "id": 6,
+      "level": "basic",
+      "question": "Which property makes a container a flexbox container?",
+      "options": ["flex: 1", "display: flex", "flex-direction: row", "flex-wrap: wrap"],
+      "correct_answer": "display: flex",
+      "explanation": "Setting display: flex on an element makes it a flexbox container."
+    },
+    {
+      "id": 7,
+      "level": "basic",
+      "question": "Which property makes a container a grid container?",
+      "options": ["grid: 1", "display: grid", "grid-template: 1fr", "grid-area: auto"],
+      "correct_answer": "display: grid",
+      "explanation": "Setting display: grid on an element makes it a grid container."
+    },
+    {
+      "id": 8,
+      "level": "basic",
+      "question": "What does 'justify-content: center' do in flexbox?",
+      "options": ["Centers text", "Centers flex items horizontally", "Centers the container", "Justifies text"],
+      "correct_answer": "Centers flex items horizontally",
+      "explanation": "justify-content: center centers flex items along the main axis (horizontally by default)."
+    },
+    {
+      "id": 9,
+      "level": "basic",
+      "question": "What does 'align-items: center' do in flexbox?",
+      "options": ["Aligns text", "Centers flex items vertically", "Aligns the container", "Centers content"],
+      "correct_answer": "Centers flex items vertically",
+      "explanation": "align-items: center centers flex items along the cross axis (vertically by default)."
+    },
+    {
+      "id": 10,
+      "level": "basic",
+      "question": "What is the default flex-direction?",
+      "options": ["column", "row", "row-reverse", "column-reverse"],
+      "correct_answer": "row",
+      "explanation": "The default flex-direction is 'row', which arranges flex items horizontally."
+    },
+    {
+      "id": 11,
+      "level": "basic",
+      "question": "How do you create a basic media query for mobile devices?",
+      "options": ["@media (max-width: 768px)", "@media mobile", "@media screen", "@media (device: mobile)"],
+      "correct_answer": "@media (max-width: 768px)",
+      "explanation": "@media (max-width: 768px) targets screens with a maximum width of 768 pixels."
+    },
+    {
+      "id": 12,
+      "level": "basic",
+      "question": "What is the 'rem' unit relative to?",
+      "options": ["Root element font size", "Parent element font size", "Viewport width", "Default browser font size"],
+      "correct_answer": "Root element font size",
+      "explanation": "The 'rem' unit is relative to the root element's font size (usually the <html> element)."
+    },
+    {
+      "id": 13,
+      "level": "basic",
+      "question": "Which CSS property controls the flexibility of flex items?",
+      "options": ["flex", "flexible", "flex-grow", "flex-size"],
+      "correct_answer": "flex",
+      "explanation": "The 'flex' property is a shorthand for flex-grow, flex-shrink, and flex-basis."
+    },
+    {
+      "id": 14,
+      "level": "basic",
+      "question": "What does 'box-sizing: border-box' do?",
+      "options": ["Adds borders", "Includes padding and border in width", "Creates boxes", "Sets border style"],
+      "correct_answer": "Includes padding and border in width",
+      "explanation": "border-box includes padding and border in the element's total width and height."
+    },
+    {
+      "id": 15,
+      "level": "basic",
+      "question": "Which property is used for CSS transitions?",
+      "options": ["transition", "animation", "transform", "change"],
+      "correct_answer": "transition",
+      "explanation": "The transition property enables smooth changes between CSS property values."
+    },
+    {
+      "id": 16,
+      "level": "basic",
+      "question": "What does 'position: relative' do?",
+      "options": ["Positions relative to viewport", "Positions relative to normal position", "Makes element float", "Centers element"],
+      "correct_answer": "Positions relative to normal position",
+      "explanation": "position: relative positions an element relative to its normal position in the document flow."
+    },
+    {
+      "id": 17,
+      "level": "basic",
+      "question": "Which property creates rounded corners?",
+      "options": ["border-radius", "corner-radius", "border-corner", "round-border"],
+      "correct_answer": "border-radius",
+      "explanation": "border-radius creates rounded corners on elements."
+    },
+    {
+      "id": 18,
+      "level": "basic",
+      "question": "What does 'overflow: hidden' do?",
+      "options": ["Hides the element", "Clips overflowing content", "Makes content transparent", "Removes scrollbars"],
+      "correct_answer": "Clips overflowing content",
+      "explanation": "overflow: hidden clips any content that overflows the element's boundaries."
+    },
+    {
+      "id": 19,
+      "level": "basic",
+      "question": "Which property controls text color?",
+      "options": ["text-color", "color", "font-color", "text-style"],
+      "correct_answer": "color",
+      "explanation": "The color property sets the text color of an element."
+    },
+    {
+      "id": 20,
+      "level": "basic",
+      "question": "What does 'display: none' do?",
+      "options": ["Makes element transparent", "Hides element completely", "Collapses element", "Removes from layout"],
+      "correct_answer": "Hides element completely",
+      "explanation": "display: none completely removes the element from the layout as if it doesn't exist."
+    },
+    {
+      "id": 21,
+      "level": "intermediate",
+      "question": "Which CSS feature allows for flexible layouts?",
+      "options": ["Flexbox", "Grid", "Float", "Block"],
+      "correct_answer": "Flexbox",
+      "explanation": "Flexbox is used for flexible one-dimensional layouts in CSS."
+    },
+    {
+      "id": 22,
+      "level": "intermediate",
+      "question": "Which media query targets screens smaller than 600px?",
+      "options": ["@media (max-width: 600px)", "@media (min-width: 600px)", "@media (width: 600px)", "@media (device-width: 600px)"],
+      "correct_answer": "@media (max-width: 600px)",
+      "explanation": "max-width targets screens up to 600px wide."
+    },
+    {
+      "id": 23,
+      "level": "intermediate",
+      "question": "What does 'fr' unit mean in CSS Grid?",
+      "options": ["Frame", "Fractional unit", "Free space", "Fixed ratio"],
+      "correct_answer": "Fractional unit",
+      "explanation": "The 'fr' unit represents a fractional unit that distributes available space in the grid container."
+    },
+    {
+      "id": 24,
+      "level": "intermediate",
+      "question": "What is the CSS 'gap' property used for?",
+      "options": ["Creating gaps in text", "Setting space between grid/flex items", "Breaking layouts", "Creating margins"],
+      "correct_answer": "Setting space between grid/flex items",
+      "explanation": "The 'gap' property sets the space between rows and columns in grid layouts or between items in flex layouts."
+    },
+    {
+      "id": 25,
+      "level": "intermediate",
+      "question": "What does 'flex: 1' mean?",
+      "options": ["One pixel width", "Equal distribution of space", "First flex item", "One column layout"],
+      "correct_answer": "Equal distribution of space",
+      "explanation": "flex: 1 is shorthand for flex: 1 1 0, meaning the item will grow and shrink equally with other flex: 1 items."
+    },
+    {
+      "id": 26,
+      "level": "intermediate",
+      "question": "What is the 'min()' function in CSS?",
+      "options": ["Minimum value", "Returns smallest of given values", "Minimizes elements", "Minimum width"],
+      "correct_answer": "Returns smallest of given values",
+      "explanation": "The min() function returns the smallest value from a list of comma-separated values."
+    },
+    {
+      "id": 27,
+      "level": "intermediate",
+      "question": "What does 'flex-wrap: wrap' do?",
+      "options": ["Wraps text", "Allows flex items to wrap to new lines", "Wraps containers", "Creates wrapped layouts"],
+      "correct_answer": "Allows flex items to wrap to new lines",
+      "explanation": "flex-wrap: wrap allows flex items to wrap onto multiple lines when they don't fit in one line."
+    },
+    {
+      "id": 28,
+      "level": "intermediate",
+      "question": "What is the difference between 'auto-fit' and 'auto-fill' in CSS Grid?",
+      "options": ["No difference", "auto-fit collapses empty tracks, auto-fill maintains them", "auto-fit is responsive, auto-fill is fixed", "They work differently in flexbox"],
+      "correct_answer": "auto-fit collapses empty tracks, auto-fill maintains them",
+      "explanation": "auto-fit collapses empty tracks to zero, while auto-fill maintains empty tracks with their minimum size."
+    },
+    {
+      "id": 29,
+      "level": "intermediate",
+      "question": "What is 'minmax()' function in CSS Grid?",
+      "options": ["Minimum and maximum values", "Defines size range for grid tracks", "Size calculations", "Grid measurements"],
+      "correct_answer": "Defines size range for grid tracks",
+      "explanation": "minmax() defines a size range for grid tracks, specifying minimum and maximum sizes."
+    },
+    {
+      "id": 30,
+      "level": "intermediate",
+      "question": "What does 'grid-auto-rows' property do?",
+      "options": ["Auto-generates rows", "Sets size for implicitly created rows", "Automatically places rows", "Responsive row sizing"],
+      "correct_answer": "Sets size for implicitly created rows",
+      "explanation": "grid-auto-rows sets the size for grid rows that are created implicitly (not explicitly defined)."
+    },
+    {
+      "id": 31,
+      "level": "intermediate",
+      "question": "What is the 'repeat()' function in CSS Grid?",
+      "options": ["Repeats animations", "Repeats track patterns", "Duplicates elements", "Loops through values"],
+      "correct_answer": "Repeats track patterns",
+      "explanation": "repeat() function repeats track patterns in grid-template-columns or grid-template-rows."
+    },
+    {
+      "id": 32,
+      "level": "intermediate",
+      "question": "What does 'align-self' property do?",
+      "options": ["Self-alignment", "Overrides align-items for individual items", "Aligns containers", "Self-positioning"],
+      "correct_answer": "Overrides align-items for individual items",
+      "explanation": "align-self allows individual flex or grid items to override the align-items value set on their container."
+    },
+    {
+      "id": 33,
+      "level": "intermediate",
+      "question": "What is the CSS 'aspect-ratio' property used for?",
+      "options": ["Image ratios", "Maintaining width-to-height ratio", "Screen ratios", "Font ratios"],
+      "correct_answer": "Maintaining width-to-height ratio",
+      "explanation": "The aspect-ratio property sets a preferred aspect ratio for an element, maintaining the width-to-height relationship."
+    },
+    {
+      "id": 34,
+      "level": "intermediate",
+      "question": "What does 'clamp()' function do in CSS?",
+      "options": ["Clamps values", "Sets minimum, preferred, and maximum values", "Restricts properties", "Limits animations"],
+      "correct_answer": "Sets minimum, preferred, and maximum values",
+      "explanation": "clamp() takes three values: minimum, preferred, and maximum, returning a value between the min and max."
+    },
+    {
+      "id": 35,
+      "level": "intermediate",
+      "question": "What is the CSS 'object-fit' property used for?",
+      "options": ["Fitting objects", "How replaced content fits in container", "Object positioning", "Container sizing"],
+      "correct_answer": "How replaced content fits in container",
+      "explanation": "object-fit specifies how the content of replaced elements (images, videos) should fit within their container."
+    },
+    {
+      "id": 36,
+      "level": "intermediate",
+      "question": "How do you use CSS custom properties?",
+      "options": ["var(--property-name)", "custom(property-name)", "$(property-name)", "prop(property-name)"],
+      "correct_answer": "var(--property-name)",
+      "explanation": "CSS custom properties are used with the var() function: var(--property-name)."
+    },
+    {
+      "id": 37,
+      "level": "intermediate",
+      "question": "What is the 'max()' function in CSS?",
+      "options": ["Maximum value", "Returns largest of given values", "Maximizes elements", "Maximum width"],
+      "correct_answer": "Returns largest of given values",
+      "explanation": "The max() function returns the largest value from a list of comma-separated values."
+    },
+    {
+      "id": 38,
+      "level": "intermediate",
+      "question": "What does 'grid-template-areas' do?",
+      "options": ["Creates grid areas", "Names grid areas for easier placement", "Templates for grids", "Area calculations"],
+      "correct_answer": "Names grid areas for easier placement",
+      "explanation": "grid-template-areas allows you to name grid areas and place items using those names."
+    },
+    {
+      "id": 39,
+      "level": "intermediate",
+      "question": "What is 'place-items' in CSS Grid?",
+      "options": ["Places items", "Shorthand for align-items and justify-items", "Item positioning", "Grid placement"],
+      "correct_answer": "Shorthand for align-items and justify-items",
+      "explanation": "place-items is a shorthand property for align-items and justify-items in grid layouts."
+    },
+    {
+      "id": 40,
+      "level": "intermediate",
+      "question": "What does '@supports' rule do in CSS?",
+      "options": ["Browser support", "Feature queries for progressive enhancement", "Support documentation", "Help system"],
+      "correct_answer": "Feature queries for progressive enhancement",
+      "explanation": "@supports allows you to apply styles only if the browser supports specific CSS features."
+    },
+    {
+      "id": 41,
+      "level": "advanced",
+      "question": "What are CSS container queries?",
+      "options": ["Database queries", "Responsive design based on container size", "Element queries", "Content queries"],
+      "correct_answer": "Responsive design based on container size",
+      "explanation": "Container queries allow responsive design based on the size of a containing element rather than the viewport."
+    },
+    {
+      "id": 42,
+      "level": "advanced",
+      "question": "What is CSS subgrid?",
+      "options": ["Smaller grids", "Grid items participating in parent grid", "Nested grids", "Grid subdivisions"],
+      "correct_answer": "Grid items participating in parent grid",
+      "explanation": "CSS subgrid allows grid items to participate in the sizing of their parent grid, creating aligned layouts."
+    },
+    {
+      "id": 43,
+      "level": "advanced",
+      "question": "What are CSS logical properties?",
+      "options": ["Boolean properties", "Direction-agnostic properties", "Mathematical properties", "Logical operators"],
+      "correct_answer": "Direction-agnostic properties",
+      "explanation": "CSS logical properties provide direction-agnostic ways to specify properties based on writing mode and text direction."
+    },
+    {
+      "id": 44,
+      "level": "advanced",
+      "question": "What is 'margin-inline-start' in CSS logical properties?",
+      "options": ["Left margin", "Start margin in writing direction", "Top margin", "Inline margin"],
+      "correct_answer": "Start margin in writing direction",
+      "explanation": "margin-inline-start sets margin at the start of the inline direction (left in LTR, right in RTL)."
+    },
+    {
+      "id": 45,
+      "level": "advanced",
+      "question": "What is CSS Houdini?",
+      "options": ["Magic tricks", "Low-level APIs for extending CSS", "CSS framework", "Animation library"],
+      "correct_answer": "Low-level APIs for extending CSS",
+      "explanation": "CSS Houdini provides low-level APIs that expose parts of the CSS engine to developers for custom styling."
+    },
+    {
+      "id": 46,
+      "level": "advanced",
+      "question": "What are CSS scroll snap properties?",
+      "options": ["Snapping scrollbars", "Controlling scroll positioning", "Image snapping", "Layout snapping"],
+      "correct_answer": "Controlling scroll positioning",
+      "explanation": "CSS scroll snap properties control the snap positions when scrolling through content."
+    },
+    {
+      "id": 47,
+      "level": "advanced",
+      "question": "What is 'content-visibility' property?",
+      "options": ["Content hiding", "Controlling content rendering", "Visibility settings", "Content filters"],
+      "correct_answer": "Controlling content rendering",
+      "explanation": "content-visibility controls whether the browser renders an element's contents, improving performance."
+    },
+    {
+      "id": 48,
+      "level": "advanced",
+      "question": "What is 'contain' property in CSS?",
+      "options": ["Container property", "Isolation of rendering effects", "Content containment", "Layout control"],
+      "correct_answer": "Isolation of rendering effects",
+      "explanation": "The contain property allows isolating elements for rendering optimizations by limiting effects to the element."
+    },
+    {
+      "id": 49,
+      "level": "advanced",
+      "question": "What are CSS cascade layers?",
+      "options": ["Visual layers", "Controlling specificity order", "Animation layers", "Layout layers"],
+      "correct_answer": "Controlling specificity order",
+      "explanation": "CSS cascade layers provide explicit control over the cascade, allowing you to organize CSS into layers."
+    },
+    {
+      "id": 50,
+      "level": "advanced",
+      "question": "How do you create a cascade layer?",
+      "options": ["@layer name", "@cascade layer", "@layer { }", "layer: name"],
+      "correct_answer": "@layer name",
+      "explanation": "Cascade layers are created using @layer followed by the layer name and optional styles."
+    },
+    {
+      "id": 51,
+      "level": "advanced",
+      "question": "What is 'backdrop-filter' property?",
+      "options": ["Background filters", "Applying filters to element backdrop", "Image filters", "Color filters"],
+      "correct_answer": "Applying filters to element backdrop",
+      "explanation": "backdrop-filter applies graphical effects like blur to the area behind an element."
+    },
+    {
+      "id": 52,
+      "level": "advanced",
+      "question": "What are CSS mask properties?",
+      "options": ["Hiding elements", "Controlling element visibility with shapes", "Face masks", "Layer masks"],
+      "correct_answer": "Controlling element visibility with shapes",
+      "explanation": "CSS mask properties allow you to hide portions of elements using shapes, gradients, or images."
+    },
+    {
+      "id": 53,
+      "level": "advanced",
+      "question": "What is 'clip-path' property?",
+      "options": ["Clipping text", "Creating clipping shapes", "Path animations", "Drawing paths"],
+      "correct_answer": "Creating clipping shapes",
+      "explanation": "clip-path creates a clipping region that defines which parts of an element are visible."
+    },
+    {
+      "id": 54,
+      "level": "advanced",
+      "question": "What are CSS environment variables?",
+      "options": ["OS environment", "Browser-provided values", "System variables", "Global variables"],
+      "correct_answer": "Browser-provided values",
+      "explanation": "CSS environment variables are browser-provided values like safe-area-inset for device-specific styling."
+    },
+    {
+      "id": 55,
+      "level": "advanced",
+      "question": "What is 'overscroll-behavior' property?",
+      "options": ["Scrolling overflow", "Controlling scroll chaining", "Scroll speed", "Scroll direction"],
+      "correct_answer": "Controlling scroll chaining",
+      "explanation": "overscroll-behavior controls whether scrolling is chained to parent elements when reaching scroll boundaries."
+    },
+    {
+      "id": 56,
+      "level": "advanced",
+      "question": "What is 'scroll-behavior' property?",
+      "options": ["Scrolling rules", "Smooth scrolling control", "Scroll animation", "Scroll timing"],
+      "correct_answer": "Smooth scrolling control",
+      "explanation": "scroll-behavior specifies the scrolling behavior for programmatic scrolling (smooth vs auto)."
+    },
+    {
+      "id": 57,
+      "level": "advanced",
+      "question": "What are CSS math functions?",
+      "options": ["Mathematical operations", "calc(), min(), max(), clamp()", "Number functions", "Calculation tools"],
+      "correct_answer": "calc(), min(), max(), clamp()",
+      "explanation": "CSS math functions include calc(), min(), max(), and clamp() for mathematical calculations in CSS."
+    },
+    {
+      "id": 58,
+      "level": "advanced",
+      "question": "What is 'color-scheme' property?",
+      "options": ["Color themes", "Indicating light/dark preferences", "Color palettes", "Theme switching"],
+      "correct_answer": "Indicating light/dark preferences",
+      "explanation": "color-scheme indicates which color schemes an element can be rendered with (light, dark, or both)."
+    },
+    {
+      "id": 59,
+      "level": "advanced",
+      "question": "What is CSS Grid Layout Module Level 2?",
+      "options": ["Second version", "Advanced grid features like subgrid", "Grid updates", "Enhanced layouts"],
+      "correct_answer": "Advanced grid features like subgrid",
+      "explanation": "CSS Grid Layout Module Level 2 introduces advanced features like subgrid and enhanced grid capabilities."
+    },
+    {
+      "id": 60,
+      "level": "advanced",
+      "question": "What is the 'intrinsic' keyword in CSS sizing?",
+      "options": ["Built-in sizing", "Natural content size", "Internal sizing", "Automatic sizing"],
+      "correct_answer": "Natural content size",
+      "explanation": "The intrinsic keyword refers to sizing based on the natural or preferred size of the content."
+    }
+  ]
+}
