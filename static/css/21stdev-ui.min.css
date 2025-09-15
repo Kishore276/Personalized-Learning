@@ -1,0 +1,9 @@
+/* Placeholder for 21st.dev UI CSS. Please download the actual file from:
+   https://cdn.jsdelivr.net/npm/@21stdev/ui/dist/21stdev-ui.min.css
+   and replace this content. */
+body { background: #f8f9fa; }
+.ui-card { border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 1rem; margin-bottom: 1rem; }
+.ui-btn { border-radius: 0.5rem; padding: 0.5rem 1rem; background: #007bff; color: #fff; border: none; cursor: pointer; }
+.ui-navbar { background: #fff; border-bottom: 1px solid #eee; }
+.ui-icon { display: inline-block; width: 1em; height: 1em; }
+/* Add more styles as needed for testing */
