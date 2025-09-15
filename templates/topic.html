@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topic.title }} - {{ course.title }}</title>
+    <!-- CLEAN SIMPLE UI VERSION 2.0 - UPDATED -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/face-detection.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/ui-enhanced.css') }}" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #f8f9fa;
+            padding-top: 70px;
+            padding-bottom: 100px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .topic-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .topic-header {
+            background: #007bff;
+            color: white;
+            padding: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .topic-content { 
+            padding: 2rem;
+        }
+        
+        .meta-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-right: 1rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+        
+        .fixed-bottom-bar { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            background: white;
+            padding: 1rem; 
+            border-top: 1px solid #dee2e6;
+            z-index: 1000;
+        }
+        
+        .btn-complete {
+            background: #28a745;
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 5px;
+        }
+        
+        .btn-complete:hover {
+            background: #218838;
+            color: white;
+        }
+        
+        .btn-next {
+            background: #007bff;
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 5px;
+        }
+        
+        .btn-next:hover {
+            background: #0056b3;
+            color: white;
+        }
+        
+        .navbar {
+            background: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            color: #007bff !important;
+            font-weight: 600;
+        }
+        
+        .content-section h2 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .content-section pre {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .breadcrumb {
+            background: #e9ecef;
+            border-radius: 5px;
+            padding: 1rem;
+        }
+
+        /* Enhanced Content Styles */
+        .theory-content, .examples-content, .exercises-content, .quiz-content, .general-content {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+            border-left: 4px solid #007bff;
+        }
+
+        .theory-content h3, .examples-content h3, .exercises-content h3, .quiz-content h3, .general-content h3 {
+            color: #007bff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .theory-content h4, .examples-content h4, .exercises-content h4, .quiz-content h4, .general-content h4 {
+            color: #333;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .theory-content h5, .examples-content h5, .exercises-content h5, .quiz-content h5, .general-content h5 {
+            color: #555;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .key-points, .study-tips, .example-preview, .exercise-types, .getting-started, .quiz-topics, .preparation, .quiz-tips {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .example-preview pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+
+        .content-section ul {
+            padding-left: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        /* Concentration Monitor Widget */
+        .concentration-widget {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1050;
+            padding: 10px;
+        }
+        
+        .concentration-widget video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Concentration Monitoring Widget -->
+    <div class="concentration-widget">
+        <div class="text-center mb-2">
+            <small class="text-muted"><i class="fas fa-eye"></i> Concentration Monitor</small>
+        </div>
+        <video id="videoInput" width="180" height="135" autoplay muted style="border-radius:8px;"></video>
+        <div id="concentration-status" class="badge bg-info text-white w-100 mt-2 text-center" style="font-size: 0.7rem;">
+            Initializing...
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/dashboard">
+                <i class="fas fa-graduation-cap me-2"></i>Personalized Learning
+            </a>
+            <a href="{{ url_for('start_course', course_id=course.id) }}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Course
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/dashboard"><i class="fas fa-home me-1"></i>Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('start_course', course_id=course.id) }}">{{ course.title }}</a>
+                </li>
+                <li class="breadcrumb-item active">{{ topic.title }}</li>
+            </ol>
+        </nav>
+        
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="topic-container">
+                    <!-- Topic Header -->
+                    <div class="topic-header">
+                        <h1>{{ topic.title }}</h1>
+                        <div>
+                            <span class="meta-badge">
+                                <i class="fas fa-clock me-1"></i>{{ topic.estimated_time }} minutes
+                            </span>
+                            {% if topic.difficulty %}
+                                <span class="meta-badge">
+                                    <i class="fas fa-signal me-1"></i>{{ topic.difficulty }}
+                                </span>
+                            {% endif %}
+                            <span class="meta-badge">
+                                <i class="fas fa-book me-1"></i>{{ course.title }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Main Content -->
+                    <div class="topic-content">
+                        <div class="content-section">
+                            {{ topic.content|safe }}
+                        </div>
+                        
+                        <!-- Navigation -->
+                        <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                            <div>
+                                {% if prev_topic %}
+                                <a href="{{ url_for('view_topic', course_id=course.id, topic_id=prev_topic.id) }}"
+                                   class="btn btn-outline-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>{{ prev_topic.title }}
+                                </a>
+                                {% endif %}
+                            </div>
+                            
+                            <div>
+                                {% if next_topic %}
+                                <a href="{{ url_for('view_topic', course_id=course.id, topic_id=next_topic.id) }}"
+                                   class="btn btn-next d-none"
+                                   id="next-topic-btn"
+                                   onclick="showModuleCompletionFeedback(event); return false;">
+                                    {{ next_topic.title }}<i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <!-- Progress Card -->
+                <div class="sidebar-card text-center">
+                    <h5><i class="fas fa-chart-line me-2 text-primary"></i>Progress</h5>
+                    <div class="progress-circle">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="50" fill="transparent" stroke="#e9ecef" stroke-width="8"/>
+                            <circle cx="60" cy="60" r="50" fill="transparent" stroke="#007bff" stroke-width="8"
+                                    stroke-dasharray="314" stroke-dashoffset="{{ 314 - (314 * progress / 100) }}"
+                                    stroke-linecap="round" transform="rotate(-90 60 60)"/>
+                            <text x="60" y="65" text-anchor="middle" fill="#007bff" font-size="20" font-weight="bold">
+                                {{ progress }}%
+                            </text>
+                        </svg>
+                    </div>
+                    <p class="text-muted">Course Completion</p>
+                </div>
+                
+                <!-- Topic Info -->
+                <div class="sidebar-card">
+                    <h6><i class="fas fa-info-circle me-2 text-info"></i>Topic Details</h6>
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <div class="p-2">
+                                <i class="fas fa-clock text-primary fs-4"></i>
+                                <div class="mt-1">
+                                    <small class="text-muted">Duration</small>
+                                    <div class="fw-bold">{{ topic.estimated_time }} min</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2">
+                                <i class="fas fa-signal text-success fs-4"></i>
+                                <div class="mt-1">
+                                    <small class="text-muted">Level</small>
+                                    <div class="fw-bold">{{ topic.difficulty or 'Beginner' }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="sidebar-card">
+                    <h6><i class="fas fa-tools me-2 text-warning"></i>Quick Actions</h6>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary btn-sm" onclick="printTopic()">
+                            <i class="fas fa-print me-2"></i>Print Topic
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="toggleFontSize()">
+                            <i class="fas fa-text-height me-2"></i>Adjust Font
+                        </button>
+                        <button class="btn btn-outline-info btn-sm" onclick="highlightText()">
+                            <i class="fas fa-highlighter me-2"></i>Highlight Mode
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Action Bar -->
+    <div class="fixed-bottom-bar">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div class="progress me-3" style="width: 200px; height: 8px;">
+                        <div class="progress-bar bg-primary" 
+                             style="width: {{ progress }}%;" 
+                             aria-valuenow="{{ progress }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                        </div>
+                    </div>
+                    <span class="fw-bold text-muted">{{ progress }}% Complete</span>
+                </div>
+                
+                <div class="d-flex gap-2 align-items-center">
+                    {% if prev_topic %}
+                    <a href="{{ url_for('view_topic', course_id=course.id, topic_id=prev_topic.id) }}"
+                       class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Previous
+                    </a>
+                    {% endif %}
+                    
+                    {% if topic.status != 'completed' %}
+                    <button type="button" id="complete-topic-btn" class="btn btn-complete">
+                        <i class="fas fa-check-circle me-2"></i>Mark Complete
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-secondary" disabled>
+                        <i class="fas fa-check-circle me-2"></i>Completed
+                    </button>
+                    {% endif %}
+
+                    {% if next_topic %}
+                    <a href="{{ url_for('view_topic', course_id=course.id, topic_id=next_topic.id) }}"
+                       id="next-topic-btn-bottom"
+                       class="btn btn-next d-none"
+                       onclick="showModuleCompletionFeedback(event); return false;">
+                        Next Topic <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('start_course', course_id=course.id) }}"
+                       id="finish-course-btn-bottom"
+                       class="btn btn-next d-none"
+                       onclick="showModuleCompletionFeedback(event); return false;">
+                        Finish Course <i class="fas fa-trophy ms-2"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check if topic is already completed on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const topicStatus = '{{ topic.status }}';
+            const nextBtn = document.getElementById('next-topic-btn');
+            const nextBtnBottom = document.getElementById('next-topic-btn-bottom') || document.getElementById('finish-course-btn-bottom');
+            
+            if (topicStatus === 'completed') {
+                // Show next buttons if already completed
+                if (nextBtn) {
+                    nextBtn.classList.remove('d-none');
+                    nextBtn.style.display = 'inline-flex';
+                }
+                if (nextBtnBottom) {
+                    nextBtnBottom.classList.remove('d-none');
+                    nextBtnBottom.style.display = 'inline-flex';
+                }
+            }
+            
+            // Initialize syntax highlighting
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAll();
+            }
+        });
+
+        // Complete topic button
+        const completeBtn = document.getElementById('complete-topic-btn');
+        if (completeBtn) {
+            completeBtn.addEventListener('click', async function() {
+                // Add loading state
+                const originalText = completeBtn.innerHTML;
+                completeBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Completing...';
+                completeBtn.disabled = true;
+                
+                try {
+                    const response = await fetch(`/complete_topic/{{ course.id }}/{{ topic.id }}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            time_spent: Date.now() - (performance.timing.navigationStart || Date.now()),
+                            concentration_score: 85 // Default score
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        // Update complete button
+                        completeBtn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Completed';
+                        completeBtn.classList.remove('btn-complete');
+                        completeBtn.classList.add('btn-secondary');
+                        
+                        // Show next topic buttons with animation
+                        const nextBtn = document.getElementById('next-topic-btn');
+                        const nextBtnBottom = document.getElementById('next-topic-btn-bottom') || document.getElementById('finish-course-btn-bottom');
+                        
+                        [nextBtn, nextBtnBottom].forEach(btn => {
+                            if (btn) {
+                                btn.classList.remove('d-none');
+                                btn.style.display = 'inline-flex';
+                                btn.style.opacity = '0';
+                                btn.style.transform = 'translateX(20px)';
+                                btn.style.transition = 'all 0.5s ease';
+                                
+                                setTimeout(() => {
+                                    btn.style.opacity = '1';
+                                    btn.style.transform = 'translateX(0)';
+                                }, 100);
+                            }
+                        });
+                        
+                        // Update all progress indicators
+                        if (data.progress !== undefined) {
+                            const newProgress = Math.round(data.progress);
+                            
+                            // Update progress bars
+                            document.querySelectorAll('.progress-bar').forEach(bar => {
+                                bar.style.width = newProgress + '%';
+                                bar.setAttribute('aria-valuenow', newProgress);
+                            });
+                            
+                            // Update progress fill
+                            document.querySelectorAll('.progress-fill').forEach(fill => {
+                                fill.style.width = newProgress + '%';
+                            });
+                            
+                            // Update circular progress
+                            document.querySelectorAll('circle[stroke="white"]').forEach(circle => {
+                                const circumference = 220;
+                                const offset = circumference - (circumference * newProgress / 100);
+                                circle.style.strokeDashoffset = offset;
+                            });
+                            
+                            // Update progress text
+                            document.querySelectorAll('text').forEach(text => {
+                                if (text.textContent.includes('%')) {
+                                    text.textContent = newProgress + '%';
+                                }
+                            });
+                            
+                            document.querySelectorAll('.fw-bold').forEach(text => {
+                                if (text.textContent.includes('% Complete')) {
+                                    text.textContent = newProgress + '% Complete';
+                                }
+                            });
+                        }
+                        
+                        // Show success notification
+                        showSuccessNotification('Topic completed successfully! 🎉');
+                        
+                        // Add celebration effect
+                        createCelebrationEffect();
+                        
+                    } else {
+                        throw new Error('Failed to complete topic');
+                    }
+                } catch (error) {
+                    console.error('Error completing topic:', error);
+                    completeBtn.innerHTML = originalText;
+                    completeBtn.disabled = false;
+                    showErrorNotification('Failed to mark topic as completed. Please try again.');
+                }
+            });
+        }
+        
+        // Enhanced notification functions
+        function showSuccessNotification(message) {
+            showNotification(message, 'success');
+        }
+        
+        function showErrorNotification(message) {
+            showNotification(message, 'error');
+        }
+        
+        function showNotification(message, type = 'info') {
+            const toastContainer = document.getElementById('toast-container') || createToastContainer();
+            
+            const toastHtml = `
+                <div class="toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} me-2"></i>
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            `;
+            
+            const toastElement = document.createElement('div');
+            toastElement.innerHTML = toastHtml;
+            const toast = toastElement.firstElementChild;
+            
+            toastContainer.appendChild(toast);
+            
+            const bsToast = new bootstrap.Toast(toast, { delay: 5000 });
+            bsToast.show();
+            
+            toast.addEventListener('hidden.bs.toast', () => {
+                toast.remove();
+            });
+        }
+        
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toast-container';
+            container.className = 'toast-container position-fixed top-0 end-0 p-3';
+            container.style.zIndex = '1055';
+            document.body.appendChild(container);
+            return container;
+        }
+        
+        function createCelebrationEffect() {
+            // Create confetti effect
+            const colors = ['#667eea', '#764ba2', '#4CAF50', '#ff9800', '#f44336'];
+            const confettiCount = 50;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-10px';
+                confetti.style.zIndex = '9999';
+                confetti.style.borderRadius = '50%';
+                confetti.style.pointerEvents = 'none';
+                
+                document.body.appendChild(confetti);
+                
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight + 20}px) rotate(360deg)`, opacity: 0 }
+                ], {
+                    duration: 3000 + Math.random() * 2000,
+                    easing: 'cubic-bezier(0.5, 0, 0.5, 1)'
+                });
+                
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+        
+    <script>
+        // Global variables
+        let currentFontSize = 16;
+        let highlightMode = false;
+        
+        // Check if topic is already completed on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const topicStatus = '{{ topic.status }}';
+            const nextBtn = document.getElementById('next-topic-btn');
+            const nextBtnBottom = document.getElementById('next-topic-btn-bottom') || document.getElementById('finish-course-btn-bottom');
+            
+            if (topicStatus === 'completed') {
+                // Show next buttons if already completed
+                if (nextBtn) {
+                    nextBtn.classList.remove('d-none');
+                }
+                if (nextBtnBottom) {
+                    nextBtnBottom.classList.remove('d-none');
+                }
+            }
+        });
+
+        // Complete topic button functionality
+        const completeBtn = document.getElementById('complete-topic-btn');
+        if (completeBtn) {
+            completeBtn.addEventListener('click', async function() {
+                // Add loading state
+                const originalText = completeBtn.innerHTML;
+                completeBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Completing...';
+                completeBtn.disabled = true;
+                
+                try {
+                    const response = await fetch(`/complete_topic/{{ course.id }}/{{ topic.id }}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            time_spent: Math.floor(Math.random() * 600) + 300, // 5-15 minutes
+                            concentration_score: 85
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        // Update complete button
+                        completeBtn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Completed';
+                        completeBtn.classList.remove('btn-complete');
+                        completeBtn.classList.add('btn-secondary');
+                        
+                        // Show next topic buttons
+                        const nextBtn = document.getElementById('next-topic-btn');
+                        const nextBtnBottom = document.getElementById('next-topic-btn-bottom') || document.getElementById('finish-course-btn-bottom');
+                        
+                        if (nextBtn) {
+                            nextBtn.classList.remove('d-none');
+                        }
+                        if (nextBtnBottom) {
+                            nextBtnBottom.classList.remove('d-none');
+                        }
+                        
+                        // Update progress indicators
+                        if (data.progress !== undefined) {
+                            const newProgress = Math.round(data.progress);
+                            
+                            // Update progress bars
+                            document.querySelectorAll('.progress-bar').forEach(bar => {
+                                bar.style.width = newProgress + '%';
+                                bar.setAttribute('aria-valuenow', newProgress);
+                            });
+                            
+                            // Update circular progress
+                            document.querySelectorAll('circle[stroke="#007bff"]').forEach(circle => {
+                                const circumference = 314;
+                                const offset = circumference - (circumference * newProgress / 100);
+                                circle.style.strokeDashoffset = offset;
+                            });
+                            
+                            // Update progress text
+                            document.querySelectorAll('text').forEach(text => {
+                                if (text.textContent.includes('%')) {
+                                    text.textContent = newProgress + '%';
+                                }
+                            });
+                            
+                            document.querySelectorAll('.fw-bold').forEach(text => {
+                                if (text.textContent.includes('% Complete')) {
+                                    text.textContent = newProgress + '% Complete';
+                                }
+                            });
+                        }
+                        
+                        // Show success message
+                        showNotification('Topic completed successfully! 🎉', 'success');
+                        
+                    } else {
+                        throw new Error('Failed to complete topic');
+                    }
+                } catch (error) {
+                    console.error('Error completing topic:', error);
+                    completeBtn.innerHTML = originalText;
+                    completeBtn.disabled = false;
+                    showNotification('Failed to mark topic as completed. Please try again.', 'error');
+                }
+            });
+        }
+        
+        // Print topic functionality
+        window.printTopic = function() {
+            const printWindow = window.open('', '_blank');
+            const content = document.querySelector('.content-section').innerHTML;
+            const topicTitle = document.querySelector('h1').textContent;
+            
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>${topicTitle}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        h1, h2, h3 { color: #333; }
+                        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; }
+                        code { background: #f5f5f5; padding: 2px 4px; border-radius: 3px; }
+                    </style>
+                </head>
+                <body>
+                    <h1>${topicTitle}</h1>
+                    ${content}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        };
+        
+        // Toggle font size functionality
+        window.toggleFontSize = function() {
+            const contentSection = document.querySelector('.content-section');
+            if (currentFontSize === 16) {
+                currentFontSize = 20;
+                contentSection.style.fontSize = '20px';
+                showNotification('Font size increased', 'info');
+            } else {
+                currentFontSize = 16;
+                contentSection.style.fontSize = '16px';
+                showNotification('Font size reset', 'info');
+            }
+        };
+        
+        // Highlight text functionality
+        window.highlightText = function() {
+            const contentSection = document.querySelector('.content-section');
+            
+            if (!highlightMode) {
+                // Enable highlight mode
+                highlightMode = true;
+                contentSection.style.cursor = 'crosshair';
+                contentSection.addEventListener('mouseup', handleTextSelection);
+                showNotification('Highlight mode enabled. Select text to highlight.', 'info');
+            } else {
+                // Disable highlight mode
+                highlightMode = false;
+                contentSection.style.cursor = 'default';
+                contentSection.removeEventListener('mouseup', handleTextSelection);
+                showNotification('Highlight mode disabled', 'info');
+            }
+        };
+        
+        // Handle text selection for highlighting
+        function handleTextSelection() {
+            const selection = window.getSelection();
+            if (selection.toString().length > 0) {
+                const range = selection.getRangeAt(0);
+                const span = document.createElement('span');
+                span.style.backgroundColor = '#ffeb3b';
+                span.style.padding = '2px';
+                span.style.borderRadius = '3px';
+                
+                try {
+                    range.surroundContents(span);
+                    showNotification('Text highlighted!', 'success');
+                } catch (e) {
+                    // If can't surround contents, create new element
+                    const contents = range.extractContents();
+                    span.appendChild(contents);
+                    range.insertNode(span);
+                    showNotification('Text highlighted!', 'success');
+                }
+                selection.removeAllRanges();
+            }
+        }
+        
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const toastContainer = document.getElementById('toast-container') || createToastContainer();
+            
+            const bgColor = type === 'success' ? 'bg-success' : type === 'error' ? 'bg-danger' : 'bg-info';
+            const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle';
+            
+            const toastHtml = `
+                <div class="toast align-items-center text-white ${bgColor} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-${icon} me-2"></i>${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            `;
+            
+            const toastElement = document.createElement('div');
+            toastElement.innerHTML = toastHtml;
+            const toast = toastElement.firstElementChild;
+            
+            toastContainer.appendChild(toast);
+            
+            const bsToast = new bootstrap.Toast(toast, { delay: 3000 });
+            bsToast.show();
+            
+            toast.addEventListener('hidden.bs.toast', () => {
+                toast.remove();
+            });
+        }
+        
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toast-container';
+            container.className = 'toast-container position-fixed top-0 end-0 p-3';
+            container.style.zIndex = '1055';
+            document.body.appendChild(container);
+            return container;
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+    
+    <!-- Add concentration monitoring -->
+    <script src="{{ url_for('static', filename='js/webcam_emotion.js') }}"></script>
+</body>
+</html>

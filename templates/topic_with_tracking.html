@@ -1,0 +1,537 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topic.title }} - {{ course.title }}</title>
+    <!-- CACHE BUSTER v4.0 - NO BUTTONS VERSION -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #f8f9fa;
+            padding-top: 70px;
+            padding-bottom: 120px;
+        }
+        .topic-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 15px 0;
+            z-index: 1000;
+        }
+        .next-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        /* Exercise progression styles */
+        .exercise-locked {
+            opacity: 0.5;
+            pointer-events: none;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+        }
+        
+        .exercise-active {
+            border: 2px solid #007bff;
+            background: white;
+        }
+        
+        .exercise-completed {
+            border: 2px solid #28a745;
+            background: #f8f9fa;
+        }
+        
+        .quiz-container {
+            margin-top: 20px;
+        }
+        
+        .question-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .quiz-option {
+            padding: 10px 15px;
+            margin: 8px 0;
+            background-color: white;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option:hover {
+            border-color: #007bff;
+            background-color: #f8f9ff;
+        }
+        
+        .quiz-option.selected {
+            border-color: #007bff;
+            background-color: #e7f1ff;
+        }
+        
+        .score-display {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .score-display.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .score-display.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .total-score {
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .solution {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f4ff;
+            border-radius: 5px;
+        }
+        
+        .show-solution {
+            display: none;
+        }
+            border: 2px solid #28a745;
+            background: #f8fff9;
+        }
+        
+        .lock-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .exercise-card {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .progress-indicator {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .progress-locked { background: #6c757d; color: white; }
+        .progress-active { background: #007bff; color: white; }
+        .progress-completed { background: #28a745; color: white; }
+        
+        .score-display {
+            background: #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .score-correct { color: #28a745; font-weight: bold; }
+        .score-wrong { color: #dc3545; font-weight: bold; }
+        
+        .solution-panel {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- CLEAN VERSION v4.0 - NO BUTTONS -->
+        <div class="topic-container">
+            <h1>{{ topic.title }}</h1>
+            <p class="text-muted">{{ course.title }}</p>
+            
+            <div class="content-area">
+                {{ topic.content | safe }}
+            </div>
+
+            {% if sub_exercises %}
+            <div class="exercises-section">
+                {% for sub_exercise in sub_exercises %}
+                <div class="exercise-section" id="exercise{{ loop.index }}" 
+                     {% if not loop.first %}style="display: none;"{% endif %}>
+                    
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <span class="progress-indicator {% if loop.first %}progress-active{% endif %}" 
+                                      id="progress-{{ loop.index }}">
+                                    {{ loop.index }}
+                                </span>
+                                <h5 class="mb-0 ms-3">Exercise {{ loop.index }}: {{ sub_exercise.title }}</h5>
+                            </div>
+                            {% if not loop.last %}
+                            <button class="btn btn-primary start-exercise" {% if not loop.first %}style="display: none;"{% endif %}>
+                                Start Next Exercise
+                            </button>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="card-header d-flex align-items-center">
+                            <span class="progress-indicator {{ 'progress-active' if loop.index == 1 else 'progress-locked' }}" 
+                                  id="progress-{{ loop.index }}">
+                                {{ loop.index }}
+                            </span>
+                            <h5 class="mb-0">{{ sub_exercise.title }}</h5>
+                        </div>
+                        
+                        <div class="card-body">
+                            {{ sub_exercise.content | safe }}
+                            
+                            {% if sub_exercise.instructions %}
+                            <div class="alert alert-primary mt-3">
+                                <h6><i class="fas fa-info-circle me-2"></i>Instructions</h6>
+                                <p class="mb-0">{{ sub_exercise.instructions }}</p>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- Exercise Action Buttons -->
+                            <div class="exercise-actions mt-4" id="actions-{{ loop.index }}">
+                                <!-- Start Exercise Button (visible initially for exercise 1) -->
+                                <button class="btn btn-primary" id="start-btn-{{ loop.index }}" 
+                                        onclick="startExercise({{ loop.index }}, {{ sub_exercise.id }})"
+                                        {% if loop.index > 1 %}style="display: none;"{% endif %}>
+                                    <i class="fas fa-play me-1"></i>Start Exercise
+                                </button>
+                                
+                                <!-- Show Hints Button (appears after starting) -->
+                                <button class="btn btn-outline-secondary" id="hints-btn-{{ loop.index }}" 
+                                        onclick="showHints({{ loop.index }}, {{ sub_exercise.id }})"
+                                        style="display: none;">
+                                    <i class="fas fa-lightbulb me-1"></i>Show Hints
+                                </button>
+                                
+                                <!-- Submit Solution Button (appears after starting) -->
+                                <button class="btn btn-success" id="submit-btn-{{ loop.index }}" 
+                                        onclick="submitSolution({{ loop.index }}, {{ sub_exercise.id }})"
+                                        style="display: none;">
+                                    <i class="fas fa-check me-1"></i>Submit Solution
+                                </button>
+                                
+                                <!-- Show Solution Button (appears after submitting) -->
+                                <button class="btn btn-warning" id="solution-btn-{{ loop.index }}" 
+                                        onclick="showSolution({{ loop.index }}, {{ sub_exercise.id }})"
+                                        style="display: none;">
+                                    <i class="fas fa-eye me-1"></i>Show Solution
+                                </button>
+                            </div>
+                            
+                            <!-- Score Display Area -->
+                            <div class="score-display" id="score-{{ loop.index }}" style="display: none;">
+                                <h6><i class="fas fa-chart-bar me-2"></i>Your Score</h6>
+                                <div id="score-content-{{ loop.index }}"></div>
+                            </div>
+                            
+                            <!-- Solution Panel -->
+                            <div class="solution-panel" id="solution-panel-{{ loop.index }}">
+                                <h6><i class="fas fa-graduation-cap me-2"></i>Solution</h6>
+                                <div id="solution-content-{{ loop.index }}">
+                                    <!-- Solution content will be loaded here -->
+                                    <p>Here's the step-by-step solution for this exercise:</p>
+                                    <div class="alert alert-info">
+                                        <strong>Hint:</strong> This is where the detailed solution would appear.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="fixed-footer">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span>Complete the topic to continue</span>
+            
+            <div class="d-flex gap-3">
+                {% if prev_topic %}
+                <a href="/course/{{ course.id }}/topic/{{ prev_topic.id }}" class="btn btn-outline-secondary">
+                    Previous
+                </a>
+                {% endif %}
+
+                <button class="btn btn-success" onclick="markComplete()" id="completeBtn">
+                    Mark Complete
+                </button>
+
+                {% if next_topic %}
+                <a href="/course/{{ course.id }}/topic/{{ next_topic.id }}" class="btn btn-primary disabled" id="next-topic-btn">
+                    Next Topic
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Exercise progression tracking
+        let exerciseProgress = {
+            currentExercise: 1,
+            totalExercises: {{ sub_exercises|length if sub_exercises else 0 }},
+            scores: {},
+            completed: []
+        };
+        
+        function startExercise(exerciseNum, exerciseId) {
+            console.log('Starting exercise:', exerciseNum);
+            
+            // Hide start button and show other buttons
+            document.getElementById(`start-btn-${exerciseNum}`).style.display = 'none';
+            document.getElementById(`hints-btn-${exerciseNum}`).style.display = 'inline-block';
+            document.getElementById(`submit-btn-${exerciseNum}`).style.display = 'inline-block';
+            
+            // Mark exercise as active
+            updateProgressIndicator(exerciseNum, 'active');
+            
+            // Show success message
+            showNotification(`Exercise ${exerciseNum} started! Good luck!`, 'info');
+        }
+        
+        function showHints(exerciseNum, exerciseId) {
+            const hints = [
+                "Break down the problem into smaller steps",
+                "Consider the data structures and algorithms needed",
+                "Think about edge cases and error handling",
+                "Review the requirements carefully"
+            ];
+            
+            const hintsHtml = hints.map((hint, index) => 
+                `<div class="alert alert-light"><strong>Hint ${index + 1}:</strong> ${hint}</div>`
+            ).join('');
+            
+            showNotification('💡 Hints revealed! Check below the exercise.', 'info');
+            
+            // Add hints to the exercise
+            const exerciseCard = document.getElementById(`exercise-card-${exerciseNum}`);
+            let hintsDiv = exerciseCard.querySelector('.hints-section');
+            if (!hintsDiv) {
+                hintsDiv = document.createElement('div');
+                hintsDiv.className = 'hints-section mt-3';
+                hintsDiv.innerHTML = `
+                    <h6><i class="fas fa-lightbulb me-2 text-warning"></i>Helpful Hints</h6>
+                    ${hintsHtml}
+                `;
+                exerciseCard.querySelector('.card-body').appendChild(hintsDiv);
+            }
+        }
+        
+        function submitSolution(exerciseNum, exerciseId) {
+            // Simulate scoring (in real app, this would validate actual solution)
+            const correctAnswers = Math.floor(Math.random() * 5) + 3; // 3-7 correct
+            const totalQuestions = 5;
+            const wrongAnswers = totalQuestions - correctAnswers;
+            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+            
+            // Store score
+            exerciseProgress.scores[exerciseNum] = {
+                correct: correctAnswers,
+                wrong: wrongAnswers,
+                total: totalQuestions,
+                percentage: percentage
+            };
+            
+            // Update UI
+            const scoreDiv = document.getElementById(`score-${exerciseNum}`);
+            const scoreContent = document.getElementById(`score-content-${exerciseNum}`);
+            
+            scoreContent.innerHTML = `
+                <div class="row text-center">
+                    <div class="col-4">
+                        <div class="score-correct">
+                            <i class="fas fa-check-circle fa-2x"></i>
+                            <div><strong>${correctAnswers}</strong></div>
+                            <small>Correct</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="score-wrong">
+                            <i class="fas fa-times-circle fa-2x"></i>
+                            <div><strong>${wrongAnswers}</strong></div>
+                            <small>Wrong</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-primary">
+                            <i class="fas fa-percentage fa-2x"></i>
+                            <div><strong>${percentage}%</strong></div>
+                            <small>Score</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            scoreDiv.style.display = 'block';
+            
+            // Hide submit button and show solution button
+            document.getElementById(`submit-btn-${exerciseNum}`).style.display = 'none';
+            document.getElementById(`solution-btn-${exerciseNum}`).style.display = 'inline-block';
+            
+            // Mark as completed and unlock next
+            markExerciseCompleted(exerciseNum);
+            unlockNextExercise(exerciseNum);
+            
+            // Show notification
+            showNotification(`Exercise ${exerciseNum} submitted! Score: ${percentage}%`, 
+                percentage >= 70 ? 'success' : 'warning');
+        }
+        
+        function showSolution(exerciseNum, exerciseId) {
+            const solutionPanel = document.getElementById(`solution-panel-${exerciseNum}`);
+            if (solutionPanel.style.display === 'none' || solutionPanel.style.display === '') {
+                solutionPanel.style.display = 'block';
+                document.getElementById(`solution-btn-${exerciseNum}`).innerHTML = 
+                    '<i class="fas fa-eye-slash me-1"></i>Hide Solution';
+                showNotification('Solution revealed!', 'info');
+            } else {
+                solutionPanel.style.display = 'none';
+                document.getElementById(`solution-btn-${exerciseNum}`).innerHTML = 
+                    '<i class="fas fa-eye me-1"></i>Show Solution';
+            }
+        }
+        
+        function markExerciseCompleted(exerciseNum) {
+            exerciseProgress.completed.push(exerciseNum);
+            updateProgressIndicator(exerciseNum, 'completed');
+            
+            // Mark card as completed
+            const exerciseCard = document.querySelector(`#exercise-card-${exerciseNum} .card`);
+            exerciseCard.classList.remove('exercise-active');
+            exerciseCard.classList.add('exercise-completed');
+        }
+        
+        function unlockNextExercise(currentExercise) {
+            const nextExercise = currentExercise + 1;
+            if (nextExercise <= exerciseProgress.totalExercises) {
+                // Remove lock overlay
+                const lockOverlay = document.getElementById(`lock-${nextExercise}`);
+                if (lockOverlay) {
+                    lockOverlay.style.display = 'none';
+                }
+                
+                // Enable next exercise
+                const nextCard = document.querySelector(`#exercise-card-${nextExercise} .card`);
+                nextCard.classList.remove('exercise-locked');
+                nextCard.classList.add('exercise-active');
+                
+                // Show start button for next exercise
+                document.getElementById(`start-btn-${nextExercise}`).style.display = 'inline-block';
+                
+                // Update progress
+                updateProgressIndicator(nextExercise, 'active');
+                
+                showNotification(`🎉 Exercise ${nextExercise} unlocked! You can start it now.`, 'success');
+            }
+        }
+        
+        function updateProgressIndicator(exerciseNum, status) {
+            const indicator = document.getElementById(`progress-${exerciseNum}`);
+            indicator.className = `progress-indicator progress-${status}`;
+            
+            if (status === 'completed') {
+                indicator.innerHTML = '<i class="fas fa-check"></i>';
+            }
+        }
+        
+        function markComplete() {
+            const btn = document.getElementById('completeBtn');
+            const nextBtn = document.getElementById('next-topic-btn');
+            
+            btn.innerHTML = 'Completed!';
+            btn.disabled = true;
+            
+            if (nextBtn) {
+                nextBtn.classList.remove('disabled');
+            }
+            
+            showNotification('🎉 Topic completed! You can now proceed to the next topic.', 'success');
+        }
+        
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : type === 'warning' ? 'warning' : 'info'} position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                border: none;
+                border-radius: 8px;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <span>${message}</span>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 4000);
+        }
+        
+        // Add slide-in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

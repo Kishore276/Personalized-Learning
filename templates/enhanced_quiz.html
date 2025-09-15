@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Quiz System - Personalized Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(1deg); }
+        }
+
+        /* Modern glass container */
+        .quiz-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-xl);
+            margin: 20px auto;
+            max-width: 1200px;
+            overflow: hidden;
+        }
+
+        /* Modern header */
+        .quiz-header {
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        /* Modern card design */
+        .quiz-type-card, .course-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            height: 100%;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .quiz-type-card::before, .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .quiz-type-card:hover, .course-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .quiz-type-card:hover::before, .course-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .quiz-type-card.selected, .course-card.selected {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(102, 126, 234, 0.4);
+        }
+
+        .quiz-type-card.selected::before, .course-card.selected::before {
+            opacity: 0;
+        }
+        .question-card {
+            background: white;
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .question-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+        }
+        .option-card {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option-card:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        .option-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .progress-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .btn-quiz {
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .category-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        .difficulty-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .difficulty-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .difficulty-beginner .difficulty-dot { background: #28a745; }
+        .difficulty-intermediate .difficulty-dot { background: #ffc107; }
+        .difficulty-advanced .difficulty-dot { background: #dc3545; }
+
+        /* Modern enhanced styles */
+        .btn-modern {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 16px;
+            padding: 14px 28px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .btn-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+        .btn-modern:hover::before {
+            left: 100%;
+        }
+
+        /* Enhanced filter tabs */
+        .course-filter-tabs .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .course-filter-tabs .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .course-filter-tabs .btn.active {
+            background: white;
+            color: var(--text-primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Enhanced category buttons */
+        .category-buttons .btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .category-buttons .btn:hover {
+            background: white;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-buttons .btn.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+        }
+        .course-selector {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Enhanced animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        /* Modern course cards */
+        .course-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .course-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .course-card.selected {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(102, 126, 234, 0.4);
+        }
+
+        .course-card.selected::before {
+            opacity: 0;
+        }
+
+        /* Modern status badges */
+        .course-status-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .course-status-badge.available {
+            background: var(--success-gradient);
+            color: white;
+        }
+
+        .course-status-badge.in_progress {
+            background: var(--warning-gradient);
+            color: white;
+        }
+
+        .course-status-badge.completed {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        /* Modern statistics cards */
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        /* Enhanced progress bar */
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            background-size: 200% 100%;
+            animation: progressShine 2s linear infinite;
+        }
+
+        @keyframes progressShine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Enhanced option cards */
+        .option-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .option-card:hover::before {
+            left: 100%;
+        }
+
+        /* Score display enhancements */
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#667eea 0deg, #764ba2 180deg, #e9ecef 180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: white;
+            position: absolute;
+        }
+
+        .score-text {
+            position: relative;
+            z-index: 1;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Loading spinner */
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error message styling */
+        .error-message {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Success message styling */
+        .success-message {
+            background: linear-gradient(135deg, #51cf66, #40c057);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* Course filter tabs styling */
+        .course-filter-tabs .btn-group {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .course-filter-tabs .btn {
+            border: none;
+            padding: 12px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .course-filter-tabs .btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .course-filter-tabs .btn:hover:not(.active) {
+            background: #f8f9fa;
+            transform: translateY(-1px);
+        }
+
+        /* Course statistics styling */
+        .course-stats {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-card {
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Enhanced course cards */
+        .course-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .course-card.available {
+            border-left: 4px solid #28a745;
+        }
+
+        .course-card.ongoing {
+            border-left: 4px solid #17a2b8;
+        }
+
+        .course-card.completed {
+            border-left: 4px solid #ffc107;
+        }
+
+        .course-status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .course-status-badge.available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .course-status-badge.ongoing {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .course-status-badge.completed {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .course-progress {
+            margin-top: 10px;
+        }
+
+        .course-progress .progress {
+            height: 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: rgba(0,0,0,0.1); backdrop-filter: blur(10px);">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="font-weight: 700; font-size: 1.5rem;">
+                <i class="fas fa-graduation-cap me-2" style="color: #667eea;"></i>
+                <span style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">QuizMaster</span>
+            </a>
+            <div class="navbar-nav ms-auto d-flex flex-row align-items-center">
+                <span class="navbar-text text-white me-3">
+                    <i class="fas fa-user me-2"></i>{{ session.get('username', 'User') }}
+                </span>
+                <a class="nav-link me-2" href="{{ url_for('dashboard') }}">
+                    <i class="fas fa-home me-1"></i>Dashboard
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <h1 class="mb-3" style="font-weight: 700; font-size: 2.5rem;">
+                    <i class="fas fa-rocket me-3" style="color: rgba(255,255,255,0.9);"></i>
+                    Programming Quiz Challenge
+                </h1>
+                <p class="mb-0" style="font-size: 1.1rem; opacity: 0.9;">
+                    🚀 Test your programming skills with our intelligent adaptive quiz system
+                </p>
+            </div>
+
+            <div class="p-4">
+                <!-- Course Selection -->
+                <div id="courseSelectionSection">
+                    <div class="text-center mb-4">
+                        <h3><i class="fas fa-book me-2"></i>Select a Course & Difficulty</h3>
+                        <p class="text-muted">Choose from available courses and set your difficulty level</p>
+                    </div>
+
+
+
+                    <!-- Simple Dropdown Selection -->
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <!-- Course Selection Dropdown -->
+                            <div class="mb-4">
+                                <label for="courseSelect" class="form-label h5">
+                                    <i class="fas fa-book me-2"></i>Select Course
+                                </label>
+                                <select class="form-select form-select-lg" id="courseSelect" onchange="selectCourseFromDropdown()">
+                                    <option value="">Choose a course...</option>
+                                    <!-- Options will be populated by JavaScript -->
+                                </select>
+                                <div class="form-text">Select the course you want to take a quiz on.</div>
+                            </div>
+
+                            <!-- Difficulty Selection Dropdown -->
+                            <div class="mb-4">
+                                <label for="difficultySelect" class="form-label h5">
+                                    <i class="fas fa-layer-group me-2"></i>Select Difficulty Level
+                                </label>
+                                <select class="form-select form-select-lg" id="difficultySelect" onchange="selectDifficultyFromDropdown()">
+                                    <option value="">Choose difficulty...</option>
+                                    <option value="beginner">🟢 Beginner - Basic concepts and fundamentals</option>
+                                    <option value="intermediate">🟡 Intermediate - Moderate complexity and applications</option>
+                                    <option value="advanced">🔴 Advanced - Expert level and complex scenarios</option>
+                                </select>
+                                <div class="form-text">Choose the difficulty level that matches your current skill level.</div>
+                            </div>
+
+                            <!-- Selected Course Info -->
+                            <div id="selectedCourseInfo" class="alert alert-info" style="display: none;">
+                                <h6><i class="fas fa-info-circle me-2"></i>Quiz Information</h6>
+                                <div id="courseInfoContent"></div>
+                            </div>
+
+                            <!-- Start Quiz Button -->
+                            <div class="text-center">
+                                <button class="btn-modern btn-lg" onclick="startQuiz()" disabled id="startQuizBtn" style="font-size: 1.2rem; padding: 18px 36px; border-radius: 25px;">
+                                    <i class="fas fa-lock me-2"></i>Select Course & Difficulty
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Quiz Questions Section -->
+                <div id="quizSection" style="display: none;">
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 id="quizTitle">Programming Assessment</h4>
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="category-badge" id="categoryBadge">General</span>
+                                <div id="progressInfo" class="text-muted">
+                                    Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-gradient" id="progressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div id="quizQuestions">
+                        <!-- Questions will be loaded here -->
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-outline-secondary btn-quiz" id="prevBtn" onclick="previousQuestion()" disabled>
+                            <i class="fas fa-arrow-left me-2"></i>Previous
+                        </button>
+                        <button class="btn btn-primary btn-quiz" id="nextBtn" onclick="nextQuestion()">
+                            Next<i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                        <button class="btn btn-success btn-quiz" id="submitBtn" onclick="submitQuiz()" style="display: none;">
+                            <i class="fas fa-check me-2"></i>Submit Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div id="resultsSection" style="display: none;">
+                    <div class="fade-in-up">
+                        <!-- Score Overview -->
+                        <div class="text-center mb-4">
+                            <div class="score-circle pulse-animation" id="scoreCircle">
+                                <div class="score-text" id="scoreText">0%</div>
+                            </div>
+                            <h2 class="mb-3">Quiz Completed!</h2>
+                            <div id="scoreDisplay" class="mb-4">
+                                <!-- Detailed score will be displayed here -->
+                            </div>
+                        </div>
+
+                        <!-- Performance Analysis -->
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <i class="fas fa-bullseye fa-2x text-success mb-2"></i>
+                                        <h5>Accuracy</h5>
+                                        <h3 id="accuracyScore" class="text-success">0%</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <i class="fas fa-clock fa-2x text-info mb-2"></i>
+                                        <h5>Time Taken</h5>
+                                        <h3 id="timeTaken" class="text-info">0:00</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <i class="fas fa-star fa-2x text-warning mb-2"></i>
+                                        <h5>Performance</h5>
+                                        <h3 id="performanceLevel" class="text-warning">Good</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Answer Review Section -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h4 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>Answer Review</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5>Review Your Answers</h5>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="filterAnswers('all')">All</button>
+                                        <button type="button" class="btn btn-outline-success btn-sm" onclick="filterAnswers('correct')">Correct</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="filterAnswers('incorrect')">Incorrect</button>
+                                    </div>
+                                </div>
+                                <div id="answerReview">
+                                    <!-- Detailed answer review will be displayed here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Learning Recommendations -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h4 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Learning Recommendations</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="recommendations">
+                                    <!-- Personalized recommendations will be displayed here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="text-center">
+                            <button class="btn btn-primary btn-quiz me-3" onclick="restartQuiz()">
+                                <i class="fas fa-redo me-2"></i>Take Another Quiz
+                            </button>
+                            <button class="btn btn-success btn-quiz me-3" onclick="shareResults()">
+                                <i class="fas fa-share me-2"></i>Share Results
+                            </button>
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary btn-quiz">
+                                <i class="fas fa-home me-2"></i>Back to Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedCourse = null;
+        let selectedDifficulty = '';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let quizStartTime = null;
+
+        // Initialize the quiz system
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load courses and show course selection
+            loadCourses();
+        });
+
+        function selectCourse(courseId, courseName) {
+            console.log('Selecting course:', courseId, courseName);
+            selectedCourse = { id: courseId, name: courseName };
+
+            // Update UI - remove selected class from all cards
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Add selected class to clicked card
+            if (event && event.target) {
+                const clickedCard = event.target.closest('.course-card');
+                if (clickedCard) {
+                    clickedCard.classList.add('selected');
+                }
+            }
+
+            // Show selection feedback
+            console.log('Course selected:', selectedCourse);
+
+            // Check if both course and difficulty are selected
+            updateStartButton();
+        }
+
+        function selectDifficulty(difficulty) {
+            console.log('Selecting difficulty:', difficulty);
+            selectedDifficulty = difficulty;
+
+            // Update UI - remove selected class from all difficulty cards
+            document.querySelectorAll('.quiz-type-card').forEach(card => {
+                if (card.classList.contains('difficulty-beginner') ||
+                    card.classList.contains('difficulty-intermediate') ||
+                    card.classList.contains('difficulty-advanced')) {
+                    card.classList.remove('selected');
+                }
+            });
+
+            // Add selected class to clicked card
+            if (event && event.target) {
+                const clickedCard = event.target.closest('.quiz-type-card');
+                if (clickedCard) {
+                    clickedCard.classList.add('selected');
+                }
+            }
+
+            // Show selection feedback
+            console.log('Difficulty selected:', selectedDifficulty);
+
+            // Check if both course and difficulty are selected
+            updateStartButton();
+        }
+
+        function updateStartButton() {
+            const startBtn = document.getElementById('startQuizBtn');
+            if (!startBtn) {
+                console.error('Start button not found');
+                return;
+            }
+
+            console.log('Updating start button. Course:', selectedCourse, 'Difficulty:', selectedDifficulty);
+
+            if (selectedCourse && selectedDifficulty) {
+                startBtn.disabled = false;
+                startBtn.classList.add('pulse-animation');
+                startBtn.style.opacity = '1';
+                startBtn.innerHTML = '<i class="fas fa-rocket me-2"></i>🚀 Launch Quiz';
+                console.log('Start button enabled');
+            } else {
+                startBtn.disabled = true;
+                startBtn.classList.remove('pulse-animation');
+                startBtn.style.opacity = '0.6';
+                startBtn.innerHTML = '<i class="fas fa-lock me-2"></i>Select Course & Difficulty';
+                console.log('Start button disabled');
+            }
+        }
+
+        function loadLanguages() {
+            fetch('/api/languages')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('languageSelect');
+                    select.innerHTML = '<option value="">Choose a language...</option>';
+
+                    if (data.languages) {
+                        // Filter languages to only show those that have courses
+                        const availableLanguages = getAvailableLanguages(data.languages);
+
+                        availableLanguages.forEach(lang => {
+                            select.innerHTML += `<option value="${lang.id}">${lang.name} (${lang.courseCount} courses)</option>`;
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading languages:', error);
+                });
+        }
+
+        function getAvailableLanguages(languages) {
+            // Count courses per language
+            const languageCounts = {};
+            allCourses.forEach(course => {
+                const lang = course.language;
+                languageCounts[lang] = (languageCounts[lang] || 0) + 1;
+            });
+
+            // Filter languages that have courses and add course count
+            return languages
+                .filter(language => languageCounts[language.name] > 0)
+                .map(language => ({
+                    ...language,
+                    courseCount: languageCounts[language.name]
+                }))
+                .sort((a, b) => b.courseCount - a.courseCount); // Sort by course count descending
+        }
+
+        let allCourses = [];
+        let userProgress = {};
+
+        function loadCourses() {
+            fetch('/api/courses')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.courses && data.courses.length > 0) {
+                        allCourses = data.courses;
+                        populateCourseDropdown(allCourses);
+                    } else {
+                        const courseSelect = document.getElementById('courseSelect');
+                        courseSelect.innerHTML = '<option value="">No courses available</option>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading courses:', error);
+                    const courseSelect = document.getElementById('courseSelect');
+                    courseSelect.innerHTML = '<option value="">Error loading courses</option>';
+                });
+        }
+
+        // Populate course dropdown
+        function populateCourseDropdown(courses) {
+            const courseSelect = document.getElementById('courseSelect');
+            courseSelect.innerHTML = '<option value="">Choose a course...</option>';
+
+            // Group courses by category
+            const coursesByCategory = {};
+            courses.forEach(course => {
+                const category = course.category || 'Other';
+                if (!coursesByCategory[category]) {
+                    coursesByCategory[category] = [];
+                }
+                coursesByCategory[category].push(course);
+            });
+
+            // Add courses grouped by category
+            Object.keys(coursesByCategory).sort().forEach(category => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = category;
+
+                coursesByCategory[category].forEach(course => {
+                    const option = document.createElement('option');
+                    option.value = course.id;
+                    option.textContent = `${course.title} (${course.language})`;
+                    option.dataset.course = JSON.stringify(course);
+                    optgroup.appendChild(option);
+                });
+
+                courseSelect.appendChild(optgroup);
+            });
+        }
+
+        // Handle course selection from dropdown
+        function selectCourseFromDropdown() {
+            const courseSelect = document.getElementById('courseSelect');
+            const selectedOption = courseSelect.options[courseSelect.selectedIndex];
+
+            if (selectedOption.value) {
+                const courseData = JSON.parse(selectedOption.dataset.course);
+                selectedCourse = {
+                    id: courseData.id,
+                    name: courseData.title,
+                    language: courseData.language,
+                    category: courseData.category
+                };
+
+                updateCourseInfo(courseData);
+                updateStartButton();
+            } else {
+                selectedCourse = null;
+                hideCourseInfo();
+                updateStartButton();
+            }
+        }
+
+        // Handle difficulty selection from dropdown
+        function selectDifficultyFromDropdown() {
+            const difficultySelect = document.getElementById('difficultySelect');
+            selectedDifficulty = difficultySelect.value;
+            updateStartButton();
+        }
+
+        // Update course info display
+        function updateCourseInfo(course) {
+            const infoDiv = document.getElementById('selectedCourseInfo');
+            const contentDiv = document.getElementById('courseInfoContent');
+
+            contentDiv.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Course:</strong> ${course.title}<br>
+                        <strong>Language:</strong> ${course.language}<br>
+                        <strong>Category:</strong> ${course.category || 'General'}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Quiz Length:</strong> 10 questions<br>
+                        <strong>Time Limit:</strong> No limit<br>
+                        <strong>Passing Score:</strong> 70%
+                    </div>
+                </div>
+            `;
+
+            infoDiv.style.display = 'block';
+        }
+
+        // Hide course info
+        function hideCourseInfo() {
+            const infoDiv = document.getElementById('selectedCourseInfo');
+            infoDiv.style.display = 'none';
+        }
+
+        // Update start button state
+        function updateStartButton() {
+            const startBtn = document.getElementById('startQuizBtn');
+
+            if (selectedCourse && selectedDifficulty) {
+                startBtn.disabled = false;
+                startBtn.innerHTML = '<i class="fas fa-rocket me-2"></i>Start Quiz';
+                startBtn.classList.add('pulse-animation');
+            } else {
+                startBtn.disabled = true;
+                startBtn.innerHTML = '<i class="fas fa-lock me-2"></i>Select Course & Difficulty';
+                startBtn.classList.remove('pulse-animation');
+            }
+        }
+
+        function populateCategories(categories) {
+            const categoryButtons = document.getElementById('categoryButtons');
+            if (!categoryButtons) {
+                console.error('categoryButtons element not found');
+                return;
+            }
+
+            // Clear existing category buttons
+            categoryButtons.innerHTML = '';
+
+            // Add "All Categories" button
+            const allButton = document.createElement('button');
+            allButton.className = 'btn btn-sm btn-outline-secondary me-2 mb-2 active';
+            allButton.onclick = () => filterByCategory('all');
+            allButton.innerHTML = '<i class="fas fa-list me-1"></i>All Categories';
+            categoryButtons.appendChild(allButton);
+
+            // Add category buttons
+            Object.keys(categories).forEach(category => {
+                const button = document.createElement('button');
+                button.className = 'btn btn-sm btn-outline-secondary me-2 mb-2';
+                button.onclick = () => filterByCategory(category);
+                button.innerHTML = `<i class="fas fa-folder me-1"></i>${category} (${categories[category].length})`;
+                categoryButtons.appendChild(button);
+            });
+
+            console.log(`Populated ${Object.keys(categories).length} categories`);
+        }
+
+        function filterByCategory(category) {
+            console.log('Filtering by category:', category);
+
+            // Update active category button
+            document.querySelectorAll('#categoryButtons .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            // Filter courses by category
+            let filteredCourses = allCourses;
+            if (category !== 'all') {
+                filteredCourses = allCourses.filter(course => course.category === category);
+            }
+
+            displayCourses(filteredCourses);
+            console.log(`Filtered to ${filteredCourses.length} courses`);
+        }
+
+        function generateMockProgress() {
+            // Generate mock progress data for demonstration
+            allCourses.forEach(course => {
+                const random = Math.random();
+                if (random < 0.3) {
+                    userProgress[course.id] = { status: 'available', progress: 0 };
+                } else if (random < 0.7) {
+                    userProgress[course.id] = { status: 'ongoing', progress: Math.floor(Math.random() * 80) + 10 };
+                } else {
+                    userProgress[course.id] = { status: 'completed', progress: 100 };
+                }
+            });
+        }
+
+        function displayCourses(courses) {
+            const courseList = document.getElementById('courseList');
+            if (!courseList) {
+                console.error('courseList element not found');
+                return;
+            }
+
+            courseList.innerHTML = '';
+
+            if (!courses || courses.length === 0) {
+                courseList.innerHTML = '<div class="col-12 text-center"><p class="text-muted">No courses available</p></div>';
+                return;
+            }
+
+            courses.forEach(course => {
+                // Use real progress data from the course object
+                const progress = course.progress || 0;
+                const status = course.status || 'available';
+                const courseCard = document.createElement('div');
+                courseCard.className = 'col-md-6 col-lg-4';
+                courseCard.setAttribute('data-status', status);
+                courseCard.setAttribute('data-category', course.category || 'General');
+
+                // Create safe course title for onclick
+                const safeCourseTitle = course.title.replace(/'/g, "\\'");
+
+                courseCard.innerHTML = `
+                    <div class="card course-card h-100 ${status}" onclick="selectCourse(${course.id}, '${safeCourseTitle}')" style="cursor: pointer;">
+                        <div class="course-status-badge ${status}">
+                            ${status.replace('_', ' ').toUpperCase()}
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title">${course.title}</h6>
+                            <p class="card-text text-muted small">${course.description || 'Programming course'}</p>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-info">${course.category || 'General'}</span>
+                                <span class="badge bg-secondary">${course.difficulty.toUpperCase()}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-primary">${course.language.toUpperCase()}</span>
+                                <span class="badge bg-success">${status.replace('_', ' ').toUpperCase()}</span>
+                            </div>
+                            ${progress > 0 ? `
+                                <div class="course-progress mt-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <small class="text-muted">Progress</small>
+                                        <small class="text-muted">${progress}%</small>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar ${status === 'completed' ? 'bg-success' : 'bg-info'}"
+                                             style="width: ${progress}%"></div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                courseList.appendChild(courseCard);
+            });
+
+            console.log(`Displayed ${courses.length} courses`);
+        }
+
+        function filterCourses(status) {
+            console.log('Filtering courses by status:', status);
+
+            // Update active tab
+            document.querySelectorAll('.course-filter-tabs .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            const tabId = status + 'CoursesTab';
+            const activeTab = document.getElementById(tabId);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+
+            // Filter courses
+            let filteredCourses = allCourses;
+            if (status !== 'all') {
+                filteredCourses = allCourses.filter(course => {
+                    return course.status === status;
+                });
+            }
+
+            displayCourses(filteredCourses);
+            updateCourseStats();
+            console.log(`Filtered to ${filteredCourses.length} courses with status: ${status}`);
+        }
+
+        function updateCourseStats() {
+            const stats = {
+                total: allCourses.length,
+                available: 0,
+                ongoing: 0,
+                completed: 0
+            };
+
+            allCourses.forEach(course => {
+                const status = course.status || 'available';
+                if (status === 'in_progress') {
+                    stats.ongoing++;
+                } else if (status === 'available') {
+                    stats.available++;
+                } else if (status === 'completed') {
+                    stats.completed++;
+                } else {
+                    stats.available++; // Default to available
+                }
+            });
+
+            // Update stats display
+            const totalEl = document.getElementById('totalCourses');
+            const availableEl = document.getElementById('availableCourses');
+            const ongoingEl = document.getElementById('ongoingCourses');
+            const completedEl = document.getElementById('completedCourses');
+
+            if (totalEl) totalEl.textContent = stats.total;
+            if (availableEl) availableEl.textContent = stats.available;
+            if (ongoingEl) ongoingEl.textContent = stats.ongoing;
+            if (completedEl) completedEl.textContent = stats.completed;
+
+            console.log('Course stats updated:', stats);
+        }
+
+        function startQuiz() {
+            // Validate selections
+            if (!selectedCourse) {
+                alert('Please select a course');
+                return;
+            }
+
+            if (!selectedDifficulty) {
+                alert('Please select a difficulty level');
+                return;
+            }
+
+            // Fetch questions based on course and difficulty
+            let endpoint = '/api/quiz/course-questions';
+            let params = new URLSearchParams();
+            params.append('course_id', selectedCourse.id);
+            params.append('difficulty', selectedDifficulty);
+
+            fetch(`${endpoint}?${params}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    currentQuestions = data.questions;
+                    currentQuestionIndex = 0;
+                    userAnswers = {};
+                    quizStartTime = new Date();
+
+                    // Hide selection section and show quiz
+                    document.getElementById('courseSelectionSection').style.display = 'none';
+                    document.getElementById('quizSection').style.display = 'block';
+
+                    // Update quiz title
+                    const title = `${selectedCourse.name} Quiz - ${selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1)}`;
+                    document.getElementById('quizTitle').textContent = title;
+
+                    displayQuestion();
+                    updateProgress();
+                })
+                .catch(error => {
+                    console.error('Error loading questions:', error);
+                    alert(error.message || 'Error loading questions. Please try again.');
+                });
+        }
+
+        function displayQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            const quizContainer = document.getElementById('quizQuestions');
+
+            quizContainer.innerHTML = `
+                <div class="question-card">
+                    <div class="question-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Question ${currentQuestionIndex + 1}</span>
+                            <span class="category-badge">${question.category || 'General'}</span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="mb-4">${question.question}</h5>
+                        <div class="options">
+                            ${question.options.map((option, index) => `
+                                <div class="option-card ${userAnswers[question.id] === index ? 'selected' : ''}"
+                                     onclick="selectAnswer(${question.id}, ${index})">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3">
+                                            <i class="fas fa-circle${userAnswers[question.id] === index ? '' : '-o'}"></i>
+                                        </div>
+                                        <div>${option}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            updateNavigationButtons();
+        }
+
+        function selectAnswer(questionId, answerIndex) {
+            userAnswers[questionId] = answerIndex;
+
+            // Update UI
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.target.closest('.option-card').classList.add('selected');
+
+            // Update icon
+            document.querySelectorAll('.option-card i').forEach(icon => {
+                icon.className = 'fas fa-circle-o';
+            });
+            event.target.closest('.option-card').querySelector('i').className = 'fas fa-circle';
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = currentQuestions.length;
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            prevBtn.disabled = currentQuestionIndex === 0;
+
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+                updateProgress();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+                updateProgress();
+            }
+        }
+
+        function submitQuiz() {
+            // Check if all questions are answered
+            const answeredCount = Object.keys(userAnswers).length;
+            if (answeredCount < currentQuestions.length) {
+                alert(`Please answer all questions. You have answered ${answeredCount} out of ${currentQuestions.length} questions.`);
+                return;
+            }
+
+            const quizData = {
+                answers: userAnswers,
+                quiz_type: selectedQuizType,
+                language_id: selectedLanguage,
+                difficulty: selectedDifficulty,
+                course_id: selectedCourse ? selectedCourse.id : null,
+                start_time: quizStartTime.toISOString(),
+                end_time: new Date().toISOString()
+            };
+
+            fetch('/api/quiz/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(quizData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                showResults(data);
+            })
+            .catch(error => {
+                console.error('Error submitting quiz:', error);
+                alert('Error submitting quiz. Please try again.');
+            });
+        }
+
+        function showResults(data) {
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'block';
+
+            const percentage = Math.round((data.score / data.total) * 100);
+            const timeTaken = calculateTimeTaken();
+
+            // Update score circle with animation
+            updateScoreCircle(percentage);
+
+            // Update performance metrics
+            document.getElementById('accuracyScore').textContent = `${percentage}%`;
+            document.getElementById('timeTaken').textContent = timeTaken;
+            document.getElementById('performanceLevel').textContent = getPerformanceLevel(percentage);
+
+            // Display detailed score information
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            scoreDisplay.innerHTML = `
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-md-3">
+                                        <h5>Questions</h5>
+                                        <h3 class="text-primary">${data.total}</h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5>Correct</h5>
+                                        <h3 class="text-success">${data.score}</h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5>Incorrect</h5>
+                                        <h3 class="text-danger">${data.total - data.score}</h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5>Score</h5>
+                                        <h3 class="text-warning">${percentage}%</h3>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="progress" style="height: 15px;">
+                                        <div class="progress-bar bg-gradient" style="width: ${percentage}%"
+                                             data-percentage="${percentage}"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    ${getPerformanceBadge(percentage)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Show detailed answer review
+            showAnswerReview(data);
+
+            // Show learning recommendations
+            showRecommendations(data);
+
+            // Animate the results section
+            document.getElementById('resultsSection').classList.add('fade-in-up');
+        }
+
+        function updateScoreCircle(percentage) {
+            const scoreCircle = document.getElementById('scoreCircle');
+            const scoreText = document.getElementById('scoreText');
+
+            // Update the conic gradient based on percentage
+            const degrees = (percentage / 100) * 360;
+            scoreCircle.style.background = `conic-gradient(#667eea 0deg, #764ba2 ${degrees}deg, #e9ecef ${degrees}deg)`;
+
+            // Animate the score text
+            let currentScore = 0;
+            const increment = percentage / 50; // 50 steps for smooth animation
+            const timer = setInterval(() => {
+                currentScore += increment;
+                if (currentScore >= percentage) {
+                    currentScore = percentage;
+                    clearInterval(timer);
+                }
+                scoreText.textContent = `${Math.round(currentScore)}%`;
+            }, 20);
+        }
+
+        function calculateTimeTaken() {
+            if (!quizStartTime) return '0:00';
+            const endTime = new Date();
+            const timeDiff = Math.floor((endTime - quizStartTime) / 1000);
+            const minutes = Math.floor(timeDiff / 60);
+            const seconds = timeDiff % 60;
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function getPerformanceLevel(percentage) {
+            if (percentage >= 90) return 'Excellent';
+            if (percentage >= 80) return 'Very Good';
+            if (percentage >= 70) return 'Good';
+            if (percentage >= 60) return 'Fair';
+            return 'Needs Improvement';
+        }
+
+        function getPerformanceBadge(percentage) {
+            if (percentage >= 90) {
+                return '<span class="badge bg-success fs-5"><i class="fas fa-trophy me-2"></i>Outstanding Performance!</span>';
+            } else if (percentage >= 80) {
+                return '<span class="badge bg-primary fs-5"><i class="fas fa-star me-2"></i>Excellent Work!</span>';
+            } else if (percentage >= 70) {
+                return '<span class="badge bg-info fs-5"><i class="fas fa-thumbs-up me-2"></i>Good Job!</span>';
+            } else if (percentage >= 60) {
+                return '<span class="badge bg-warning fs-5"><i class="fas fa-check me-2"></i>Keep Practicing!</span>';
+            } else {
+                return '<span class="badge bg-danger fs-5"><i class="fas fa-book me-2"></i>More Study Needed!</span>';
+            }
+        }
+
+        function showAnswerReview(data) {
+            const answerReview = document.getElementById('answerReview');
+            let reviewHTML = '';
+
+            currentQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[question.id];
+                const isCorrect = userAnswer === question.correct;
+                const userAnswerText = question.options[userAnswer] || 'Not answered';
+                const correctAnswerText = question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="answer-review-item ${isCorrect ? 'correct' : 'incorrect'} mb-4" data-status="${isCorrect ? 'correct' : 'incorrect'}">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">Question ${index + 1}</h6>
+                                <span class="badge ${isCorrect ? 'bg-success' : 'bg-danger'}">
+                                    <i class="fas ${isCorrect ? 'fa-check' : 'fa-times'} me-1"></i>
+                                    ${isCorrect ? 'Correct' : 'Incorrect'}
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <p class="fw-bold mb-3">${question.question}</p>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="answer-box ${isCorrect ? 'correct-answer' : 'wrong-answer'}">
+                                            <h6><i class="fas fa-user me-2"></i>Your Answer:</h6>
+                                            <p class="mb-0">${userAnswerText}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="answer-box correct-answer">
+                                            <h6><i class="fas fa-check-circle me-2"></i>Correct Answer:</h6>
+                                            <p class="mb-0">${correctAnswerText}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                ${question.explanation ? `
+                                    <div class="explanation-box mt-3">
+                                        <h6><i class="fas fa-lightbulb me-2"></i>Explanation:</h6>
+                                        <p class="mb-0">${question.explanation}</p>
+                                    </div>
+                                ` : ''}
+
+                                ${question.category ? `
+                                    <div class="mt-2">
+                                        <span class="badge bg-secondary">${question.category}</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            answerReview.innerHTML = reviewHTML;
+
+            // Add CSS for answer review styling
+            const style = document.createElement('style');
+            style.textContent = `
+                .answer-box {
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin-bottom: 10px;
+                }
+                .correct-answer {
+                    background: #d4edda;
+                    border: 1px solid #c3e6cb;
+                    color: #155724;
+                }
+                .wrong-answer {
+                    background: #f8d7da;
+                    border: 1px solid #f5c6cb;
+                    color: #721c24;
+                }
+                .explanation-box {
+                    background: #e2e3e5;
+                    border: 1px solid #d6d8db;
+                    border-radius: 8px;
+                    padding: 15px;
+                    color: #383d41;
+                }
+                .answer-review-item {
+                    transition: all 0.3s ease;
+                }
+                .answer-review-item:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function showRecommendations(data) {
+            const recommendations = document.getElementById('recommendations');
+            const percentage = Math.round((data.score / data.total) * 100);
+            const incorrectCount = data.total - data.score;
+
+            let recommendationsHTML = '';
+
+            // Get difficulty progression recommendation
+            const difficultyRecommendation = getDifficultyRecommendation(percentage, selectedDifficulty);
+
+            if (percentage >= 90) {
+                recommendationsHTML = `
+                    <div class="alert alert-success">
+                        <h5><i class="fas fa-trophy me-2"></i>Outstanding Performance!</h5>
+                        <p>You've mastered this ${selectedDifficulty} level! ${difficultyRecommendation.message}</p>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <h6>🎯 Next Steps:</h6>
+                                <ul>
+                                    ${difficultyRecommendation.nextSteps.map(step => `<li>${step}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>💡 Recommendations:</h6>
+                                <ul>
+                                    <li>Building projects to apply your knowledge</li>
+                                    <li>Helping others learn this subject</li>
+                                    <li>Exploring related technologies</li>
+                                </ul>
+                            </div>
+                        </div>
+                        ${difficultyRecommendation.actionButton}
+                    </div>
+                `;
+            } else if (percentage >= 70) {
+                recommendationsHTML = `
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-thumbs-up me-2"></i>Good Progress!</h5>
+                        <p>You're doing well at ${selectedDifficulty} level! ${difficultyRecommendation.message}</p>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <h6>📚 To Improve:</h6>
+                                <ul>
+                                    <li>Review the ${incorrectCount} questions you missed</li>
+                                    <li>Study the explanations provided</li>
+                                    <li>Practice similar problems</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>🎯 Next Steps:</h6>
+                                <ul>
+                                    ${difficultyRecommendation.nextSteps.map(step => `<li>${step}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                        ${difficultyRecommendation.actionButton}
+                    </div>
+                `;
+            } else {
+                recommendationsHTML = `
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-book me-2"></i>Keep Learning!</h5>
+                        <p>You need more practice at ${selectedDifficulty} level. ${difficultyRecommendation.message}</p>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <h6>📖 Study Plan:</h6>
+                                <ul>
+                                    <li>Review the course materials thoroughly</li>
+                                    <li>Focus on the topics you missed</li>
+                                    <li>Take practice exercises</li>
+                                    <li>Seek help from instructors or peers</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>🎯 Recommendations:</h6>
+                                <ul>
+                                    ${difficultyRecommendation.nextSteps.map(step => `<li>${step}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                        ${difficultyRecommendation.actionButton}
+                    </div>
+                `;
+            }
+
+            // Add topic-specific recommendations based on incorrect answers
+            const topicRecommendations = getTopicRecommendations();
+            if (topicRecommendations.length > 0) {
+                recommendationsHTML += `
+                    <div class="mt-3">
+                        <h6>Focus Areas:</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            ${topicRecommendations.map(topic =>
+                                `<span class="badge bg-primary">${topic}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            recommendations.innerHTML = recommendationsHTML;
+        }
+
+        function getDifficultyRecommendation(percentage, currentDifficulty) {
+            const courseName = selectedCourse ? selectedCourse.name : 'this course';
+
+            if (currentDifficulty === 'beginner') {
+                if (percentage >= 90) {
+                    return {
+                        message: "You're ready to advance!",
+                        nextSteps: [
+                            "Try the intermediate level quiz",
+                            "Explore more complex concepts",
+                            "Practice with real-world examples"
+                        ],
+                        actionButton: `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-success me-2" onclick="advanceToNextLevel('intermediate')">
+                                    <i class="fas fa-arrow-up me-2"></i>Try Intermediate Level
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="retakeQuiz()">
+                                    <i class="fas fa-redo me-2"></i>Retake Quiz
+                                </button>
+                            </div>
+                        `
+                    };
+                } else if (percentage >= 70) {
+                    return {
+                        message: "You're making good progress, but should strengthen your foundation first.",
+                        nextSteps: [
+                            "Retake this quiz to improve your score",
+                            "Practice more beginner exercises",
+                            "Review fundamental concepts"
+                        ],
+                        actionButton: `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-primary me-2" onclick="retakeQuiz()">
+                                    <i class="fas fa-redo me-2"></i>Retake Quiz
+                                </button>
+                                <button class="btn btn-outline-secondary" onclick="goBackToCourseSelection()">
+                                    <i class="fas fa-book me-2"></i>Study More
+                                </button>
+                            </div>
+                        `
+                    };
+                } else {
+                    return {
+                        message: "Focus on mastering the basics before moving forward.",
+                        nextSteps: [
+                            "Review course materials carefully",
+                            "Practice fundamental concepts",
+                            "Retake this quiz when ready",
+                            "Consider getting additional help"
+                        ],
+                        actionButton: `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-warning me-2" onclick="goBackToCourseSelection()">
+                                    <i class="fas fa-book me-2"></i>Study Course Materials
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="retakeQuiz()">
+                                    <i class="fas fa-redo me-2"></i>Retake Quiz
+                                </button>
+                            </div>
+                        `
+                    };
+                }
+            } else if (currentDifficulty === 'intermediate') {
+                if (percentage >= 90) {
+                    return {
+                        message: "Excellent! You're ready for advanced challenges!",
+                        nextSteps: [
+                            "Try the advanced level quiz",
+                            "Explore expert-level topics",
+                            "Work on complex projects"
+                        ],
+                        actionButton: `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-danger me-2" onclick="advanceToNextLevel('advanced')">
+                                    <i class="fas fa-rocket me-2"></i>Try Advanced Level
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="retakeQuiz()">
+                                    <i class="fas fa-redo me-2"></i>Retake Quiz
+                                </button>
+                            </div>
+                        `
+                    };
+                } else if (percentage >= 70) {
+                    return {
+                        message: "Good work! Strengthen your intermediate skills before advancing.",
+                        nextSteps: [
+                            "Retake this quiz to improve",
+                            "Practice intermediate concepts",
+                            "Review challenging topics"
+                        ],
+                        actionButton: `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-primary me-2" onclick="retakeQuiz()">
+                                    <i class="fas fa-redo me-2"></i>Retake Quiz
+                                </button>
+                                <button class="btn btn-outline-secondary" onclick="goBackToCourseSelection()">
+                                    <i class="fas fa-book me-2"></i>Study More
+                                </button>
+                            </div>
+                        `
+                    };
+                } else {
+                    return {
+                        message: "Consider reviewing beginner concepts or getting more practice.",
+                        nextSteps: [
+                            "Review beginner level materials",
+                            "Take the beginner quiz again",
+                            "Practice fundamental concepts",
+                            "Study intermediate topics more thoroughly"
+                        ],
+                        actionButton: `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-info me-2" onclick="advanceToNextLevel('beginner')">
+                                    <i class="fas fa-arrow-down me-2"></i>Try Beginner Level
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="retakeQuiz()">
+                                    <i class="fas fa-redo me-2"></i>Retake Quiz
+                                </button>
+                            </div>
+                        `
+                    };
+                }
+            } else { // advanced
+                if (percentage >= 90) {
+                    return {
+                        message: "Outstanding! You've mastered advanced concepts!",
+                        nextSteps: [
+                            "Apply knowledge in real projects",
+                            "Mentor others in this subject",
+                            "Explore cutting-edge technologies",
+                            "Contribute to open source projects"
+                        ],
+                        actionButton: `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-success me-2" onclick="goBackToCourseSelection()">
+                                    <i class="fas fa-graduation-cap me-2"></i>Explore New Courses
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="retakeQuiz()">
+                                    <i class="fas fa-redo me-2"></i>Retake Quiz
+                                </button>
+                            </div>
+                        `
+                    };
+                } else if (percentage >= 70) {
+                    return {
+                        message: "Good progress on advanced topics! Keep practicing.",
+                        nextSteps: [
+                            "Retake this quiz to improve",
+                            "Practice advanced concepts",
+                            "Work on challenging projects"
+                        ],
+                        actionButton: `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-primary me-2" onclick="retakeQuiz()">
+                                    <i class="fas fa-redo me-2"></i>Retake Quiz
+                                </button>
+                                <button class="btn btn-outline-secondary" onclick="goBackToCourseSelection()">
+                                    <i class="fas fa-book me-2"></i>Study More
+                                </button>
+                            </div>
+                        `
+                    };
+                } else {
+                    return {
+                        message: "Advanced level is challenging. Consider strengthening intermediate skills first.",
+                        nextSteps: [
+                            "Review intermediate level concepts",
+                            "Take the intermediate quiz",
+                            "Practice more before returning to advanced",
+                            "Focus on foundational knowledge"
+                        ],
+                        actionButton: `
+                            <div class="text-center mt-3">
+                                <button class="btn btn-warning me-2" onclick="advanceToNextLevel('intermediate')">
+                                    <i class="fas fa-arrow-down me-2"></i>Try Intermediate Level
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="retakeQuiz()">
+                                    <i class="fas fa-redo me-2"></i>Retake Quiz
+                                </button>
+                            </div>
+                        `
+                    };
+                }
+            }
+        }
+
+        // Action functions for recommendations
+        function advanceToNextLevel(newDifficulty) {
+            selectedDifficulty = newDifficulty;
+            document.getElementById('difficultySelect').value = newDifficulty;
+
+            // Hide results and show course selection
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('courseSelectionSection').style.display = 'block';
+
+            // Update the UI to reflect new difficulty
+            updateStartButton();
+
+            // Show success message
+            showSuccess(`Difficulty level updated to ${newDifficulty.charAt(0).toUpperCase() + newDifficulty.slice(1)}! You can now start a new quiz.`);
+        }
+
+        function retakeQuiz() {
+            // Hide results and show course selection
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('courseSelectionSection').style.display = 'block';
+
+            // Reset quiz state
+            currentQuestions = [];
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            quizStartTime = null;
+
+            showSuccess('Ready to retake the quiz! Click "Start Quiz" when you\'re ready.');
+        }
+
+        function goBackToCourseSelection() {
+            // Hide results and show course selection
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('courseSelectionSection').style.display = 'block';
+
+            // Reset selections
+            selectedCourse = null;
+            selectedDifficulty = '';
+            document.getElementById('courseSelect').value = '';
+            document.getElementById('difficultySelect').value = '';
+
+            // Reset quiz state
+            currentQuestions = [];
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            quizStartTime = null;
+
+            // Update UI
+            hideCourseInfo();
+            updateStartButton();
+
+            showSuccess('Course selection reset. Choose a new course and difficulty to continue learning!');
+        }
+
+        function getTopicRecommendations() {
+            const incorrectTopics = [];
+            currentQuestions.forEach(question => {
+                const userAnswer = userAnswers[question.id];
+                const isCorrect = userAnswer === question.correct;
+                if (!isCorrect && question.category && !incorrectTopics.includes(question.category)) {
+                    incorrectTopics.push(question.category);
+                }
+            });
+            return incorrectTopics;
+        }
+
+        function filterAnswers(filter) {
+            const items = document.querySelectorAll('.answer-review-item');
+            items.forEach(item => {
+                if (filter === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    const status = item.getAttribute('data-status');
+                    item.style.display = status === filter ? 'block' : 'none';
+                }
+            });
+
+            // Update button states
+            document.querySelectorAll('.btn-group .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function shareResults() {
+            const percentage = Math.round((currentQuestions.length > 0 ?
+                (Object.keys(userAnswers).length / currentQuestions.length) * 100 : 0));
+            const text = `I just completed a programming quiz and scored ${percentage}%! 🎯`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Quiz Results',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                navigator.clipboard.writeText(text).then(() => {
+                    showMessage('Results copied to clipboard!', 'success');
+                });
+            }
+        }
+
+        function showMessage(message, type = 'info') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `${type}-message`;
+            messageDiv.innerHTML = `<i class="fas fa-info-circle me-2"></i>${message}`;
+
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        function restartQuiz() {
+            // Reset all variables
+            selectedCourse = null;
+            selectedDifficulty = '';
+            currentQuestions = [];
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            quizStartTime = null;
+
+            // Reset UI
+            document.querySelectorAll('.quiz-type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Show initial section
+            document.getElementById('courseSelectionSection').style.display = 'block';
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'none';
+
+            // Reset start button
+            updateStartButton();
+        }
+    </script>
+</body>
+</html>

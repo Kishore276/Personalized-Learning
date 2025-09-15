@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic Quiz - Personalized Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 56px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        .question-card {
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+        }
+        .option-label {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .option-label:hover {
+            background-color: #e9ecef;
+        }
+        .option-input:checked + .option-text {
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        .emotion-tracker {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        .timer {
+            font-size: 1.2em;
+            text-align: center;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/dashboard">Personalized Learning</a>
+            <span class="navbar-text text-white">Topic Quiz</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="quiz-container">
+            <h2 class="mb-4">Quiz: {{ quiz_data.title }}</h2>
+            
+            <!-- Timer -->
+            <div class="alert alert-info">
+                <div class="timer" id="quiz-timer">Time Remaining: 00:00</div>
+            </div>
+
+            <form id="quizForm" method="post" action="/topic/{{ topic_id }}/submit_quiz">
+                <input type="hidden" name="quiz_start_time" id="quizStartTime">
+                
+                {% for question in quiz_data.questions %}
+                <div class="question-card">
+                    <h5>
+                        <i class="fas fa-question-circle me-2"></i>
+                        Question {{ loop.index }}
+                    </h5>
+                    <p class="lead">{{ question.text }}</p>
+                    
+                    {% for option in question.options %}
+                    <label class="option-label">
+                        <input type="radio" 
+                               name="question_{{ question.id }}" 
+                               value="{{ loop.index0 }}"
+                               class="option-input"
+                               required>
+                        <span class="option-text">{{ option }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-paper-plane me-2"></i>Submit Quiz
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Emotion Tracking -->
+        <div class="emotion-tracker">
+            <h5><i class="fas fa-smile me-2"></i>Emotion Tracking</h5>
+            <video id="webcam" class="webcam-preview" autoplay playsinline></video>
+            <div id="emotion-status" class="alert alert-info">
+                <i class="fas fa-spinner fa-spin me-2"></i>Detecting...
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/webcam.js"></script>
+    <script>
+        // Set quiz start time
+        document.getElementById('quizStartTime').value = new Date().toISOString();
+
+        // Timer functionality
+        const startTime = new Date();
+        const timerElement = document.getElementById('quiz-timer');
+        const quizDuration = 30 * 60; // 30 minutes in seconds
+
+        const timer = setInterval(() => {
+            const now = new Date();
+            const timeSpent = Math.floor((now - startTime) / 1000);
+            const timeLeft = quizDuration - timeSpent;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                document.getElementById('quizForm').submit();
+                return;
+            }
+
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `Time Remaining: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            // Warning when 5 minutes remaining
+            if (timeLeft <= 300) {
+                timerElement.classList.remove('alert-info');
+                timerElement.classList.add('alert-warning');
+            }
+        }, 1000);
+
+        // Form submission
+        document.getElementById('quizForm').addEventListener('submit', (e) => {
+            clearInterval(timer);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.title }} - Learning Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .module-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+        }
+        
+        .module-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .module-content.active {
+            display: block;
+        }
+        
+        .submodule-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">{{ course.title }}</h1>
+        <p class="lead mb-5">{{ course.description }}</p>
+        
+        <h2><i class="fas fa-book"></i> Course Modules ({{ sub_exercises|length }})</h2>
+        
+        {% if sub_exercises %}
+            {% for module in sub_exercises %}
+            <div class="module-card">
+                <div class="module-header" onclick="toggleModule({{ loop.index }})">
+                    <h3 class="mb-0">{{ module.title }}</h3>
+                    <p class="mb-0">{{ module.description }}</p>
+                </div>
+                
+                <div class="module-content" id="module-{{ loop.index }}">
+                    {% if module.submodules %}
+                        {% for submodule in module.submodules %}
+                        <div class="submodule-item">
+                            <h4>{{ submodule.title }}</h4>
+                            <p>{{ submodule.description }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">No submodules available for this module.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> No modules available for this course yet.
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+// Real-time webcam emotion detection integration
+let isConcentrated = false;
+let faceDetected = false;
+
+function startEmotionDetection() {
+    const video = document.createElement('video');
+    video.autoplay = true;
+    video.width = 224;
+    video.height = 224;
+    video.style.display = 'block'; // Show video for debugging
+    video.style.position = 'fixed';
+    video.style.bottom = '20px';
+    video.style.right = '20px';
+    video.style.zIndex = '9999';
+    document.body.appendChild(video);
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+            setInterval(() => {
+                sendFrameToBackend(video);
+            }, 3000);
+        })
+        .catch(err => {
+            showNotification('Camera access denied!', 'warning');
+            console.error('Camera access error:', err);
+        });
+}
+
+function sendFrameToBackend(video) {
+    const canvas = document.createElement('canvas');
+    canvas.width = video.width;
+    canvas.height = video.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imgData = canvas.toDataURL('image/jpeg');
+    fetch('/api/emotion_detect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: imgData })
+    })
+    .then(res => res.json())
+    .then(data => {
+        faceDetected = data.face_detected;
+        isConcentrated = data.is_concentrated;
+        updateFaceDetectionStatus(faceDetected);
+        // Optionally show emotion status in UI
+        // document.getElementById('concentrationStatus').textContent = data.emotion;
+    })
+    .catch((err) => {
+        showNotification('Error analyzing emotion!', 'warning');
+        console.error('Emotion API error:', err);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', startEmotionDetection);
+        function toggleModule(moduleId) {
+            const content = document.getElementById(`module-${moduleId}`);
+            content.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%) !important;
+        }
+        
+        .module-card.completed .card-header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+        }
+        
+        /* Module Content */
+        .module-body {
+            padding: 30px !important;
+            background: #f8f9fa !important;
+        }
+        
+        .module-content-area {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        /* Module Buttons */
+        .module-button {
+            width: 100%;
+            text-align: left;
+            padding: 0;
+            background: transparent;
+            border: none;
+            color: white;
+        }
+        
+        .module-button:focus {
+            outline: none;
+            box-shadow: none;
+        }
+        
+        /* Status Indicators */
+        .module-status {
+            margin-bottom: 15px;
+        }
+        
+        .module-status .badge {
+            padding: 8px 15px;
+            font-weight: 500;
+        }
+        
+        /* Module Info */
+        .module-info h5 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .module-meta {
+            text-align: right;
+        }
+        
+        /* Completion Badge */
+        .completion-badge {
+            margin-top: 10px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Animations */
+        @keyframes slideDown {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .collapse.show {
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .module-info h5 {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+        }
+        
+        .module-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+        
+        .module-meta {
+            text-align: right;
+            color: white;
+        }
+        
+        .collapse-icon {
+            font-size: 1.3em;
+            transition: transform 0.3s ease;
+            color: white;
+        }
+        
+        .card-header[aria-expanded="true"] .collapse-icon {
+            transform: rotate(180deg);
+        }
+        
+        .card-body {
+            padding: 30px !important;
+            background: #f8f9fa !important;
+            border-top: 3px solid #007bff;
+        }
+        
+        .module-content-area {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .module-actions {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .start-module-btn, .complete-module-btn {
+            min-width: 160px;
+            font-weight: 600;
+        }
+        
+        .complete-module-btn {
+            display: none;
+        }
+        
+        .hint-btn {
+            border: 2px solid #17a2b8;
+            font-weight: 500;
+        }
+        
+        .hint-btn:hover {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .hint-section {
+            display: none;
+        }
+        
+        .module-progress {
+            display: none;
+        }
+        
+        .completion-badge {
+            display: none;
+            margin-top: 8px;
+        }
+        
+        /* Module Card Animations */
+        .module-card {
+            animation: slideInUp 0.6s ease-out;
+        }
+        
+        .module-card:nth-child(1) { animation-delay: 0.1s; }
+        .module-card:nth-child(2) { animation-delay: 0.2s; }
+        .module-card:nth-child(3) { animation-delay: 0.3s; }
+        .module-card:nth-child(4) { animation-delay: 0.4s; }
+        .module-card:nth-child(5) { animation-delay: 0.5s; }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .module-meta {
+                text-align: left;
+                margin-top: 15px;
+            }
+        }
+        
+        .content-section li {
+            margin-bottom: 8px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .alert-info-custom {
+            background: #e7f3ff;
+            border: 1px solid #b8daff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .nav-tabs-custom {
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 30px;
+        }
+        
+        .nav-tabs-custom .nav-link {
+            border: none;
+            color: #6c757d;
+            font-weight: 600;
+            padding: 15px 25px;
+            margin-right: 10px;
+        }
+        
+        .nav-tabs-custom .nav-link.active {
+            color: #007bff;
+            border-bottom: 3px solid #007bff;
+            background: none;
+        }
+        
+        /* Exercise Accordion Styles */
+        .exercises-accordion {
+            margin-top: 20px;
+        }
+        
+        .exercise-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .exercise-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .exercise-card.unlocked {
+            border-color: #28a745;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+        }
+        
+        .exercise-card.locked {
+            border-color: #dee2e6;
+            background: #f8f9fa;
+            opacity: 0.7;
+        }
+        
+        .exercise-card.completed {
+            border-color: #007bff;
+            background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+        }
+        
+        .exercise-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+        
+        .exercise-card.unlocked .exercise-header:hover {
+            background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+            transform: translateY(-1px);
+        }
+        
+        .exercise-card.locked .exercise-header {
+            background: #f8f9fa;
+            cursor: not-allowed !important;
+        }
+        
+        .exercise-status {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .exercise-number {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .exercise-info h5 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .exercise-meta {
+            text-align: right;
+        }
+        
+        .collapse-icon {
+            font-size: 1.2em;
+            color: #6c757d;
+            transition: transform 0.3s ease;
+        }
+        
+        .exercise-header[aria-expanded="true"] .collapse-icon {
+            transform: rotate(180deg);
+        }
+        
+        .exercise-body {
+            padding: 25px;
+            background: white;
+        }
+        
+        .exercise-card.locked .exercise-body {
+            background: #f8f9fa;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .complete-btn {
+            display: none;
+        }
+        
+        .completion-status {
+            display: none;
+            margin-top: 8px;
+        }
+        
+        .hint-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .exercise-progress-indicator {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+        
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(#28a745 0deg, #e9ecef 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .progress-circle::before {
+            content: '';
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .progress-text {
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('dashboard') }}">
+                <i class="fas fa-graduation-cap me-2"></i>Learning Platform
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{{ url_for('dashboard') }}">
+                    <i class="fas fa-home me-1"></i>Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="module-container">
+        <!-- Module Header -->
+        <div class="module-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-2">{{ topic.title }}</h1>
+                    <p class="text-muted mb-0">{{ course.title }}</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="difficulty-badge difficulty-{{ topic.difficulty or 'beginner' }}">
+                        {{ (topic.difficulty or 'beginner').title() }}
+                    </span>
+                    <div class="mt-2">
+                        <small class="text-muted">
+                            <i class="fas fa-clock me-1"></i>{{ topic.estimated_time or 15 }} minutes
+                        </small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" style="width: 0%" id="progressBar"></div>
+            </div>
+            <small class="text-muted">Progress: <span id="progressText">0%</span></small>
+        </div>
+
+        <!-- Module Content - Exercises Only -->
+        <div class="module-content">
+            <!-- Exercises Section -->
+            <div class="exercises-section">
+                <h3 class="mb-4">
+                    <i class="fas fa-dumbbell me-2"></i>Course Modules ({{ sub_exercises|length if sub_exercises else 0 }})
+                </h3>
+                
+                {% if sub_exercises %}
+                <!-- Individual Modules Container -->
+                <div class="modules-container">
+                    {% for exercise in sub_exercises %}
+                    <!-- Start Module {{ loop.index }} -->
+                    <div class="module-card mb-4 {{ 'unlocked' if loop.first else 'locked' }}" data-module-id="{{ loop.index }}">
+                        <div class="card shadow-sm border-0">
+                            <!-- Module Header -->
+                            <div class="card-header module-header {{ 'bg-success' if loop.first else 'bg-secondary' }}">
+                                <div class="d-flex align-items-center justify-content-between w-100" role="button"
+                                     data-bs-toggle="collapse" 
+                                     data-bs-target="#moduleContent{{ loop.index }}"
+                                     aria-expanded="{{ 'true' if loop.first else 'false' }}"
+                                     aria-controls="moduleContent{{ loop.index }}"
+                                     style="cursor: {{ 'pointer' if loop.first else 'not-allowed' }};"
+                                     {% if not loop.first %}disabled{% endif %}>
+                                
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="module-info">
+                                            <div class="module-status mb-2">
+                                                {% if loop.first %}
+                                                    <i class="fas fa-unlock text-white me-2"></i>
+                                                    <span class="badge bg-light text-dark">Available</span>
+                                                {% else %}
+                                                    <i class="fas fa-lock text-white me-2"></i>
+                                                    <span class="badge bg-light text-dark">Locked</span>
+                                                {% endif %}
+                                            </div>
+                                            <h5 class="text-white mb-1">
+                                                <i class="fas fa-graduation-cap me-2"></i>
+                                                Module {{ loop.index }}: {{ exercise.title }}
+                                            </h5>
+                                            <p class="text-white-50 mb-0">{{ exercise.description or 'Complete this module to advance your learning.' }}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 text-end">
+                                        <div class="module-meta">
+                                            <span class="badge bg-warning text-dark mb-2">
+                                                {{ (exercise.difficulty or 'beginner').title() }}
+                                            </span>
+                                            <div class="text-white-50">
+                                                <i class="fas fa-clock me-1"></i>
+                                                <small>{{ exercise.estimated_time or '15-20' }} minutes</small>
+                                            </div>
+                                            <div class="module-controls mt-2">
+                                                <i class="fas fa-chevron-down text-white collapse-icon"></i>
+                                                <div class="completion-badge" style="display: none;">
+                                                    <i class="fas fa-check-circle text-success"></i>
+                                                    <small class="text-success">Completed</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Module Content Body -->
+                            <div class="collapse {% if loop.first %}show{% endif %}" id="moduleContent{{ loop.index }}">
+                                <div class="card-body module-body">
+                                    <!-- Module Content -->
+                                    <div class="module-content-area">
+                                        {{ exercise.content | safe }}
+                                    </div>
+                                    
+                                    <!-- Action Buttons -->
+                                    <div class="module-actions mt-4">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-8">
+                                                <div class="action-buttons">
+                                                    <button class="btn btn-primary btn-lg start-module-btn" 
+                                                            onclick="startModule({{ loop.index }})"
+                                                            {% if not loop.first %}disabled{% endif %}>
+                                                        <i class="fas fa-play me-2"></i>Start Module
+                                                    </button>
+                                                    
+                                                    <button class="btn btn-success btn-lg complete-module-btn d-none" 
+                                                            onclick="completeModule({{ loop.index }})">
+                                                        <i class="fas fa-check me-2"></i>Mark Complete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-4 text-end">
+                                                <button class="btn btn-outline-info hint-btn" 
+                                                        onclick="toggleHint({{ loop.index }})"
+                                                        {% if not loop.first %}disabled{% endif %}>
+                                                    <i class="fas fa-lightbulb me-2"></i>Show Hints
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Hint Section -->
+                                        <div class="hint-section mt-4 d-none" id="hint{{ loop.index }}">
+                                            <div class="alert alert-info">
+                                                <h6><i class="fas fa-lightbulb me-2"></i>Module Hints:</h6>
+                                                <ul class="mb-0">
+                                                    <li>{{ exercise.hint or 'Take your time to understand each concept thoroughly.' }}</li>
+                                                    <li>Practice the examples provided in the module content.</li>
+                                                    <li>Don't hesitate to re-read sections if needed.</li>
+                                                    <li>Apply what you learn immediately for better retention.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Progress Indicator -->
+                                        <div class="module-progress mt-3 d-none">
+                                            <div class="alert alert-success">
+                                                <i class="fas fa-check-circle me-2"></i>
+                                                <strong>Module {{ loop.index }} Completed!</strong> 
+                                                {% if not loop.last %}
+                                                    You can now proceed to Module {{ loop.index + 1 }}.
+                                                {% else %}
+                                                    All modules completed! Great job!
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Module {{ loop.index }} -->
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-graduation-cap fa-3x text-muted mb-3"></i>
+                    <h4>No Modules Available</h4>
+                    <p class="text-muted">Course modules are being prepared.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise Progress Indicator -->
+    <div class="exercise-progress-indicator">
+        <div class="progress-circle" id="progressCircle">
+            <span class="progress-text" id="progressPercent">0%</span>
+        </div>
+        <div class="text-center mt-2">
+            <small class="text-muted">
+                <span id="completedCount">0</span>/<span id="totalCount">{{ sub_exercises|length if sub_exercises else 0 }}</span> Complete
+            </small>
+        </div>
+    </div>
+
+    <!-- Fixed Footer -->
+    <div class="fixed-footer">
+        <div class="footer-content">
+            <div class="progress-info">
+                <small class="text-muted">
+                    <i class="fas fa-tasks me-1"></i>
+                    <span id="completionStatus">Click "Mark Complete" to continue</span>
+                </small>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="btn btn-success me-3" onclick="markTopicComplete()" id="completeBtn">
+                    <i class="fas fa-check me-1"></i>Mark Complete
+                </button>
+                
+                <a href="/course/{{ course.id }}/topic/{{ next_topic_id or '1_0_1' }}" 
+                   class="btn btn-primary-custom" id="nextBtn" style="display: none;" onclick="handleNextTopic(event)">
+                    Next Topic <i class="fas fa-chevron-right ms-1"></i>
+                </a>
+        // Track concentration and face detection status
+        let isConcentrated = true; // Set from emotion tracking logic
+        let faceDetected = false;   // Default false, set true from camera/emotion JS
+
+        // Dynamically update Next Topic button based on face detection
+        function updateFaceDetectionStatus(detected) {
+            faceDetected = detected;
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn) {
+                nextBtn.style.display = detected ? 'inline-block' : 'none';
+            }
+            if (!detected) {
+                showNotification('😐 No face detected. Please read again for better understanding.', 'warning');
+            }
+        }
+
+        // Function to handle Next Topic click with concentration popup
+        function handleNextTopic(e) {
+            e.preventDefault();
+            if (!faceDetected) {
+                showNotification('😐 No face detected. Please read again for better understanding.', 'warning');
+                return;
+            }
+            if (isConcentrated) {
+                showNotification('🎉 Congrats! You were focused during this module. Proceeding to the next topic.', 'success');
+                setTimeout(function() {
+                    window.location.href = e.currentTarget.getAttribute('href');
+                }, 1500);
+            } else {
+                showNotification('⚠️ You seemed distracted. Please try to read again for better understanding.', 'warning');
+                setTimeout(function() {
+                    window.location.href = e.currentTarget.getAttribute('href');
+                }, 2500);
+            }
+        }
+                
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-home me-1"></i>Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let completedExercises = 0;
+    let totalExercises = parseInt("{{ (sub_exercises|length if sub_exercises else 1) }}");
+        let topicCompleted = false;
+        let exerciseStates = [];
+
+        // Initialize exercise states
+        for (let i = 1; i <= totalExercises; i++) {
+            exerciseStates[i] = {
+                unlocked: i === 1, // Only first exercise is unlocked initially
+                started: false,
+                completed: false
+            };
+        }
+
+        function updateProgress() {
+            const progress = (completedExercises / totalExercises) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = Math.round(progress) + '%';
+            
+            // Update circular progress indicator
+            const progressCircle = document.getElementById('progressCircle');
+            const progressPercent = document.getElementById('progressPercent');
+            const completedCount = document.getElementById('completedCount');
+            
+            progressCircle.style.background = `conic-gradient(#28a745 ${progress * 3.6}deg, #e9ecef ${progress * 3.6}deg)`;
+            progressPercent.textContent = Math.round(progress) + '%';
+            completedCount.textContent = completedExercises;
+        }
+
+        function startExercise(exerciseId) {
+            if (!exerciseStates[exerciseId].unlocked) return;
+            
+            exerciseStates[exerciseId].started = true;
+            
+            // Update UI
+            const startBtn = document.querySelector(`[data-exercise-id="${exerciseId}"] .start-btn`);
+            const completeBtn = document.querySelector(`[data-exercise-id="${exerciseId}"] .complete-btn`);
+            const hintBtn = document.querySelector(`[data-exercise-id="${exerciseId}"] .hint-btn`);
+            
+            startBtn.style.display = 'none';
+            completeBtn.style.display = 'inline-block';
+            hintBtn.disabled = false;
+            
+            // Show info message
+            showNotification(`Exercise ${exerciseId} started! Complete it to unlock the next exercise.`, 'info');
+        }
+
+        function completeExercise(exerciseId) {
+            if (!exerciseStates[exerciseId].started) return;
+            
+            exerciseStates[exerciseId].completed = true;
+            completedExercises++;
+            
+            // Update UI for completed exercise
+            const exerciseCard = document.querySelector(`[data-exercise-id="${exerciseId}"] .exercise-card`);
+            const completeBtn = document.querySelector(`[data-exercise-id="${exerciseId}"] .complete-btn`);
+            const completionStatus = document.querySelector(`[data-exercise-id="${exerciseId}"] .completion-status`);
+            const lockIcon = document.querySelector(`[data-exercise-id="${exerciseId}"] .fas.fa-unlock`);
+            
+            exerciseCard.classList.add('completed');
+            completeBtn.innerHTML = '<i class="fas fa-check me-2"></i>Completed!';
+            completeBtn.disabled = true;
+            completeBtn.className = 'btn btn-success complete-btn';
+            
+            if (completionStatus) {
+                completionStatus.style.display = 'block';
+            }
+            
+            // Change unlock icon to check
+            if (lockIcon) {
+                lockIcon.className = 'fas fa-check-circle text-success me-2';
+            }
+            
+            // Unlock next exercise
+            unlockNextExercise(exerciseId);
+            
+            // Update progress
+            updateProgress();
+            
+            // Show success message
+            showNotification(`🎉 Exercise ${exerciseId} completed! ${totalExercises - completedExercises > 0 ? 'Next exercise unlocked!' : 'All exercises completed!'}`, 'success');
+            
+            // Check if all exercises are completed
+            if (completedExercises >= totalExercises) {
+                document.getElementById('completionStatus').innerHTML = 
+                    '<i class="fas fa-graduation-cap text-success me-1"></i>All exercises completed! You can proceed to the next topic.';
+                
+                // Enable next topic button
+                const nextBtn = document.getElementById('nextBtn');
+                if (nextBtn) {
+                    nextBtn.style.display = 'inline-block';
+                }
+                
+                // Celebration effect
+                if (typeof confetti !== 'undefined') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
+            }
+        }
+
+        function unlockNextExercise(currentExerciseId) {
+            const nextExerciseId = currentExerciseId + 1;
+            
+            if (nextExerciseId <= totalExercises) {
+                exerciseStates[nextExerciseId].unlocked = true;
+                
+                // Update UI for next exercise
+                const nextExerciseCard = document.querySelector(`[data-exercise-id="${nextExerciseId}"] .exercise-card`);
+                const nextExerciseHeader = document.querySelector(`[data-exercise-id="${nextExerciseId}"] .exercise-header`);
+                const nextLockIcon = document.querySelector(`[data-exercise-id="${nextExerciseId}"] .fas.fa-lock`);
+                const nextStartBtn = document.querySelector(`[data-exercise-id="${nextExerciseId}"] .start-btn`);
+                const nextHintBtn = document.querySelector(`[data-exercise-id="${nextExerciseId}"] .hint-btn`);
+                
+                if (nextExerciseCard) {
+                    nextExerciseCard.classList.remove('locked');
+                    nextExerciseCard.classList.add('unlocked');
+                }
+                
+                if (nextExerciseHeader) {
+                    nextExerciseHeader.style.cursor = 'pointer';
+                }
+                
+                if (nextLockIcon) {
+                    nextLockIcon.className = 'fas fa-unlock text-success me-2';
+                }
+                
+                if (nextStartBtn) {
+                    nextStartBtn.disabled = false;
+                }
+                
+                if (nextHintBtn) {
+                    nextHintBtn.disabled = false;
+                }
+                
+                // Auto-expand next exercise
+                const nextCollapse = document.querySelector(`#exercise${nextExerciseId}`);
+                if (nextCollapse && !nextCollapse.classList.contains('show')) {
+                    const bsCollapse = new bootstrap.Collapse(nextCollapse, { toggle: true });
+                }
+            }
+        }
+
+        function showHint(exerciseId) {
+            if (!exerciseStates[exerciseId].unlocked) return;
+            
+            const hintSection = document.querySelector(`[data-exercise-id="${exerciseId}"] .hint-section`);
+            
+            if (hintSection.style.display === 'none') {
+                hintSection.style.display = 'block';
+                showNotification('Hint revealed! Use it to help complete the exercise.', 'info');
+            } else {
+                hintSection.style.display = 'none';
+            }
+        }
+
+        function showNotification(message, type) {
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : type === 'info' ? 'info' : 'warning'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 100px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 4 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 4000);
+        }
+
+        function markTopicComplete() {
+            if (topicCompleted || completedExercises < totalExercises) {
+                if (completedExercises < totalExercises) {
+                    showNotification('Complete all exercises before marking the topic as complete!', 'warning');
+                }
+                return;
+            }
+            
+            topicCompleted = true;
+            const completeBtn = document.getElementById('completeBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            completeBtn.innerHTML = '<i class="fas fa-check me-1"></i>Completed!';
+            completeBtn.disabled = true;
+            completeBtn.className = 'btn btn-success me-3';
+            
+            if (nextBtn) {
+                nextBtn.style.display = 'inline-block';
+            }
+            
+            document.getElementById('completionStatus').innerHTML = 
+                '<i class="fas fa-graduation-cap text-success me-1"></i>Topic completed! You can proceed to the next topic.';
+            
+            // Update progress to 100%
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progressText').textContent = '100%';
+            
+            showNotification('🎓 Topic completed successfully!', 'success');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            
+            // Disable locked exercise headers
+            document.querySelectorAll('.exercise-card.locked .exercise-header').forEach(header => {
+                header.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showNotification('Complete the previous exercise to unlock this one!', 'warning');
+                });
+            });
+        });
+    </script>
+    
+    <!-- Confetti library for celebration effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Learning - Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+        }
+        .auth-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .auth-welcome {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            text-align: center;
+            color: #333;
+        }
+        .auth-welcome h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        .auth-welcome p {
+            color: #4a5568;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .auth-forms {
+            padding: 40px;
+        }
+        .nav-tabs {
+            border: none;
+            margin-bottom: 30px;
+        }
+        .nav-tabs .nav-link {
+            border: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            color: #718096;
+            transition: all 0.3s ease;
+        }
+        .nav-tabs .nav-link.active {
+            background-color: #667eea;
+            color: white;
+        }
+        .form-control {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .btn-auth {
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-guest {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            margin-top: 20px;
+        }
+        .btn-guest:hover {
+            background: #667eea;
+            color: white;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+        .feature-item i {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="auth-container">
+            <div class="row g-0">
+                <!-- Welcome Section -->
+                <div class="col-md-6">
+                    <div class="auth-welcome">
+                        <h1>Welcome to Personalized Learning</h1>
+                        <p>Your personalized journey to knowledge and growth starts here.</p>
+                        
+                        <div class="features">
+                            <div class="feature-item">
+                                <i class="fas fa-brain"></i>
+                                <h5>Smart Learning</h5>
+                                <p>Adaptive to your pace</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-chart-line"></i>
+                                <h5>Track Progress</h5>
+                                <p>Monitor your growth</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-users"></i>
+                                <h5>Community</h5>
+                                <p>Learn together</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auth Forms -->
+                <div class="col-md-6">
+                    <div class="auth-forms">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#login" type="button" role="tab" aria-selected="true">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="register-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#register" type="button" role="tab" aria-selected="false">
+                                    <i class="fas fa-user-plus me-2"></i>Sign Up
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <!-- Login Form -->
+                            <div class="tab-pane fade show active" id="login" role="tabpanel">
+                                {% if request.args.get('error') %}
+                                <div class="alert alert-danger mb-3" role="alert">
+                                    {{ request.args.get('error') }}
+                                </div>
+                                {% endif %}
+                                <form id="loginForm" method="post" action="/login" onsubmit="return validateLoginForm()">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="loginUsername" 
+                                            name="username" placeholder="Username" required>
+                                        <label for="loginUsername">Username</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="loginPassword" 
+                                            name="password" placeholder="Password" required>
+                                        <label for="loginPassword">Password</label>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                                        </div>
+                                        <a href="#" class="text-decoration-none">Forgot password?</a>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-auth w-100">
+                                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Register Form -->
+                            <div class="tab-pane fade" id="register" role="tabpanel">
+                                <form id="registerForm" method="post" action="/register">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="regUsername" 
+                                            name="username" placeholder="Username" required>
+                                        <label for="regUsername">Choose Username</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="regEmail" 
+                                            name="email" placeholder="Email" required>
+                                        <label for="regEmail">Email Address</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="regPassword" 
+                                            name="password" placeholder="Password" required>
+                                        <label for="regPassword">Choose Password</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="regConfirmPassword" 
+                                            name="confirm_password" placeholder="Confirm Password" required>
+                                        <label for="regConfirmPassword">Confirm Password</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-auth w-100">
+                                        <i class="fas fa-user-plus me-2"></i>Request Access
+                                    </button>
+                                </form>
+                                <div class="text-center mt-3">
+                                    <small class="text-muted">
+                                        Registration requests are reviewed by administrators
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Password match validation
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+            }
+        });
+
+    <script>
+    function validateLoginForm() {
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value.trim();
+        
+        if (!username || !password) {
+            alert('Please enter both username and password');
+            return false;
+        }
+        return true;
+    }
+    </script>
+</body>
+</html>

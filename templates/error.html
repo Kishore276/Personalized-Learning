@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ error_title }} - Personalized Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .error-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 40px;
+            text-align: center;
+        }
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        .error-404 { color: #ffc107; }
+        .error-500 { color: #dc3545; }
+        .error-403 { color: #fd7e14; }
+        .error-default { color: #6c757d; }
+        
+        .error-code {
+            font-size: 6rem;
+            font-weight: bold;
+            color: #6c757d;
+            margin: 20px 0;
+            opacity: 0.3;
+        }
+        .btn-home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: white;
+        }
+        .error-details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .suggestions {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .suggestions ul {
+            padding-left: 20px;
+        }
+        .suggestions li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-container">
+            <!-- Error Icon -->
+            <div class="error-icon 
+                {% if error_code == 404 %}error-404
+                {% elif error_code == 500 %}error-500
+                {% elif error_code == 403 %}error-403
+                {% else %}error-default{% endif %}">
+                {% if error_code == 404 %}
+                    <i class="fas fa-search"></i>
+                {% elif error_code == 500 %}
+                    <i class="fas fa-exclamation-triangle"></i>
+                {% elif error_code == 403 %}
+                    <i class="fas fa-lock"></i>
+                {% else %}
+                    <i class="fas fa-bug"></i>
+                {% endif %}
+            </div>
+
+            <!-- Error Code -->
+            <div class="error-code">{{ error_code }}</div>
+
+            <!-- Error Title -->
+            <h1 class="mb-3">{{ error_title }}</h1>
+
+            <!-- Error Message -->
+            <div class="error-details">
+                <p class="mb-0">{{ error_message }}</p>
+            </div>
+
+            <!-- Suggestions based on error type -->
+            <div class="suggestions">
+                {% if error_code == 404 %}
+                <h5><i class="fas fa-lightbulb me-2"></i>What you can do:</h5>
+                <ul>
+                    <li>Check the URL for typos</li>
+                    <li>Go back to the previous page</li>
+                    <li>Visit our homepage to find what you're looking for</li>
+                    <li>Use the search feature to find courses</li>
+                </ul>
+                {% elif error_code == 500 %}
+                <h5><i class="fas fa-tools me-2"></i>What happened:</h5>
+                <ul>
+                    <li>Our servers are experiencing technical difficulties</li>
+                    <li>The issue has been automatically reported to our team</li>
+                    <li>Please try again in a few minutes</li>
+                    <li>If the problem persists, contact support</li>
+                </ul>
+                {% elif error_code == 403 %}
+                <h5><i class="fas fa-shield-alt me-2"></i>Access Information:</h5>
+                <ul>
+                    <li>You may need to log in to access this content</li>
+                    <li>Your session may have expired</li>
+                    <li>This content may require special permissions</li>
+                    <li>Contact support if you believe this is an error</li>
+                </ul>
+                {% else %}
+                <h5><i class="fas fa-question-circle me-2"></i>Need help?</h5>
+                <ul>
+                    <li>Try refreshing the page</li>
+                    <li>Clear your browser cache</li>
+                    <li>Check your internet connection</li>
+                    <li>Contact our support team if issues persist</li>
+                </ul>
+                {% endif %}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-4">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-home me-3">
+                    <i class="fas fa-home me-2"></i>Go to Dashboard
+                </a>
+                <button onclick="history.back()" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Go Back
+                </button>
+            </div>
+
+            <!-- Additional Help -->
+            <div class="mt-4 pt-3 border-top">
+                <small class="text-muted">
+                    <i class="fas fa-clock me-1"></i>
+                    Error occurred at {{ moment().format('MMMM Do YYYY, h:mm:ss a') if moment else 'just now' }}
+                </small>
+                <br>
+                <small class="text-muted">
+                    Need immediate help? 
+                    <a href="mailto:support@personalizedlearning.com" class="text-decoration-none">
+                        <i class="fas fa-envelope me-1"></i>Contact Support
+                    </a>
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Auto-refresh for 500 errors after 30 seconds
+        {% if error_code == 500 %}
+        setTimeout(function() {
+            if (confirm('Would you like to try reloading the page?')) {
+                window.location.reload();
+            }
+        }, 30000);
+        {% endif %}
+
+        // Log error for analytics (in production, send to error tracking service)
+        console.error('Error {{ error_code }}: {{ error_title }}');
+    </script>
+</body>
+</html>

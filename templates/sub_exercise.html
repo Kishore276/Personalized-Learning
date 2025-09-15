@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ sub_exercise.title }} - {{ course.title }}</title>
+    <!-- ADVANCED CLEAN EXERCISE UI -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --background-color: #f8fafc;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        body { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            padding-bottom: 120px;
+        }
+        
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .exercise-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .exercise-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            color: white;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .exercise-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+        
+        .exercise-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .exercise-subtitle {
+            opacity: 0.9;
+            font-size: 16px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 3;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .exercise-meta {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .meta-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+        
+        .exercise-content {
+            padding: 40px;
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+        
+        .content-section {
+            margin-bottom: 32px;
+        }
+        
+        .content-section h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+        
+        .instructions-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .instructions-icon {
+            color: var(--primary-color);
+            font-size: 20px;
+            margin-right: 8px;
+        }
+        
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 12px;
+            padding: 24px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+            border: 1px solid #374151;
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: 'Code';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: #374151;
+            color: #9ca3af;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hint-solution-area {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .hint-solution-area.solution {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: var(--success-color);
+        }
+        
+        .hint-solution-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .action-area {
+            background: var(--background-color);
+            padding: 24px 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .progress-indicator {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar-container {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--success-color) 100%);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-modern {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .btn-modern:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .btn-modern.success {
+            background: var(--success-color);
+        }
+        
+        .btn-modern.success:hover {
+            background: #059669;
+            box-shadow: 0 8px 15px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-modern.warning {
+            background: var(--warning-color);
+            color: #1f2937;
+        }
+        
+        .btn-modern.warning:hover {
+            background: #d97706;
+            color: #1f2937;
+            box-shadow: 0 8px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-modern:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Fixed Next Topic Button */
+        .fixed-next-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+        
+        .fixed-next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.5);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            z-index: 1050;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
+        }
+        
+        .notification.info {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+        }
+        
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning-color) 0%, #d97706 100%);
+            color: #1f2937;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 10px;
+            }
+            
+            .exercise-header {
+                padding: 20px;
+            }
+            
+            .exercise-title {
+                font-size: 24px;
+            }
+            
+            .exercise-content {
+                padding: 20px;
+            }
+            
+            .action-area {
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .fixed-next-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 14px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Exercise Header -->
+        <div class="exercise-card">
+            <div class="exercise-header">
+                <a href="{{ url_for('view_topic', course_id=course.id, topic_id=topic_id) }}" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                
+                <div class="exercise-title">{{ sub_exercise.title }}</div>
+                <div class="exercise-subtitle">{{ course.title }}</div>
+                
+                <div class="exercise-meta">
+                    <span class="meta-badge">
+                        <i class="fas fa-tag"></i> {{ sub_exercise.exercise_type.title() if sub_exercise.exercise_type else 'Practice' }}
+                    </span>
+                    <span class="meta-badge">
+                        <i class="fas fa-signal"></i> {{ sub_exercise.difficulty.title() if sub_exercise.difficulty else 'Beginner' }}
+                    </span>
+                    <span class="meta-badge">
+                        <i class="fas fa-clock"></i> {{ sub_exercise.estimated_time or 15 }} min
+                    </span>
+                    {% if progress.status == 'completed' %}
+                    <span class="meta-badge">
+                        <i class="fas fa-check"></i> Completed
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Progress Indicator -->
+            <div class="action-area">
+                <div class="progress-indicator">
+                    {% set progress_percent = 100 if progress.status == 'completed' else (50 if progress.status == 'in_progress' else 0) %}
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: {{ progress_percent }}%"></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Progress: {{ progress_percent }}%</span>
+                        <span class="text-muted">
+                            {% if progress.status == 'completed' %}
+                                <i class="fas fa-check text-success"></i> Completed
+                            {% elif progress.status == 'in_progress' %}
+                                <i class="fas fa-play text-primary"></i> In Progress
+                            {% else %}
+                                <i class="fas fa-circle text-muted"></i> Not Started
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons (Simplified) -->
+                <div class="action-buttons">
+                    {% if progress.status != 'completed' %}
+                    <button class="btn-modern" onclick="startExercise()" id="startBtn">
+                        <i class="fas fa-play"></i> 
+                        {% if progress.status == 'in_progress' %}Continue{% else %}Start Exercise{% endif %}
+                    </button>
+                    {% endif %}
+                    
+                    {% if progress.status == 'in_progress' or progress.status == 'completed' %}
+                    <button class="btn-modern success" onclick="completeExercise()" id="completeBtn">
+                        <i class="fas fa-check"></i> 
+                        {% if progress.status == 'completed' %}Completed{% else %}Complete{% endif %}
+                    </button>
+                    {% endif %}
+                    
+                    <button class="btn-modern warning" onclick="toggleHint()" id="hintBtn">
+                        <i class="fas fa-lightbulb"></i> Hint
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Exercise Content -->
+            <div class="exercise-content">
+                <!-- Instructions -->
+                <div class="instructions-box">
+                    <h3><i class="fas fa-info-circle instructions-icon"></i>Instructions</h3>
+                    {{ sub_exercise.description | safe }}
+                </div>
+                
+                {% if sub_exercise.instructions %}
+                <div class="content-section">
+                    <h3>Details</h3>
+                    <div>{{ sub_exercise.instructions | safe }}</div>
+                </div>
+                {% endif %}
+                
+                {% if sub_exercise.code_template %}
+                <div class="content-section">
+                    <h3>Code Template</h3>
+                    <div class="code-block">{{ sub_exercise.code_template }}</div>
+                </div>
+                {% endif %}
+                
+                {% if sub_exercise.examples %}
+                <div class="content-section">
+                    <h3>Examples</h3>
+                    <div>{{ sub_exercise.examples | safe }}</div>
+                </div>
+                {% endif %}
+                
+                <!-- Hint Area -->
+                <div class="hint-solution-area" id="hintArea">
+                    <div class="hint-solution-header">
+                        <i class="fas fa-lightbulb" style="color: #f59e0b; margin-right: 8px;"></i>
+                        Helpful Hint
+                    </div>
+                    <div>
+                        {% if sub_exercise.hint %}
+                            {{ sub_exercise.hint | safe }}
+                        {% else %}
+                            <p>Break down the problem into smaller parts. Consider what you need to achieve and what tools/methods you have available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Solution Area -->
+                <div class="hint-solution-area solution" id="solutionArea">
+                    <div class="hint-solution-header">
+                        <i class="fas fa-key" style="color: #10b981; margin-right: 8px;"></i>
+                        Solution
+                    </div>
+                    <div>
+                        {% if sub_exercise.solution %}
+                            {{ sub_exercise.solution | safe }}
+                        {% else %}
+                            <p>Work through the problem step by step. Try to understand the requirements and implement the solution gradually.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fixed Next Topic Button -->
+    {% if all_sub_exercises %}
+        {% for ex in all_sub_exercises %}
+            {% if ex.id == sub_exercise.id + 1 %}
+            <a href="{{ url_for('view_sub_exercise', course_id=course.id, topic_id=topic_id, sub_exercise_id=ex.id) }}" 
+               class="fixed-next-btn">
+                <span>Next Exercise</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <a href="{{ url_for('view_topic', course_id=course.id, topic_id=topic_id) }}" 
+           class="fixed-next-btn">
+            <span>Back to Topic</span>
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let hintVisible = false;
+        let solutionVisible = false;
+        
+        function startExercise() {
+            const btn = document.getElementById('startBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting...';
+            
+            fetch('/course/{{ course.id }}/topic/{{ topic_id }}/sub_exercise/{{ sub_exercise.id }}/start', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    btn.innerHTML = '<i class="fas fa-play"></i> Continue';
+                    btn.disabled = false;
+                    
+                    // Show complete button
+                    const completeBtn = document.getElementById('completeBtn');
+                    if (completeBtn) {
+                        completeBtn.style.display = 'inline-flex';
+                    }
+                    
+                    // Update progress
+                    updateProgress(50);
+                    
+                    showNotification('Exercise started! Good luck!', 'success');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-play"></i> Start Exercise';
+                showNotification('Error starting exercise', 'warning');
+            });
+        }
+        
+        function completeExercise() {
+            const btn = document.getElementById('completeBtn');
+            
+            if (btn.textContent.includes('Completed')) {
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Completing...';
+            
+            fetch('/course/{{ course.id }}/topic/{{ topic_id }}/sub_exercise/{{ sub_exercise.id }}/complete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    btn.innerHTML = '<i class="fas fa-check"></i> Completed';
+                    btn.classList.add('success');
+                    
+                    // Update progress
+                    updateProgress(100);
+                    
+                    showNotification('Exercise completed! Excellent work!', 'success');
+                    
+                    // Show next button highlight
+                    const nextBtn = document.querySelector('.fixed-next-btn');
+                    if (nextBtn) {
+                        nextBtn.style.animation = 'pulse 2s infinite';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check"></i> Complete';
+                showNotification('Error completing exercise', 'warning');
+            });
+        }
+        
+        function toggleHint() {
+            const hintArea = document.getElementById('hintArea');
+            const btn = document.getElementById('hintBtn');
+            
+            hintVisible = !hintVisible;
+            
+            if (hintVisible) {
+                hintArea.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Hint';
+                showNotification('Hint revealed!', 'info');
+            } else {
+                hintArea.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-lightbulb"></i> Hint';
+            }
+        }
+        
+        function updateProgress(percent) {
+            const progressBar = document.querySelector('.progress-bar-fill');
+            const progressText = document.querySelector('.progress-indicator span:first-child');
+            
+            if (progressBar) {
+                progressBar.style.width = percent + '%';
+            }
+            if (progressText) {
+                progressText.textContent = `Progress: ${percent}%`;
+            }
+        }
+        
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Trigger animation
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Remove after 4 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if progress.status == 'completed' %}
+            const startBtn = document.getElementById('startBtn');
+            const completeBtn = document.getElementById('completeBtn');
+            
+            if (startBtn) startBtn.style.display = 'none';
+            if (completeBtn) {
+                completeBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
+                completeBtn.classList.add('success');
+                completeBtn.disabled = true;
+            }
+            {% endif %}
+        });
+    </script>
+</body>
+</html>
+                                Great progress! Continue working to complete this exercise.
+                            {% else %}
+                                Ready to start? Click the start button above.
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Exercise Content -->
+            <div class="exercise-content" id="exerciseContent">
+                {{ sub_exercise.description | safe }}
+                
+                {% if sub_exercise.instructions %}
+                <h3>Instructions</h3>
+                <div>{{ sub_exercise.instructions | safe }}</div>
+                {% endif %}
+                
+                {% if sub_exercise.code_template %}
+                <h3>Code Template</h3>
+                <div class="code-block">{{ sub_exercise.code_template }}</div>
+                {% endif %}
+                
+                {% if sub_exercise.examples %}
+                <h3>Examples</h3>
+                <div>{{ sub_exercise.examples | safe }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- Solution Area (Hidden by default) -->
+            <div class="solution-area" id="solutionArea" style="display: none;">
+                <h4><i class="fas fa-key"></i> Solution</h4>
+                <div id="solutionContent">
+                    {% if sub_exercise.solution %}
+                        {{ sub_exercise.solution | safe }}
+                    {% else %}
+                        <p>Work through the problem step by step. Try to understand the requirements and implement the solution gradually.</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Hint Area (Hidden by default) -->
+            <div class="solution-area" id="hintArea" style="display: none; background-color: #d4edda; border-color: #c3e6cb;">
+                <h4><i class="fas fa-lightbulb"></i> Hint</h4>
+                <div id="hintContent">
+                    {% if sub_exercise.hint %}
+                        {{ sub_exercise.hint | safe }}
+                    {% else %}
+                        <p>Break down the problem into smaller parts. Consider what you need to achieve and what tools/methods you have available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Exercise Navigation -->
+        <div class="exercise-container">
+            <div class="exercise-navigation">
+                <div>
+                    {% if all_sub_exercises and sub_exercise.id > 1 %}
+                    {% for ex in all_sub_exercises %}
+                        {% if ex.id == sub_exercise.id - 1 %}
+                        <a href="{{ url_for('view_sub_exercise', course_id=course.id, topic_id=topic_id, sub_exercise_id=ex.id) }}" 
+                           class="nav-button">
+                            <i class="fas fa-chevron-left"></i> Previous: {{ ex.title }}
+                        </a>
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if all_sub_exercises %}
+                    {% for ex in all_sub_exercises %}
+                        {% if ex.id == sub_exercise.id + 1 %}
+                        <a href="{{ url_for('view_sub_exercise', course_id=course.id, topic_id=topic_id, sub_exercise_id=ex.id) }}" 
+                           class="nav-button">
+                            Next: {{ ex.title }} <i class="fas fa-chevron-right"></i>
+                        </a>
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let startTime = null;
+        let timerInterval = null;
+        
+        function startExercise() {
+            const btn = document.getElementById('startBtn');
+            
+            // Start the exercise
+            fetch('/course/{{ course.id }}/topic/{{ topic_id }}/sub_exercise/{{ sub_exercise.id }}/start', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    btn.innerHTML = '<i class="fas fa-play"></i> Exercise Started';
+                    btn.disabled = true;
+                    
+                    // Show complete button
+                    const completeBtn = document.getElementById('completeBtn');
+                    if (completeBtn) {
+                        completeBtn.style.display = 'inline-block';
+                    }
+                    
+                    // Start timer
+                    startTimer();
+                    
+                    showNotification('Exercise started! Good luck!', 'success');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Error starting exercise', 'error');
+            });
+        }
+        
+        function completeExercise() {
+            const btn = document.getElementById('completeBtn');
+            
+            if (btn.classList.contains('completed')) {
+                return;
+            }
+            
+            // Complete the exercise
+            fetch('/course/{{ course.id }}/topic/{{ topic_id }}/sub_exercise/{{ sub_exercise.id }}/complete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    btn.innerHTML = '<i class="fas fa-check"></i> Completed!';
+                    btn.classList.add('completed');
+                    
+                    // Stop timer
+                    if (timerInterval) {
+                        clearInterval(timerInterval);
+                    }
+                    
+                    showNotification('Exercise completed! Well done!', 'success');
+                    
+                    // Update progress visual
+                    updateProgressDisplay(100);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Error completing exercise', 'error');
+            });
+        }
+        
+        function showHint() {
+            const hintArea = document.getElementById('hintArea');
+            if (hintArea.style.display === 'none') {
+                hintArea.style.display = 'block';
+                showNotification('Hint revealed!', 'info');
+            } else {
+                hintArea.style.display = 'none';
+            }
+        }
+        
+        function showSolution() {
+            const solutionArea = document.getElementById('solutionArea');
+            if (solutionArea.style.display === 'none') {
+                solutionArea.style.display = 'block';
+                showNotification('Solution revealed!', 'info');
+            } else {
+                solutionArea.style.display = 'none';
+            }
+        }
+        
+        function startTimer() {
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+        
+        function updateTimer() {
+            if (!startTime) return;
+            
+            const now = new Date();
+            const elapsed = Math.floor((now - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            
+            const timerDisplay = document.getElementById('timer');
+            if (timerDisplay) {
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+        
+        function updateProgressDisplay(percent) {
+            const progressText = document.querySelector('.progress-circle + small');
+            if (progressText) {
+                progressText.textContent = `${percent}% Complete`;
+            }
+        }
+        
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 1050;
+                min-width: 300px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // If exercise is in progress, start timer
+            {% if progress.status == 'in_progress' %}
+            startTimer();
+            {% endif %}
+            
+            // If exercise is completed, disable start button
+            {% if progress.status == 'completed' %}
+            const startBtn = document.getElementById('startBtn');
+            const completeBtn = document.getElementById('completeBtn');
+            
+            if (startBtn) startBtn.style.display = 'none';
+            if (completeBtn) {
+                completeBtn.innerHTML = '<i class="fas fa-check"></i> Completed!';
+                completeBtn.classList.add('completed');
+            }
+            {% endif %}
+        });
+    </script>
+</body>
+</html>

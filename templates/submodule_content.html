@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ submodule.title }} - {{ course.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/ui-enhanced.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+            padding-top: 70px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .content-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .content-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .content-body {
+            padding: 30px;
+        }
+        
+        .breadcrumb {
+            background: #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .navigation-buttons {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        /* Enhanced Content Styles */
+        .theory-content, .examples-content, .exercises-content, .quiz-content, .general-content {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+            border-left: 4px solid #007bff;
+        }
+
+        .theory-content h3, .examples-content h3, .exercises-content h3, .quiz-content h3, .general-content h3 {
+            color: #007bff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .theory-content h4, .examples-content h4, .exercises-content h4, .quiz-content h4, .general-content h4 {
+            color: #333;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .theory-content h5, .examples-content h5, .exercises-content h5, .quiz-content h5, .general-content h5 {
+            color: #555;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .key-points, .study-tips, .example-preview, .exercise-types, .getting-started, .quiz-topics, .preparation, .quiz-tips {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .example-preview pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+
+        .content-body ul {
+            padding-left: 1.5rem;
+        }
+
+        .content-body li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        /* Concentration Monitor Widget */
+        .concentration-widget {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1050;
+            padding: 10px;
+        }
+        
+        .concentration-widget video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Concentration Monitoring Widget -->
+    <div class="concentration-widget">
+        <div class="text-center mb-2">
+            <small class="text-muted"><i class="fas fa-eye"></i> Concentration Monitor</small>
+        </div>
+        <video id="videoInput" width="180" height="135" autoplay muted style="border-radius:8px;"></video>
+        <div id="concentration-status" class="badge bg-info text-white w-100 mt-2 text-center" style="font-size: 0.7rem;">
+            Initializing...
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('dashboard') }}">
+                <i class="fas fa-graduation-cap me-2"></i>Learning Platform
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{{ url_for('dashboard') }}">
+                    <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                </a>
+                <a class="nav-link" href="{{ url_for('profile') }}">
+                    <!-- Profile button removed -->
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('dashboard') }}"><i class="fas fa-home me-1"></i>Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('course_modules', course_id=course.id) }}">{{ course.title }}</a>
+                </li>
+                <li class="breadcrumb-item">{{ module.title }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ submodule.title }}</li>
+            </ol>
+        </nav>
+
+        <!-- Content Container -->
+        <div class="content-container">
+            <div class="content-header">
+                <h1 class="mb-0">{{ submodule.title }}</h1>
+                <p class="mb-0 mt-2">{{ module.title }} - {{ course.title }}</p>
+            </div>
+            
+            <div class="content-body">
+                {% if submodule.content %}
+                    {{ submodule.content|safe }}
+                {% else %}
+                    <div class="general-content">
+                        <h3>📚 {{ submodule.title }}</h3>
+                        <p>{{ submodule.description or "Welcome to this learning module!" }}</p>
+                        
+                        <h4>What You'll Learn</h4>
+                        <ul>
+                            <li>Core concepts and principles</li>
+                            <li>Practical applications</li>
+                            <li>Best practices and techniques</li>
+                            <li>Real-world examples</li>
+                        </ul>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Detailed content for this module is being prepared. Check back soon for comprehensive learning materials!
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Navigation Buttons -->
+                <div class="navigation-buttons">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {% if prev_submodule %}
+                                <a href="{{ url_for('view_submodule', course_id=course.id, submodule_id=prev_submodule.id) }}" 
+                                   class="btn btn-outline-primary">
+                                    <i class="fas fa-arrow-left me-2"></i>Previous: {{ prev_submodule.title }}
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 text-end">
+                            {% if next_submodule %}
+                                <a href="{{ url_for('view_submodule', course_id=course.id, submodule_id=next_submodule.id) }}" 
+                                   class="btn btn-primary"
+                                   onclick="showModuleCompletionFeedback(event); return false;">
+                                    Next: {{ next_submodule.title }}<i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Back to Course Button -->
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('course_modules', course_id=course.id) }}" class="btn btn-secondary">
+                        <i class="fas fa-list me-2"></i>Back to Course Modules
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add concentration monitoring -->
+    <script src="{{ url_for('static', filename='js/webcam_emotion.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
