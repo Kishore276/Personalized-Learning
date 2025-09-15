@@ -1,0 +1,64 @@
+2025-08-19 22:40:24,280 - PERF - dashboard - Duration: 0.135s - Error: quiz_modal.html
+2025-08-19 22:40:32,745 - PERF - dashboard - Duration: 0.099s - Error: quiz_modal.html
+2025-08-19 22:41:24,004 - PERF - dashboard - Duration: 0.135s - Error: quiz_modal.html
+2025-08-19 22:41:29,206 - PERF - dashboard - Duration: 0.135s - Error: quiz_modal.html
+2025-08-19 22:42:03,251 - PERF - dashboard - Duration: 0.162s - Error: quiz_modal.html
+2025-08-19 22:42:21,785 - PERF - dashboard - Duration: 0.694s - Error: quiz_modal.html
+2025-08-19 22:47:04,765 - PERF - dashboard - Duration: 0.134s - Error: quiz_modal.html
+2025-08-19 22:48:18,433 - PERF - dashboard - Duration: 0.133s - Error: quiz_modal.html
+2025-08-19 22:52:37,152 - PERF - dashboard - Duration: 0.081s - Error: quiz_modal.html
+2025-08-19 22:53:10,310 - PERF - dashboard - Duration: 0.103s - Error: quiz_modal.html
+2025-08-19 22:53:53,526 - PERF - dashboard - Duration: 0.100s - Error: quiz_modal.html
+2025-08-19 22:56:23,583 - PERF - dashboard - Duration: 0.090s - Error: quiz_modal.html
+2025-08-19 22:56:44,125 - PERF - dashboard - Duration: 0.000s - Success
+2025-08-19 22:58:16,793 - PERF - dashboard - Duration: 0.088s - Error: quiz_modal.html
+2025-08-19 22:59:10,616 - PERF - dashboard - Duration: 0.152s - Error: quiz_modal.html
+2025-08-19 23:00:29,274 - PERF - dashboard - Duration: 0.083s - Error: quiz_modal.html
+2025-08-19 23:01:16,111 - PERF - dashboard - Duration: 0.079s - Success
+2025-08-19 23:01:39,727 - PERF - dashboard - Duration: 0.300s - Success
+2025-08-19 23:02:28,540 - PERF - dashboard - Duration: 0.917s - Success
+2025-08-19 23:09:07,442 - PERF - dashboard - Duration: 1.712s - Success
+2025-08-19 23:09:17,792 - PERF - dashboard - Duration: 0.203s - Success
+2025-08-19 23:09:34,096 - PERF - dashboard - Duration: 0.147s - Success
+2025-08-19 23:13:36,940 - PERF - dashboard - Duration: 0.114s - Success
+2025-08-19 23:15:10,438 - PERF - dashboard - Duration: 0.396s - Success
+2025-08-19 23:17:18,539 - PERF - dashboard - Duration: 0.002s - Success
+2025-08-19 23:17:29,673 - PERF - dashboard - Duration: 0.688s - Success
+2025-08-19 23:19:16,447 - PERF - dashboard - Duration: 0.079s - Success
+2025-08-19 23:20:15,002 - PERF - dashboard - Duration: 0.012s - Success
+2025-08-19 23:21:11,088 - PERF - dashboard - Duration: 0.253s - Success
+2025-08-19 23:21:46,772 - PERF - dashboard - Duration: 0.119s - Success
+2025-08-19 23:30:39,705 - PERF - dashboard - Duration: 0.087s - Success
+2025-08-19 23:30:48,805 - PERF - dashboard - Duration: 0.348s - Success
+2025-08-19 23:31:26,120 - PERF - dashboard - Duration: 2.182s - Success
+2025-08-19 23:34:31,093 - PERF - dashboard - Duration: 0.000s - Success
+2025-08-19 23:34:37,601 - PERF - dashboard - Duration: 0.001s - Success
+2025-08-19 23:38:35,850 - PERF - dashboard - Duration: 0.578s - Success
+2025-08-19 23:42:59,504 - PERF - dashboard - Duration: 0.000s - Success
+2025-08-19 23:43:24,743 - PERF - dashboard - Duration: 0.274s - Success
+2025-08-19 23:52:38,465 - PERF - dashboard - Duration: 0.006s - Success
+2025-08-19 23:54:13,355 - PERF - dashboard - Duration: 1.048s - Success
+2025-08-19 23:55:00,826 - PERF - dashboard - Duration: 0.064s - Success
+2025-08-20 00:00:05,931 - PERF - dashboard - Duration: 0.012s - Success
+2025-08-20 00:02:23,851 - PERF - dashboard - Duration: 1.558s - Success
+2025-08-20 00:03:38,574 - PERF - dashboard - Duration: 0.144s - Success
+2025-08-20 00:10:16,782 - PERF - dashboard - Duration: 0.006s - Success
+2025-08-20 00:11:19,365 - PERF - dashboard - Duration: 0.626s - Success
+2025-08-20 00:16:29,876 - PERF - dashboard - Duration: 0.001s - Success
+2025-08-20 00:23:13,011 - PERF - dashboard - Duration: 0.058s - Success
+2025-08-20 00:23:24,940 - PERF - dashboard - Duration: 0.028s - Success
+2025-08-20 00:24:16,838 - PERF - dashboard - Duration: 0.030s - Success
+2025-08-20 00:24:30,882 - PERF - dashboard - Duration: 0.017s - Success
+2025-08-20 00:31:47,497 - PERF - dashboard - Duration: 0.270s - Success
+2025-08-20 00:31:59,750 - PERF - dashboard - Duration: 0.023s - Success
+2025-08-20 00:32:11,560 - PERF - dashboard - Duration: 0.019s - Success
+2025-08-20 00:32:16,156 - PERF - dashboard - Duration: 0.271s - Success
+2025-08-20 00:32:34,796 - PERF - dashboard - Duration: 0.001s - Success
+2025-08-20 00:50:30,326 - PERF - dashboard - Duration: 0.097s - Success
+2025-08-20 00:50:38,639 - PERF - dashboard - Duration: 0.026s - Success
+2025-08-20 01:02:23,534 - PERF - dashboard - Duration: 0.149s - Success
+2025-08-20 02:11:38,425 - PERF - dashboard - Duration: 0.156s - Success
+2025-08-20 02:36:00,913 - PERF - dashboard - Duration: 0.103s - Success
+2025-08-20 02:37:06,354 - PERF - dashboard - Duration: 0.058s - Success
+2025-08-20 17:52:50,158 - PERF - dashboard - Duration: 0.148s - Success
+2025-08-20 17:55:35,120 - PERF - dashboard - Duration: 0.025s - Success
