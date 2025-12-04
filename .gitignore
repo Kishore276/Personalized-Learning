@@ -25,8 +25,6 @@ var/
 *.egg
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -73,6 +71,7 @@ cython_debug/
 
 # VS Code
 .vscode/
+.vs/
 
 # SQLite database files
 *.db
@@ -89,12 +88,29 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Windows
-*.bat
-
 # Misc
 *.swp
 *.swo
+*.bak
 
-# Data
-/data/
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing files
+test_*.py
+*_test.py
+auth_test_app.py
+test_app_simple.py
+test_app_start.py
+camera_test.html
+
+# Database backups
+*.db-journal
