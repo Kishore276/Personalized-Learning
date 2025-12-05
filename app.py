@@ -499,6 +499,13 @@ def profile():
     
     return render_template('profile.html')
 
+@app.route('/career-recommendations')
+def career_recommendations():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    return render_template('career_recommendations.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -2111,6 +2118,186 @@ def quiz_review():
             return f"Error parsing answers: {e}", 400
     return render_template('quiz_review.html', questions=review_questions)
 
+# Career Recommendations API
+@app.route('/api/career-recommendations')
+def get_career_recommendations():
+    """Get all available career recommendations with their tech stack requirements"""
+    try:
+        # Load career recommendations from JSON file
+        career_file = 'career_recommendations.json'
+        if not os.path.exists(career_file):
+            return jsonify({'success': False, 'error': 'Career recommendations not found'}), 404
+        
+        with open(career_file, 'r', encoding='utf-8') as f:
+            career_data = json.load(f)
+        
+        # Get list of available courses from quiz files
+        available_languages = set()
+        quiz_dir = 'data/quiz_questions'
+        
+        if os.path.exists(quiz_dir):
+            for filename in os.listdir(quiz_dir):
+                if filename.endswith('.json'):
+                    try:
+                        with open(os.path.join(quiz_dir, filename), 'r', encoding='utf-8') as f:
+                            quiz_data = json.load(f)
+                            language = quiz_data.get('language', '').lower()
+                            if language:
+                                available_languages.add(language)
+                    except Exception as e:
+                        logger.error(f"Error reading quiz file {filename}: {e}")
+                        continue
+        
+        # Process careers to only show tech stack items that are available
+        processed_careers = []
+        
+        for career in career_data.get('careers', []):
+            career_copy = dict(career)
+            available_skills = []
+            
+            # Filter skills based on available languages
+            for skill in career.get('required_skills', []):
+                skill_info = career_data.get('skill_mapping', {}).get(skill, {})
+                skill_language = skill_info.get('language', '').lower()
+                
+                # Only include skills if their language is available in quiz files
+                if skill_language in available_languages or skill_language in ['html', 'docker', 'aws']:
+                    available_skills.append({
+                        'skill_id': skill,
+                        'display_name': skill_info.get('display_name', skill),
+                        'language': skill_language,
+                        'course_id': skill_info.get('course_id')
+                    })
+            
+            # Only include career if it has at least one available skill
+            if available_skills:
+                career_copy['available_skills'] = available_skills
+                career_copy['total_skills'] = len(available_skills)
+                career_copy['skill_count'] = f"{len(available_skills)} technologies"
+                processed_careers.append(career_copy)
+        
+        return jsonify({
+            'success': True,
+            'careers': processed_careers,
+            'available_languages': list(available_languages)
+        })
+        
+    except Exception as e:
+        logger.error(f"Error getting career recommendations: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/api/career-recommendations/<career_id>')
+def get_career_detail(career_id):
+    """Get detailed information about a specific career path"""
+    try:
+        career_file = 'career_recommendations.json'
+        if not os.path.exists(career_file):
+            return jsonify({'success': False, 'error': 'Career data not found'}), 404
+        
+        with open(career_file, 'r', encoding='utf-8') as f:
+            career_data = json.load(f)
+        
+        # Find the career
+        selected_career = None
+        for career in career_data.get('careers', []):
+            if career.get('id') == career_id:
+                selected_career = career
+                break
+        
+        if not selected_career:
+            return jsonify({'success': False, 'error': 'Career not found'}), 404
+        
+        # Get available languages from quiz files
+        available_languages = set()
+        quiz_dir = 'data/quiz_questions'
+        course_info = {}
+        
+        if os.path.exists(quiz_dir):
+            for filename in os.listdir(quiz_dir):
+                if filename.endswith('.json'):
+                    try:
+                        with open(os.path.join(quiz_dir, filename), 'r', encoding='utf-8') as f:
+                            quiz_data = json.load(f)
+                            language = quiz_data.get('language', '').lower()
+                            course_id = quiz_data.get('course_id')
+                            course_title = quiz_data.get('course_title')
+                            
+                            if language:
+                                available_languages.add(language)
+                                course_info[course_id] = {
+                                    'title': course_title,
+                                    'language': language
+                                }
+                    except Exception as e:
+                        logger.error(f"Error reading quiz file {filename}: {e}")
+                        continue
+        
+        # Build detailed skill information
+        skill_mapping = career_data.get('skill_mapping', {})
+        detailed_skills = []
+        
+        for skill_id in selected_career.get('required_skills', []):
+            skill_info = skill_mapping.get(skill_id, {})
+            skill_language = skill_info.get('language', '').lower()
+            course_id = skill_info.get('course_id')
+            
+            # Check if this skill's language is available
+            is_available = skill_language in available_languages or skill_language in ['html', 'docker', 'aws']
+            
+            if is_available:
+                course_data = course_info.get(course_id, {})
+                detailed_skills.append({
+                    'skill_id': skill_id,
+                    'display_name': skill_info.get('display_name', skill_id),
+                    'language': skill_language,
+                    'course_id': course_id,
+                    'course_title': course_data.get('title', 'Unknown Course'),
+                    'is_available': True
+                })
+        
+        # Add user progress if logged in
+        user_progress = {}
+        if 'user_id' in session:
+            user_id = session['user_id']
+            conn = get_connection()
+            cursor = conn.cursor()
+            
+            for skill in detailed_skills:
+                course_id = skill['course_id']
+                cursor.execute('''
+                    SELECT AVG(progress_percentage) as avg_progress
+                    FROM course_progress 
+                    WHERE user_id = ? AND course_id = ?
+                ''', (user_id, course_id))
+                
+                progress_result = cursor.fetchone()
+                user_progress[course_id] = progress_result['avg_progress'] if progress_result else 0
+            
+            conn.close()
+        
+        return jsonify({
+            'success': True,
+            'career': {
+                'id': selected_career.get('id'),
+                'title': selected_career.get('title'),
+                'description': selected_career.get('description'),
+                'icon': selected_career.get('icon'),
+                'color': selected_career.get('color'),
+                'skills': detailed_skills,
+                'total_skills': len(detailed_skills),
+                'user_progress': user_progress
+            }
+        })
+        
+    except Exception as e:
+        logger.error(f"Error getting career detail: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
