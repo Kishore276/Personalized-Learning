@@ -1,0 +1,163 @@
+{
+  "careers": [
+    {
+      "id": "ml_developer",
+      "title": "Machine Learning Developer",
+      "description": "Build intelligent systems using machine learning algorithms and data science",
+      "required_skills": [
+        "machine_learning",
+        "python",
+        "data_structures_&_algorithms"
+      ],
+      "difficulty_progression": ["basic", "intermediate", "advanced"],
+      "icon": "bi-brain",
+      "color": "#6f42c1"
+    },
+    {
+      "id": "backend_developer",
+      "title": "Backend Developer",
+      "description": "Develop server-side applications and APIs using modern frameworks",
+      "required_skills": [
+        "java_programming",
+        "node_js_backend_development",
+        "web_development_with_php",
+        "data_structures_&_algorithms"
+      ],
+      "difficulty_progression": ["basic", "intermediate", "advanced"],
+      "icon": "bi-server",
+      "color": "#28a745"
+    },
+    {
+      "id": "frontend_developer",
+      "title": "Frontend Developer",
+      "description": "Create beautiful and responsive user interfaces for web applications",
+      "required_skills": [
+        "html_&_css_basics",
+        "javascript_essentials",
+        "react_development",
+        "advanced_css_&_responsive_design"
+      ],
+      "difficulty_progression": ["basic", "intermediate", "advanced"],
+      "icon": "bi-palette",
+      "color": "#fd7e14"
+    },
+    {
+      "id": "devops_engineer",
+      "title": "DevOps Engineer",
+      "description": "Manage infrastructure, deployment, and containerization of applications",
+      "required_skills": [
+        "docker_&_containerization",
+        "aws",
+        "data_structures_&_algorithms",
+        "java_programming"
+      ],
+      "difficulty_progression": ["basic", "intermediate", "advanced"],
+      "icon": "bi-gear",
+      "color": "#dc3545"
+    },
+    {
+      "id": "full_stack_developer",
+      "title": "Full Stack Developer",
+      "description": "Develop complete web applications with both frontend and backend expertise",
+      "required_skills": [
+        "html_&_css_basics",
+        "javascript_essentials",
+        "react_development",
+        "node_js_backend_development",
+        "data_structures_&_algorithms"
+      ],
+      "difficulty_progression": ["basic", "intermediate", "advanced"],
+      "icon": "bi-diagram-3",
+      "color": "#0dcaf0"
+    },
+    {
+      "id": "web_developer",
+      "title": "Web Developer",
+      "description": "Build web applications using PHP and modern web development practices",
+      "required_skills": [
+        "html_&_css_basics",
+        "javascript_essentials",
+        "web_development_with_php",
+        "advanced_css_&_responsive_design"
+      ],
+      "difficulty_progression": ["basic", "intermediate", "advanced"],
+      "icon": "bi-globe",
+      "color": "#0d6efd"
+    },
+    {
+      "id": "data_structures_specialist",
+      "title": "Data Structures & Algorithms Specialist",
+      "description": "Master the fundamentals of computer science and algorithm optimization",
+      "required_skills": [
+        "data_structures_&_algorithms",
+        "java_programming",
+        "machine_learning"
+      ],
+      "difficulty_progression": ["basic", "intermediate", "advanced"],
+      "icon": "bi-diagram-2",
+      "color": "#6c757d"
+    }
+  ],
+  "skill_mapping": {
+    "machine_learning": {
+      "display_name": "Machine Learning",
+      "language": "python",
+      "course_id": 43
+    },
+    "python": {
+      "display_name": "Python",
+      "language": "python",
+      "course_id": 43
+    },
+    "html_&_css_basics": {
+      "display_name": "HTML & CSS Basics",
+      "language": "html",
+      "course_id": 3
+    },
+    "javascript_essentials": {
+      "display_name": "JavaScript Essentials",
+      "language": "javascript",
+      "course_id": 40
+    },
+    "react_development": {
+      "display_name": "React Development",
+      "language": "javascript",
+      "course_id": 41
+    },
+    "java_programming": {
+      "display_name": "Java Programming",
+      "language": "java",
+      "course_id": 6
+    },
+    "node_js_backend_development": {
+      "display_name": "Node.js Backend Development",
+      "language": "javascript",
+      "course_id": 42
+    },
+    "web_development_with_php": {
+      "display_name": "Web Development with PHP",
+      "language": "php",
+      "course_id": 39
+    },
+    "docker_&_containerization": {
+      "display_name": "Docker & Containerization",
+      "language": "docker",
+      "course_id": 17
+    },
+    "aws": {
+      "display_name": "AWS",
+      "language": "aws",
+      "course_id": 44
+    },
+    "advanced_css_&_responsive_design": {
+      "display_name": "Advanced CSS & Responsive Design",
+      "language": "html",
+      "course_id": 4
+    },
+    "data_structures_&_algorithms": {
+      "display_name": "Data Structures & Algorithms",
+      "language": "java",
+      "course_id": 5
+    }
+  }
+}
