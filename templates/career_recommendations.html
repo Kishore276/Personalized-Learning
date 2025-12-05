@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Recommendations - Personalized Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: white;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .career-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            text-align: center;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .careers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .career-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 5px solid;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .career-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .career-card-header {
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .career-icon {
+            font-size: 3rem;
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .career-card-title h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .career-card-title p {
+            margin: 0.5rem 0 0 0;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .career-card-body {
+            padding: 1.5rem 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .skill-count {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .skill-badge {
+            background: #f5f5f5;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .skill-badge i {
+            font-size: 0.75rem;
+        }
+
+        .card-footer {
+            padding: 1.5rem 2rem;
+            background: #f9f9f9;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .view-details-btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Career type specific colors */
+        .career-ml_developer {
+            border-left-color: #6f42c1;
+        }
+
+        .career-ml_developer .career-icon {
+            background: linear-gradient(135deg, #6f42c1, #8e5dd9);
+        }
+
+        .career-ml_developer .view-details-btn {
+            background: linear-gradient(135deg, #6f42c1, #8e5dd9);
+            color: white;
+        }
+
+        .career-ml_developer .view-details-btn:hover {
+            background: linear-gradient(135deg, #5a34a3, #7a4bbf);
+            transform: translateY(-2px);
+        }
+
+        .career-backend_developer {
+            border-left-color: #28a745;
+        }
+
+        .career-backend_developer .career-icon {
+            background: linear-gradient(135deg, #28a745, #51d97c);
+        }
+
+        .career-backend_developer .view-details-btn {
+            background: linear-gradient(135deg, #28a745, #51d97c);
+            color: white;
+        }
+
+        .career-backend_developer .view-details-btn:hover {
+            background: linear-gradient(135deg, #218838, #3eb563);
+            transform: translateY(-2px);
+        }
+
+        .career-frontend_developer {
+            border-left-color: #fd7e14;
+        }
+
+        .career-frontend_developer .career-icon {
+            background: linear-gradient(135deg, #fd7e14, #fe9f3b);
+        }
+
+        .career-frontend_developer .view-details-btn {
+            background: linear-gradient(135deg, #fd7e14, #fe9f3b);
+            color: white;
+        }
+
+        .career-frontend_developer .view-details-btn:hover {
+            background: linear-gradient(135deg, #e86b00, #f28a1d);
+            transform: translateY(-2px);
+        }
+
+        .career-devops_engineer {
+            border-left-color: #dc3545;
+        }
+
+        .career-devops_engineer .career-icon {
+            background: linear-gradient(135deg, #dc3545, #f25465);
+        }
+
+        .career-devops_engineer .view-details-btn {
+            background: linear-gradient(135deg, #dc3545, #f25465);
+            color: white;
+        }
+
+        .career-devops_engineer .view-details-btn:hover {
+            background: linear-gradient(135deg, #c92a2a, #d93f53);
+            transform: translateY(-2px);
+        }
+
+        .career-full_stack_developer {
+            border-left-color: #0dcaf0;
+        }
+
+        .career-full_stack_developer .career-icon {
+            background: linear-gradient(135deg, #0dcaf0, #29d4eb);
+        }
+
+        .career-full_stack_developer .view-details-btn {
+            background: linear-gradient(135deg, #0dcaf0, #29d4eb);
+            color: white;
+        }
+
+        .career-full_stack_developer .view-details-btn:hover {
+            background: linear-gradient(135deg, #0aa4c8, #1ab8cd);
+            transform: translateY(-2px);
+        }
+
+        .career-web_developer {
+            border-left-color: #0d6efd;
+        }
+
+        .career-web_developer .career-icon {
+            background: linear-gradient(135deg, #0d6efd, #3d8ffe);
+        }
+
+        .career-web_developer .view-details-btn {
+            background: linear-gradient(135deg, #0d6efd, #3d8ffe);
+            color: white;
+        }
+
+        .career-web_developer .view-details-btn:hover {
+            background: linear-gradient(135deg, #0b5cdb, #2568ed);
+            transform: translateY(-2px);
+        }
+
+        .career-data_structures_specialist {
+            border-left-color: #6c757d;
+        }
+
+        .career-data_structures_specialist .career-icon {
+            background: linear-gradient(135deg, #6c757d, #95a3a6);
+        }
+
+        .career-data_structures_specialist .view-details-btn {
+            background: linear-gradient(135deg, #6c757d, #95a3a6);
+            color: white;
+        }
+
+        .career-data_structures_specialist .view-details-btn:hover {
+            background: linear-gradient(135deg, #5a6268, #757e84);
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .career-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .detail-icon {
+            font-size: 5rem;
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .career-detail-info h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .career-detail-info p {
+            color: #666;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .required-skills-section {
+            margin-bottom: 2rem;
+        }
+
+        .required-skills-section h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-item {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .skill-item-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-language {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .progress {
+            flex-grow: 1;
+            height: 8px;
+            border-radius: 10px;
+            background: #e0e0e0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .no-careers-message {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 15px;
+            color: #666;
+        }
+
+        .navbar-top {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .navbar-top .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+        }
+
+        .spinner-border {
+            color: white;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .careers-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .header-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .career-detail-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .skill-language {
+                margin-left: 0;
+            }
+
+            .back-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="/dashboard" class="back-button">
+        <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+    </a>
+
+    <div class="career-container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <h1><i class="bi bi-rocket-takeoff me-2"></i>Career Pathways</h1>
+            <p>Explore different career paths and learn the technologies you need to succeed</p>
+        </div>
+
+        <!-- Careers Grid -->
+        <div class="careers-grid" id="careersContainer">
+            <div class="loading-spinner">
+                <div class="spinner-border text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Career Detail Modal -->
+    <div class="modal fade" id="careerDetailModal" tabindex="-1" aria-labelledby="careerDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="careerDetailModalLabel">Career Details</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="careerDetailContent">
+                    <!-- Content will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load career recommendations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCareerRecommendations();
+        });
+
+        function loadCareerRecommendations() {
+            fetch('/api/career-recommendations')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.careers.length > 0) {
+                        renderCareers(data.careers);
+                    } else {
+                        renderNoCareers();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading careers:', error);
+                    renderNoCareers();
+                });
+        }
+
+        function renderCareers(careers) {
+            const container = document.getElementById('careersContainer');
+            container.innerHTML = '';
+
+            careers.forEach(career => {
+                const careerCard = document.createElement('div');
+                careerCard.className = `career-card career-${career.id}`;
+                
+                const skillsHTML = career.available_skills
+                    .slice(0, 3) // Show first 3 skills
+                    .map(skill => `<span class="skill-badge"><i class="bi bi-check-circle"></i>${skill.display_name}</span>`)
+                    .join('');
+
+                const moreSkills = career.available_skills.length > 3 
+                    ? `<span class="skill-badge"><i class="bi bi-plus"></i>+${career.available_skills.length - 3} more</span>` 
+                    : '';
+
+                careerCard.innerHTML = `
+                    <div class="career-card-header">
+                        <div class="career-icon">
+                            <i class="bi ${career.icon}"></i>
+                        </div>
+                        <div class="career-card-title">
+                            <h3>${career.title}</h3>
+                            <p>${career.description}</p>
+                        </div>
+                    </div>
+                    <div class="career-card-body">
+                        <span class="skill-count">
+                            <i class="bi bi-code-square me-1"></i>${career.skill_count}
+                        </span>
+                        <div class="skills-list">
+                            ${skillsHTML}
+                            ${moreSkills}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="view-details-btn" onclick="viewCareerDetails('${career.id}')">
+                            <i class="bi bi-arrow-right me-2"></i>View Details
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(careerCard);
+            });
+        }
+
+        function renderNoCareers() {
+            const container = document.getElementById('careersContainer');
+            container.innerHTML = `
+                <div class="no-careers-message">
+                    <i class="bi bi-info-circle" style="font-size: 3rem; color: #ccc;"></i>
+                    <h4 class="mt-3">No Career Paths Available</h4>
+                    <p>Career recommendations will be available once courses are added to the system.</p>
+                </div>
+            `;
+        }
+
+        function viewCareerDetails(careerId) {
+            fetch(`/api/career-recommendations/${careerId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        renderCareerDetail(data.career);
+                        const modal = new bootstrap.Modal(document.getElementById('careerDetailModal'));
+                        modal.show();
+                    }
+                })
+                .catch(error => console.error('Error loading career details:', error));
+        }
+
+        function renderCareerDetail(career) {
+            const contentDiv = document.getElementById('careerDetailContent');
+            
+            const skillsHTML = career.skills
+                .map(skill => {
+                    const progress = career.user_progress[skill.course_id] || 0;
+                    return `
+                        <div class="skill-item">
+                            <div class="skill-item-title">
+                                <i class="bi bi-code-square"></i>
+                                ${skill.display_name}
+                                <span class="skill-language">${skill.language.toUpperCase()}</span>
+                            </div>
+                            <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
+                                ${skill.course_title}
+                            </p>
+                            <div class="progress-bar-container">
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: ${progress}%"></div>
+                                </div>
+                                <span class="progress-text">${Math.round(progress)}%</span>
+                            </div>
+                        </div>
+                    `;
+                })
+                .join('');
+
+            contentDiv.innerHTML = `
+                <div class="career-detail-header">
+                    <div class="detail-icon" style="background: ${career.color};">
+                        <i class="bi ${career.icon}"></i>
+                    </div>
+                    <div class="career-detail-info">
+                        <h2>${career.title}</h2>
+                        <p>${career.description}</p>
+                    </div>
+                </div>
+
+                <div class="required-skills-section">
+                    <h4>
+                        <i class="bi bi-stack"></i>
+                        Required Tech Stack (${career.total_skills} technologies)
+                    </h4>
+                    ${skillsHTML}
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="/dashboard" class="btn btn-primary btn-lg" style="background: ${career.color}; border: none;">
+                        <i class="bi bi-play-circle me-2"></i>Start Learning
+                    </a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
